@@ -1,24 +1,17 @@
 # comment-vue
 
-## Project setup
+## 安装
 ```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
+yarn add @jx3box/jx3box-comment-ui
 ```
 
-### Compiles and minifies for production
-```
-yarn build
-```
+## 使用
 
-### Lints and fixes files
-```
-yarn lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+import Comments from "@jx3box/jx3box-comment-ui"
+Vue.use(Comments)
+
+// 判断文章id为100的评论
+<Comment postId="100"/>
+```
