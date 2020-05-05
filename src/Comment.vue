@@ -27,10 +27,17 @@
               :date="item.comment.commentDate"
               :content="item.comment.content"
             />
-            <ReplyListSimple v-if="item.reply" :reply-list="item.reply" :post-id="postId" />
-            <div v-if="item.reply && item.reply.length >= 3">
-              <el-button type="text" @click="showMore()">查看更多</el-button>
-            </div>
+            <ReplyList
+              v-if="item.reply"
+              :post-id="postId"
+              :origin-reply-list="item.reply"
+              :comment-id="item.comment.id"
+            />
+            <!-- <ReplyListSimple
+              v-show="item.reply && !item.more"
+              :reply-list="item.reply"
+              :post-id="postId"
+            />-->
           </el-col>
         </el-row>
         <el-divider></el-divider>
@@ -53,7 +60,8 @@
 import { JX3BOX } from "@jx3box/jx3box-common";
 import Avatar from "./components/avatar.vue";
 import CommentContent from "./components/comment-content.vue";
-import ReplyListSimple from "./components/reply-list-simple.vue";
+//import ReplyListSimple from "./components/reply-list-simple.vue";
+import ReplyList from "./components/reply-list.vue";
 import { GET, POST } from "./service";
 // import { ElContainer, ElMain, ElFooter } from "element-ui";
 export default {
@@ -62,7 +70,8 @@ export default {
   components: {
     Avatar,
     CommentContent,
-    ReplyListSimple
+    //ReplyListSimple,
+    ReplyList
     // ElMain,
     // ElFooter
   },
@@ -81,10 +90,13 @@ export default {
     };
   },
   methods: {
+    showMoreReply(index) {
+      this.commentList[index].more = true;
+    },
     reloadCommentList(index) {
       GET(`/api/comments/post/${this.postId}/comment/page/${index}`)
         .then(resp => {
-          this.commentList = resp.data;
+          this.commentList = resp.data || [];
           this.pager = resp.page;
         })
         .catch(() => {});
