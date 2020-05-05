@@ -9,58 +9,32 @@
           <el-button type="primary" @click="onSubmit">发表评论</el-button>
         </el-form-item>
       </el-form>
-      <el-card v-for="item in commentList" :key="item.comment.id">
+      <el-divider></el-divider>
+      <div v-for="item in commentList" :key="item.comment.id">
         <el-row>
           <el-col :span="2">
-            <div>
-              <el-avatar shape="square" :size="68" :src="defautlAvatar"></el-avatar>
-            </div>
-            <div>
-              <el-link
-                type="primary"
-                target="jx3box_user"
-                :href="profileLink + item.comment.userId"
-              >{{item.comment.author}}</el-link>
-            </div>
+            <Avatar
+              :avatar-size="68"
+              :user-avatar="defautlAvatar"
+              :user-href="profileLink + item.comment.userId"
+              :username="item.comment.author"
+            />
           </el-col>
           <el-col :span="22">
-            <div>{{item.comment.content}}</div>
-            <div>
-              <span>{{dataForamt(item.comment.commentDate)}}</span>
-              <span>回复</span>
-            </div>
-            <div v-if="item.reply">
-              <el-divider></el-divider>
-              <el-card v-for="reply in item.reply" :key="reply.id">
-                <el-row>
-                  <el-col :span="2">
-                    <div>
-                      <el-avatar shape="square" :size="34" :src="defautlAvatar"></el-avatar>
-                    </div>
-                    <div>
-                      <el-link
-                        type="primary"
-                        target="jx3box_user"
-                        :href="profileLink + reply.userId"
-                      >{{reply.author}}</el-link>
-                    </div>
-                  </el-col>
-                  <el-col :span="22">
-                    <div>{{reply.content}}</div>
-                    <div>
-                      <span>{{dataForamt(reply.commentDate)}}</span>
-                      <span>回复</span>
-                    </div>
-                  </el-col>
-                </el-row>
-              </el-card>
-              <div v-if="item.reply.length >= 3">
-                <div>查看更多</div>
-              </div>
+            <CommentContent
+              :post-id="postId"
+              :comment-id="item.comment.id"
+              :date="item.comment.commentDate"
+              :content="item.comment.content"
+            />
+            <ReplyListSimple v-if="item.reply" :reply-list="item.reply" :post-id="postId" />
+            <div v-if="item.reply && item.reply.length >= 3">
+              <el-button type="text" @click="showMore()">查看更多</el-button>
             </div>
           </el-col>
         </el-row>
-      </el-card>
+        <el-divider></el-divider>
+      </div>
     </el-main>
     <el-footer>
       <el-pagination
@@ -77,13 +51,18 @@
 
 <script>
 import { JX3BOX } from "@jx3box/jx3box-common";
+import Avatar from "./components/avatar.vue";
+import CommentContent from "./components/comment-content.vue";
+import ReplyListSimple from "./components/reply-list-simple.vue";
 import { GET, POST } from "./service";
 // import { ElContainer, ElMain, ElFooter } from "element-ui";
 export default {
   name: "Comment",
   props: ["postId"],
   components: {
-    // ElContainer,
+    Avatar,
+    CommentContent,
+    ReplyListSimple
     // ElMain,
     // ElFooter
   },
@@ -102,22 +81,6 @@ export default {
     };
   },
   methods: {
-    dataForamt(str) {
-      let d = new Date(str);
-      return (
-        d.getFullYear() +
-        "-" +
-        (d.getMonth() + 1) +
-        "-" +
-        d.getDate() +
-        " " +
-        d.getHours() +
-        ":" +
-        d.getMinutes() +
-        ":" +
-        d.getSeconds()
-      );
-    },
     reloadCommentList(index) {
       GET(`/api/comments/post/${this.postId}/comment/page/${index}`)
         .then(resp => {
@@ -158,5 +121,3 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
