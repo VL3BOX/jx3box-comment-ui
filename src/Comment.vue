@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { JX3BOX } from "@jx3box/jx3box-common";
+import { JX3BOX,Utils } from "@jx3box/jx3box-common";
 import Avatar from "./components/avatar.vue";
 import CommmentWithReply from "./components/comment-with-reply.vue";
 import { GET, POST } from "./service";
@@ -55,8 +55,8 @@ export default {
   data: function() {
     return {
       commentList: [],
-      defautlAvatar: JX3BOX.default_avatar,
-      profileLink: JX3BOX.__Links.dashboard.profile + "/",
+      defautlAvatar: Utils.showAvatar(),
+      profileLink: JX3BOX.__Links.author + "",
       newComment: {},
       pager: {
         index: 1,
