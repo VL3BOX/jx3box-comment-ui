@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-divider></el-divider>
+    <el-divider v-if="replyList.length"></el-divider>
     <el-row
       v-for="(reply, __index) in replyList"
       :key="reply.id"
@@ -34,7 +34,7 @@
         layout="total, prev, pager, next"
         :total="pager.total"
       ></el-pagination>
-      <div v-if="originReplyList && originReplyList.length >= 3">
+      <div v-if="replyList && replyList.length >= 3">
         <el-button type="text" v-show="showPager" @click="showLess()">收起</el-button>
         <el-button type="text" v-show="!showPager" @click="showMore()">查看更多</el-button>
       </div>
@@ -45,7 +45,7 @@
 <script>
 import { JX3BOX } from "@jx3box/jx3box-common";
 import { GET } from "../service";
-import CommentContent from "./comment-content.vue";
+import CommentContent from "./comment-content-simple.vue";
 import Avatar from "./avatar.vue";
 export default {
   props: ["postId", "commentId", "originReplyList"],
@@ -53,11 +53,13 @@ export default {
     Avatar,
     CommentContent
   },
+  backReplyList: [],
   data: function() {
     return {
       defautlAvatar: JX3BOX.default_avatar,
       profileLink: JX3BOX.__Links.dashboard.profile + "/",
       replyList: [],
+
       pager: {
         index: 1,
         pageSize: 10,
@@ -68,9 +70,17 @@ export default {
     };
   },
   mounted() {
-    console.log(this.originReplyList);
-    this.replyList = this.originReplyList;
-    // this.loadCommentList(1);
+    this.backReplyList = this.originReplyList || [];
+    this.replyList = this.backReplyList;
+    this.$on("refresh", newItem => {
+      if (this.showPager) {
+        this.loadCommentList(this.pager.index);
+      } else if (this.replyList.length < 3) {
+        // this.backReplyList.push(newItem);
+        this.replyList.push(newItem);
+        console.log(newItem);
+      }
+    });
   },
   methods: {
     showMore() {
@@ -79,14 +89,14 @@ export default {
     },
     showLess() {
       this.showPager = false;
-      this.replyList = this.originReplyList;
+      this.replyList = this.backReplyList;
     },
     handleCurrentChange(gotoIndex) {
       this.loadCommentList(gotoIndex);
     },
     loadCommentList(index) {
       GET(
-        `/api/comments/post/${this.postId}/comment/${this.commentId}/reply/page/${index}`
+        `/api/comments/post/${this.postId}/comment/${this.commentId}/reply/page/${index}?pageSize=6`
       )
         .then(resp => {
           this.replyList = resp.data;

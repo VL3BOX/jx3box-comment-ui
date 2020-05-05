@@ -12,7 +12,25 @@ export const GET = function (url, queryParams) {
 
 }
 
+var postRecord = {}
+
 export const POST = function (url, queryParams, body) {
+
+    if (!postRecord[url]) {
+        postRecord[url] = Date.now()
+    } else if (Date.now() - postRecord[url] < 10 * 1000) {
+        Notification.warning({
+            title: "系统",
+            message: "你单身多久了? 动作这么快, 系统处理不过来 ( T_T )",
+            duration: 3000,
+            position: "bottom-right"
+        })
+        return new Promise((reslove, reject) => {
+            reject()
+        })
+    } else {
+        postRecord[url] = Date.now()
+    }
     let options = {
         "method": "POST",
         headers: {
@@ -64,7 +82,6 @@ function __fetch(url, queryParams, options) {
                     Notification.warning({
                         title: "系统",
                         message: body || "提交内容不合法,请重新提交",
-                        type: "success",
                         duration: 3000,
                         position: "bottom-right"
                     })

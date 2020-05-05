@@ -21,23 +21,7 @@
             />
           </el-col>
           <el-col :span="22">
-            <CommentContent
-              :post-id="postId"
-              :comment-id="item.comment.id"
-              :date="item.comment.commentDate"
-              :content="item.comment.content"
-            />
-            <ReplyList
-              v-if="item.reply"
-              :post-id="postId"
-              :origin-reply-list="item.reply"
-              :comment-id="item.comment.id"
-            />
-            <!-- <ReplyListSimple
-              v-show="item.reply && !item.more"
-              :reply-list="item.reply"
-              :post-id="postId"
-            />-->
+            <CommmentWithReply :item="item" :postId="postId" />
           </el-col>
         </el-row>
         <el-divider></el-divider>
@@ -59,21 +43,14 @@
 <script>
 import { JX3BOX } from "@jx3box/jx3box-common";
 import Avatar from "./components/avatar.vue";
-import CommentContent from "./components/comment-content.vue";
-//import ReplyListSimple from "./components/reply-list-simple.vue";
-import ReplyList from "./components/reply-list.vue";
+import CommmentWithReply from "./components/comment-with-reply.vue";
 import { GET, POST } from "./service";
-// import { ElContainer, ElMain, ElFooter } from "element-ui";
 export default {
   name: "Comment",
   props: ["postId"],
   components: {
     Avatar,
-    CommentContent,
-    //ReplyListSimple,
-    ReplyList
-    // ElMain,
-    // ElFooter
+    CommmentWithReply
   },
   data: function() {
     return {
@@ -90,9 +67,6 @@ export default {
     };
   },
   methods: {
-    showMoreReply(index) {
-      this.commentList[index].more = true;
-    },
     reloadCommentList(index) {
       GET(`/api/comments/post/${this.postId}/comment/page/${index}`)
         .then(resp => {
