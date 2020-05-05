@@ -90,6 +90,7 @@ export default {
             duration: 3000,
             position: "bottom-right"
           });
+          this.newComment = {};
           if (
             this.pager.index == this.pager.pageTotal ||
             this.pager.total % this.pager.pageSize == 0
