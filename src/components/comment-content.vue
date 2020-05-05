@@ -47,13 +47,9 @@ export default {
       );
     },
     submit() {
-      POST(
-        `/api/comments/post/${this.postId}/comment/${this.commentId}/reply`,
-        null,
-        {
-          content: this.newComment.content
-        }
-      )
+      POST(`/api/post/${this.postId}/comment/${this.commentId}/reply`, null, {
+        content: this.newComment.content
+      })
         .then(data => {
           this.$notify({
             title: "",

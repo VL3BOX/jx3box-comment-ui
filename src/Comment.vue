@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     reloadCommentList(index) {
-      GET(`/api/comments/post/${this.postId}/comment/page/${index}`)
+      GET(`/api/post/${this.postId}/comment/page/${index}`)
         .then(resp => {
           this.commentList = resp.data || [];
           this.pager = resp.page;
@@ -79,7 +79,7 @@ export default {
       this.reloadCommentList(gotoIndex);
     },
     onSubmit() {
-      POST(`/api/comments/post/${this.postId}/comment`, null, {
+      POST(`/api/post/${this.postId}/comment`, null, {
         content: this.newComment.content
       })
         .then(() => {

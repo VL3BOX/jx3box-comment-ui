@@ -96,7 +96,7 @@ export default {
     },
     loadCommentList(index) {
       GET(
-        `/api/comments/post/${this.postId}/comment/${this.commentId}/reply/page/${index}?pageSize=6`
+        `/api/post/${this.postId}/comment/${this.commentId}/reply/page/${index}?pageSize=6`
       )
         .then(resp => {
           this.replyList = resp.data;
