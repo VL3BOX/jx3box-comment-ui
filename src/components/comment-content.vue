@@ -3,12 +3,21 @@
     <div>{{content}}</div>
     <div class="comment-content-footer">
       <el-button size="mini" round icon="el-icon-chat-round" @click="showForm = true">回复</el-button>
-      <el-button
-        type="text"
-        icon="el-icon-time"
-        disabled
-        style="font-size:10px;float:right"
-      >{{dataFormat(date)}}</el-button>
+      <div style="float:right">
+        <el-button
+          type="text"
+          icon="el-icon-delete"
+          size="mini"
+        >删除</el-button>
+
+        <el-button
+          type="text"
+          icon="el-icon-time"
+          disabled
+          size="mini"
+        >{{dataFormat(date)}}</el-button>
+      </div>
+      
     </div>
     <div v-if="showForm">
       <el-form ref="form" :model="newComment">
@@ -27,23 +36,26 @@
 
 <script>
 import { POST } from "../service";
+function fillZero(num){
+  return num  > 9 ? num  : `0${num}`
+}
 export default {
-  props: ["postId", "commentId", "content", "date", "hasReply"],
+  props: ["postId", "commentId", "content", "date", "hasReply", "canDelete"],
   methods: {
     dataFormat(str) {
       let d = new Date(str);
       return (
         d.getFullYear() +
         "-" +
-        (d.getMonth() + 1) +
+        fillZero(d.getMonth() + 1) +
         "-" +
-        d.getDate() +
+        fillZero(d.getDate()) +
         " " +
-        d.getHours() +
+        fillZero(d.getHours()) +
         ":" +
-        d.getMinutes() +
+        fillZero( d.getMinutes()) +
         ":" +
-        d.getSeconds()
+        fillZero(d.getSeconds())
       );
     },
     submit() {

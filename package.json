@@ -10,7 +10,7 @@
     "dependencies": {
         "@jx3box/jx3box-common": "^1.1.1",
         "core-js": "^3.6.4",
-        "element-ui": "^2.4.5",
+        "element-ui": "^2.13.1",
         "vue": "^2.6.11"
     },
     "devDependencies": {
