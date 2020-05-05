@@ -4,6 +4,10 @@
 ```
 yarn add @jx3box/jx3box-comment-ui
 ```
+或
+```
+npm install @jx3box/jx3box-comment-ui
+```
 
 ## 使用
 
