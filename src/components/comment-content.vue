@@ -1,7 +1,7 @@
 <template>
-  <div class="comment-content">
+  <div style="width: 100%;">
     <div>{{content}}</div>
-    <div class="comment-content-footer">
+    <div style="width: 100%;margin-top: 30px;">
       <el-button size="mini" round icon="el-icon-chat-round" @click="showForm = true">回复</el-button>
       <div style="float:right">
         <el-button
@@ -83,16 +83,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.comment-content {
-  width: 100%;
-}
-.comment-content-footer {
-  width: 100%;
-  margin-top: 30px;
-}
-.comment-content-footer span {
-  margin-left: 20px;
-}
-</style>

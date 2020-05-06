@@ -4,8 +4,7 @@
     <el-row
       v-for="(reply, __index) in replyList"
       :key="reply.comment.id"
-      style="padding: 10px"
-      :class="{'comment-need-bg': __index % 2 == 1}"
+      :style="getStyle(__index)"
     >
       <el-col :span="1">
         <Avatar
@@ -84,6 +83,12 @@ export default {
     });
   },
   methods: {
+    getStyle(index){
+      return  index % 2 == 1 ? {
+        backgroundColor: "#f8f8f8",
+        padding: "10px"
+      }: {padding: "10px"}
+    },
     showAvatar: Utils.showAvatar,
     showMore() {
       this.showPager = true;
@@ -117,8 +122,3 @@ export default {
 </script>
 
 
-<style scoped>
-.comment-need-bg {
-  background-color: #f8f8f8;
-}
-</style>

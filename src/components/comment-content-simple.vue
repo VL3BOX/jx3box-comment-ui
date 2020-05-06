@@ -1,8 +1,8 @@
 <template>
-  <div class="comment-content">
+  <div  style="width: 100%;">
     <div>{{content}}</div>
     
-    <div class="comment-content-footer">
+    <div style="width: 100%;">
        <div style="float:right">
         <el-button
           v-if="canDelete"
@@ -49,15 +49,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.comment-content {
-  width: 100%;
-}
-.comment-content-footer {
-  width: 100%;
-}
-.comment-content-footer span {
-  margin-left: 20px;
-}
-</style>
