@@ -5,6 +5,7 @@
     <div class="comment-content-footer">
        <div style="float:right">
         <el-button
+          v-if="canDelete"
           type="text"
           icon="el-icon-delete"
           size="mini"
@@ -27,7 +28,7 @@ function fillZero(num){
   return num  > 9 ? num  : `0${num}`
 }
 export default {
-  props: ["postId", "commentId", "content", "date", "hasReply"],
+  props: ["postId", "commentId", "content", "date", "hasReply", "canDelete"],
   methods: {
     dataFormat(str) {
       let d = new Date(str);

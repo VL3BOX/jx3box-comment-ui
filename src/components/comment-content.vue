@@ -5,6 +5,7 @@
       <el-button size="mini" round icon="el-icon-chat-round" @click="showForm = true">回复</el-button>
       <div style="float:right">
         <el-button
+          v-if="canDelete"
           type="text"
           icon="el-icon-delete"
           size="mini"

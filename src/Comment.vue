@@ -21,7 +21,7 @@
             />
           </el-col>
           <el-col :span="22">
-            <CommmentWithReply :item="item" :postId="postId" />
+            <CommmentWithReply :item="item" :post-id="postId" :power="commentPower" />
           </el-col>
         </el-row>
         <el-divider></el-divider>
@@ -54,6 +54,10 @@ export default {
   },
   data: function() {
     return {
+      commentPower:{
+        allow: false,
+        uid: -1
+      },
       commentList: [],
       defautlAvatar: Utils.showAvatar(),
       profileLink: JX3BOX.__Links.author + "",
@@ -103,7 +107,10 @@ export default {
   },
 
   mounted() {
-    this.reloadCommentList(1);
+    GET(`/api/post/${this.postId}/can-i-delete-comment`).then((power)=>{
+      this.commentPower = power
+      this.reloadCommentList(1);
+    }).catch(()=>{})
   }
 };
 </script>

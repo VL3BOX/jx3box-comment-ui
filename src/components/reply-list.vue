@@ -16,11 +16,12 @@
         />
       </el-col>
       <el-col :span="23">
-        <CommentContent
+        <CommentContentSimple
           :post-id="postId"
           :comment-id="reply.id"
           :date="reply.commentDate"
           :content="reply.content"
+          :can-delete="power.allow || power.uid == reply.authorId"
         />
       </el-col>
     </el-row>
@@ -45,13 +46,13 @@
 <script>
 import { JX3BOX } from "@jx3box/jx3box-common";
 import { GET } from "../service";
-import CommentContent from "./comment-content-simple.vue";
+import CommentContentSimple from "./comment-content-simple.vue";
 import Avatar from "./avatar.vue";
 export default {
-  props: ["postId", "commentId", "originReplyList"],
+  props: ["postId", "commentId", "originReplyList", "power"],
   components: {
     Avatar,
-    CommentContent
+    CommentContentSimple
   },
   backReplyList: [],
   data: function() {
