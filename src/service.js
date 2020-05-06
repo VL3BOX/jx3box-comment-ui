@@ -17,19 +17,32 @@ var postRecord = {}
 export const POST = function (url, queryParams, body) {
 
     if (!postRecord[url]) {
-        postRecord[url] = Date.now()
-    } else if (Date.now() - postRecord[url] < 10 * 1000) {
-        Notification.warning({
-            title: "系统",
-            message: "你单身多久了? 动作这么快, 系统处理不过来 ( T_T )",
-            duration: 3000,
-            position: "bottom-right"
-        })
-        return new Promise((reslove, reject) => {
-            reject()
-        })
-    } else {
-        postRecord[url] = Date.now()
+        postRecord[url] = {
+            lastest:  Date.now(),
+            count: 0
+        }
+        // 60 秒内发送评论超过10条
+    } else if (Date.now() - postRecord[url].lastest < 60 * 1000) {
+
+        if (postRecord[url].count >= 6){
+            Notification.warning({
+                title: "系统",
+                message: "你单身多久了? 动作这么快, 系统处理不过来 ( T_T )",
+                duration: 3000,
+                position: "bottom-right"
+            })
+            return new Promise((reslove, reject) => {
+                reject()
+            })
+        }else{
+            postRecord[url].count = postRecord[url].count + 1
+        }
+      
+    } else if (Date.now() - postRecord[url].lastest > 60 * 1000){
+        postRecord[url] = {
+            lastest:  Date.now(),
+            count: 0
+        }
     }
     let options = {
         "method": "POST",

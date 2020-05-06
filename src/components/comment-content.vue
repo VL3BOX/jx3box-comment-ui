@@ -18,10 +18,8 @@
           size="mini"
         >{{dataFormat(date)}}</el-button>
       </div>
-      
     </div>
-    <div v-if="showForm">
-      <el-form ref="form" :model="newComment">
+      <el-form v-if="showForm" ref="form" :model="newComment" style="margin-top:10px">
         <el-form-item>
           <el-input type="textarea" v-model="newComment.content"></el-input>
         </el-form-item>
@@ -30,7 +28,6 @@
           <el-button size="mini" type="text" @click="showForm = false">收起</el-button>
         </el-form-item>
       </el-form>
-    </div>
   </div>
 </template>
 
