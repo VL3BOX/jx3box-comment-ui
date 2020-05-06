@@ -1,0 +1,29 @@
+{
+  "name": "dist",
+  "version": "1.0",
+  "dependencies": {},
+  "silky-version": "2.7.0-rc7",
+  "silky-plugin": {
+    "sp-proxy": {
+      "from": ["^/p", "^/api"],
+      "attribute": "i",
+      "to": "http://api.jx3box.com" 
+    }
+  },
+  "silky": {
+    "port": 14422,
+    "index": "index.html",
+    "autoindex": true
+  },
+  "silky-pubPath": "node_modules",
+  "silky-build": {
+    "outdir": "./build",
+    "ignore": [
+      "node_modules",
+      "(\\/\\.[^/]+)$"
+    ]
+  },
+  "devDependencies": {
+    "sp-proxy": "1.0.1"
+  }
+}

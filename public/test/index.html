@@ -1,0 +1,22 @@
+<meta charset="utf-8">
+<title>comment demo</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jx3box/jx3box-common/css/element.css" />
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/element-ui@2.13.0/lib/index.js"></script>
+<script src="./comment.umd.js"></script>
+
+<link rel="stylesheet" href="./comment.css">
+
+
+<div id="app">
+  <demo post-id=100></demo>
+</div>
+
+<script>
+new Vue({
+  components: {
+    demo: comment
+  }
+}).$mount('#app')
+</script>

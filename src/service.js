@@ -1,4 +1,4 @@
-import { Notification } from 'element-ui';
+//import { Notification } from 'element-ui';
 import { JX3BOX } from "@jx3box/jx3box-common"
 export const GET = function (url, queryParams) {
     let options = {
@@ -68,7 +68,7 @@ export const DELETE = function (url, queryParams) {
 }
 
 function __fetch(url, queryParams, options) {
-    let domain = "/" //JX3BOX.__api
+    let domain = "/" //process.env.NODE_ENV == "production" ? JX3BOX.__api : "/"
     if(domain[domain.length-1] == "/"){
         domain = domain.substring(0, domain.length-1)
     }
