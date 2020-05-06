@@ -9,37 +9,36 @@
           type="text"
           icon="el-icon-delete"
           size="mini"
+          @click="deleteComment()"
         >删除</el-button>
 
-        <el-button
-          type="text"
-          icon="el-icon-time"
-          disabled
-          size="mini"
-        >{{dataFormat(date)}}</el-button>
+        <el-button type="text" icon="el-icon-time" disabled size="mini">{{dataFormat(date)}}</el-button>
       </div>
     </div>
-      <el-form v-if="showForm" ref="form" :model="newComment" style="margin-top:10px">
-        <el-form-item>
-          <el-input type="textarea" v-model="newComment.content"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button size="mini" type="primary" @click="submit()">提交</el-button>
-          <el-button size="mini" type="text" @click="showForm = false">收起</el-button>
-        </el-form-item>
-      </el-form>
+    <el-form v-if="showForm" ref="form" :model="newComment" style="margin-top:10px">
+      <el-form-item>
+        <el-input type="textarea" v-model="newComment.content"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button size="mini" type="primary" @click="submit()">提交</el-button>
+        <el-button size="mini" type="text" @click="showForm = false">收起</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
 
 <script>
 import { POST } from "../service";
-function fillZero(num){
-  return num  > 9 ? num  : `0${num}`
+function fillZero(num) {
+  return num > 9 ? num : `0${num}`;
 }
 export default {
   props: ["postId", "commentId", "content", "date", "hasReply", "canDelete"],
   methods: {
+    deleteComment() {
+      this.$emit("deteleComment", this.commentId);
+    },
     dataFormat(str) {
       let d = new Date(str);
       return (
@@ -51,7 +50,7 @@ export default {
         " " +
         fillZero(d.getHours()) +
         ":" +
-        fillZero( d.getMinutes()) +
+        fillZero(d.getMinutes()) +
         ":" +
         fillZero(d.getSeconds())
       );
@@ -60,7 +59,7 @@ export default {
       POST(`/api/post/${this.postId}/comment/${this.commentId}/reply`, null, {
         content: this.newComment.content
       })
-        .then(data => {
+        .then(() => {
           this.$notify({
             title: "",
             message: "评论成功!",
@@ -69,7 +68,7 @@ export default {
             position: "bottom-right"
           });
           this.newComment = {};
-          this.$emit("addNewComment", data);
+          this.$emit("addNewComment");
         })
         .catch(() => {});
     },

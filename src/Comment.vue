@@ -3,13 +3,22 @@
     <el-main>
       <el-form ref="form" :model="newComment">
         <el-form-item>
-          <el-input type="textarea" v-model="newComment.content"></el-input>
+          <el-input
+            rows="3"
+            type="textarea"
+            maxlength="300"
+            show-word-limit
+            v-model="newComment.content"
+            placeholder="参与讨论..."
+          ></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">发表评论</el-button>
         </el-form-item>
       </el-form>
-      <el-divider></el-divider>
+      <div
+        style="display: block; height: 1px; width: 100%; margin: 12px 0; background-color: #DCDFE6; position: relative;"
+      ></div>
       <div v-for="item in commentList" :key="item.comment.id">
         <el-row>
           <el-col :span="2">
@@ -21,30 +30,58 @@
             />
           </el-col>
           <el-col :span="22">
-            <CommmentWithReply :item="item" :post-id="postId" :power="commentPower" />
+            <CommmentWithReply
+              :item="item"
+              :post-id="postId"
+              :power="commentPower"
+              @deteleComment="deteleComment"
+            />
           </el-col>
         </el-row>
-        <el-divider></el-divider>
+        <div
+          style="display: block; height: 1px; width: 100%; margin: 8px 0px 20px 0px; background-color: #DCDFE6; position: relative;"
+        ></div>
       </div>
+
+      <el-row>
+        <el-col :span="12">
+          <el-form :inline="true" :model="newComment">
+            <el-form-item>
+              <el-input
+                show-word-limit
+                v-model="newComment.content"
+                placeholder="参与讨论"
+                style="width:360px"
+              ></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit">提交</el-button>
+            </el-form-item>
+          </el-form>
+        </el-col>
+        <el-col :span="12">
+          <el-pagination
+            style="text-align:right"
+            background
+            hide-on-single-page
+            @current-change="handleCurrentChange"
+            :current-page.sync="pager.index"
+            :page-size="pager.pageSize"
+            layout="prev, pager, next, total"
+            :total="pager.total"
+          ></el-pagination>
+        </el-col>
+      </el-row>
     </el-main>
-    <el-footer>
-      <el-pagination
-        background
-        @current-change="handleCurrentChange"
-        :current-page.sync="pager.index"
-        :page-size="pager.pageSize"
-        layout="total, prev, pager, next"
-        :total="pager.total"
-      ></el-pagination>
-    </el-footer>
+    <el-footer></el-footer>
   </el-container>
 </template>
 
 <script>
-import { JX3BOX,Utils } from "@jx3box/jx3box-common";
+import { JX3BOX, Utils } from "@jx3box/jx3box-common";
 import Avatar from "./components/avatar.vue";
 import CommmentWithReply from "./components/comment-with-reply.vue";
-import { GET, POST } from "./service";
+import { GET, POST, DELETE } from "./service";
 export default {
   name: "Comment",
   props: ["postId"],
@@ -54,7 +91,7 @@ export default {
   },
   data: function() {
     return {
-      commentPower:{
+      commentPower: {
         allow: false,
         uid: -1
       },
@@ -71,6 +108,20 @@ export default {
     };
   },
   methods: {
+    deteleComment(id) {
+      DELETE(`/api/post/${this.postId}/comment/${id}`)
+        .then(() => {
+          this.$notify({
+            title: "",
+            message: "删除成功!",
+            type: "success",
+            duration: 3000,
+            position: "bottom-right"
+          });
+          this.reloadCommentList(this.pager.index);
+        })
+        .catch(() => {});
+    },
     reloadCommentList(index) {
       GET(`/api/post/${this.postId}/comment/page/${index}`)
         .then(resp => {
@@ -107,10 +158,12 @@ export default {
   },
 
   mounted() {
-    GET(`/api/post/${this.postId}/can-i-delete-comment`).then((power)=>{
-      this.commentPower = power
-      this.reloadCommentList(1);
-    }).catch(()=>{})
+    this.reloadCommentList(1);
+    GET(`/api/post/${this.postId}/can-i-delete-comment`)
+      .then(power => {
+        this.commentPower = power;
+      })
+      .catch(() => {});
   }
 };
 </script>

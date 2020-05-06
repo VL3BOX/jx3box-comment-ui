@@ -5,8 +5,9 @@
       :comment-id="item.comment.id"
       :date="item.comment.commentDate"
       :content="item.comment.content"
-      :can-delete="power.allow || power.uid == item.comment.userId"
+      :can-delete="power.allow || power.uid == item.user.id"
       @addNewComment="refreshReply"
+      @deteleComment="deteleComment"
     />
     <ReplyList
       :post-id="postId"
@@ -29,8 +30,11 @@ export default {
     ReplyList
   },
   methods: {
-    refreshReply(item) {
-      this.$refs.replyList.$emit("refresh", item);
+    deteleComment(id) {
+      this.$emit("deteleComment", id);
+    },
+    refreshReply() {
+      this.$refs.replyList.$emit("refresh");
     }
   }
 };

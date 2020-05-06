@@ -1,12 +1,15 @@
 <template>
   <div>
-    <el-divider v-if="replyList.length"></el-divider>
+    <div
+      v-if="replyList.length"
+      style="display: block; height: 1px; width: 100%; margin: 12px 0; background-color: #DCDFE6; position: relative;"
+    ></div>
     <el-row
       v-for="(reply, __index) in replyList"
       :key="reply.comment.id"
       :style="getStyle(__index)"
     >
-      <el-col :span="1">
+      <el-col :span="2">
         <Avatar
           :avatar-size="34"
           :user-avatar="showAvatar(reply.user.avatar)"
@@ -14,13 +17,14 @@
           :username="reply.user.displayName"
         />
       </el-col>
-      <el-col :span="23">
+      <el-col :span="22">
         <CommentContentSimple
           :post-id="postId"
           :comment-id="reply.comment.id"
           :date="reply.comment.commentDate"
           :content="reply.comment.content"
           :can-delete="power.allow || power.uid == reply.user.id"
+          @deleteReply="deleteReply"
         />
       </el-col>
     </el-row>
@@ -39,7 +43,6 @@
           layout="total, prev, pager, next"
           :total="pager.total"
         ></el-pagination>
-
       </el-col>
     </el-row>
   </div>
@@ -47,7 +50,7 @@
 
 <script>
 import { JX3BOX, Utils } from "@jx3box/jx3box-common";
-import { GET } from "../service";
+import { GET, DELETE } from "../service";
 import CommentContentSimple from "./comment-content-simple.vue";
 import Avatar from "./avatar.vue";
 export default {
@@ -74,20 +77,22 @@ export default {
   mounted() {
     this.backReplyList = this.originReplyList || [];
     this.replyList = this.backReplyList;
-    this.$on("refresh", ()=> {
+    this.$on("refresh", () => {
       if (this.showPager) {
         this.loadCommentList(this.pager.index);
       } else if (this.replyList.length < 3) {
-        this.loadCommentList(1, 3)
+        this.loadCommentList(1, 3);
       }
     });
   },
   methods: {
-    getStyle(index){
-      return  index % 2 == 1 ? {
-        backgroundColor: "#f8f8f8",
-        padding: "10px"
-      }: {padding: "10px"}
+    getStyle(index) {
+      return index % 2 == 1
+        ? {
+            backgroundColor: "#f8f8f8",
+            padding: "10px 10px 0px 10px"
+          }
+        : { padding: "10px 10px 0px 10px" };
     },
     showAvatar: Utils.showAvatar,
     showMore() {
@@ -101,16 +106,35 @@ export default {
     handleCurrentChange(gotoIndex) {
       this.loadCommentList(gotoIndex);
     },
+    deleteReply(id) {
+      DELETE(`/api/post/${this.postId}/comment/${id}`)
+        .then(() => {
+          this.$notify({
+            title: "",
+            message: "删除成功!",
+            type: "success",
+            duration: 3000,
+            position: "bottom-right"
+          });
+
+          if (this.showPager) {
+            this.loadCommentList(this.pager.index);
+          } else {
+            this.loadCommentList(this.pager.index, 3);
+          }
+        })
+        .catch(() => {});
+    },
     loadCommentList(index, pageSize) {
-      if(!pageSize){
-        pageSize = 6
+      if (!pageSize) {
+        pageSize = 6;
       }
       GET(
         `/api/post/${this.postId}/comment/${this.commentId}/reply/page/${index}?pageSize=${pageSize}`
       )
         .then(resp => {
-          if(index == 1&&pageSize == 3){
-            this.backReplyList = resp.data
+          if (index == 1 && pageSize == 3) {
+            this.backReplyList = resp.data;
           }
           this.replyList = resp.data;
           this.pager = resp.page;
