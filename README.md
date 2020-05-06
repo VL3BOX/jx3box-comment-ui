@@ -23,7 +23,11 @@ Vue.use(Comments)
 
 ## 本地开发
 
-将`package.json`里的代理配置改为
+```
+yarn install
+```
+
+然后 将`package.json`里的代理配置改为
 
 ```
 "vue": {
@@ -37,4 +41,9 @@ Vue.use(Comments)
 }
 ```
 
-即可使用线上数据库。 【注意 cookie中需要加入有效token】
+即可使用线上数据。 【注意 cookie中需要加入有效token】
+
+
+```
+yarn serve
+```
