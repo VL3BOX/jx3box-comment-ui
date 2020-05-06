@@ -3,7 +3,7 @@
     "version": "0.1.6",
     "scripts": {
         "serve": "vue-cli-service serve",
-        "build": "vue-cli-service build --target lib --name comment src/Comment.vue",
+        "build": "vue-cli-service build --target lib --name comment src/Comment.vue && cp index.html dist/demo.html",
         "lint": "vue-cli-service lint"
     },
     "main": "index.js",

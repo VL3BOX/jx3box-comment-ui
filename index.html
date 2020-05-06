@@ -6,17 +6,14 @@
 <script src="https://cdn.jsdelivr.net/npm/element-ui@2.13.0/lib/index.js"></script>
 <script src="./comment.umd.js"></script>
 
-<link rel="stylesheet" href="./comment.css">
-
-
 <div id="app">
   <demo post-id=100></demo>
 </div>
 
 <script>
-new Vue({
-  components: {
-    demo: comment
-  }
-}).$mount('#app')
+  new Vue({
+    components: {
+      demo: comment
+    }
+  }).$mount('#app')
 </script>
