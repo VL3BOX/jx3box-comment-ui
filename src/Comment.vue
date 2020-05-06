@@ -15,9 +15,9 @@
           <el-col :span="2">
             <Avatar
               :avatar-size="68"
-              :user-avatar="defautlAvatar"
-              :user-href="profileLink + item.comment.userId"
-              :username="item.comment.author"
+              :user-avatar="showAvatar(item.user.avatar)"
+              :user-href="profileLink + item.user.id"
+              :username="item.user.displayName"
             />
           </el-col>
           <el-col :span="22">
@@ -59,7 +59,7 @@ export default {
         uid: -1
       },
       commentList: [],
-      defautlAvatar: Utils.showAvatar(),
+      showAvatar: Utils.showAvatar,
       profileLink: JX3BOX.__Links.author + "",
       newComment: {},
       pager: {
