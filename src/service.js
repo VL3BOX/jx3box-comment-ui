@@ -1,5 +1,14 @@
 //import { Notification } from 'element-ui';
 import { JX3BOX } from "@jx3box/jx3box-common"
+import Vue from "vue"
+var Notification = null
+
+if (process.env.NODE_ENV == "production") {
+    Notification = Vue.prototype.$notify
+} else {
+    Notification = require("element-ui").Notification
+}
+
 export const GET = function (url, queryParams) {
     let options = {
         "method": "GET",
@@ -18,13 +27,13 @@ export const POST = function (url, queryParams, body) {
 
     if (!postRecord[url]) {
         postRecord[url] = {
-            lastest:  Date.now(),
+            lastest: Date.now(),
             count: 0
         }
         // 60 秒内发送评论超过10条
     } else if (Date.now() - postRecord[url].lastest < 60 * 1000) {
 
-        if (postRecord[url].count >= 6){
+        if (postRecord[url].count >= 6) {
             Notification.warning({
                 title: "系统",
                 message: "你单身多久了? 动作这么快, 系统处理不过来 ( T_T )",
@@ -34,13 +43,13 @@ export const POST = function (url, queryParams, body) {
             return new Promise((reslove, reject) => {
                 reject()
             })
-        }else{
+        } else {
             postRecord[url].count = postRecord[url].count + 1
         }
-      
-    } else if (Date.now() - postRecord[url].lastest > 60 * 1000){
+
+    } else if (Date.now() - postRecord[url].lastest > 60 * 1000) {
         postRecord[url] = {
-            lastest:  Date.now(),
+            lastest: Date.now(),
             count: 0
         }
     }
@@ -68,9 +77,9 @@ export const DELETE = function (url, queryParams) {
 }
 
 function __fetch(url, queryParams, options) {
-    let domain = "/" //process.env.NODE_ENV == "production" ? JX3BOX.__api : "/"
-    if(domain[domain.length-1] == "/"){
-        domain = domain.substring(0, domain.length-1)
+    let domain = process.env.NODE_ENV == "production" ? JX3BOX.__api : "/"
+    if (domain[domain.length - 1] == "/") {
+        domain = domain.substring(0, domain.length - 1)
     }
     url = domain + url
     if (queryParams) {
@@ -79,8 +88,8 @@ function __fetch(url, queryParams, options) {
             queryQueue.push(key + "=" + queryParams[key])
         })
         let domain = JX3BOX.__api
-        if(domain[domain.length-1] == "/"){
-            domain = domain.substring(0, domain.length-1)
+        if (domain[domain.length - 1] == "/") {
+            domain = domain.substring(0, domain.length - 1)
         }
         url = url + "?" + queryQueue.join("&")
     }

@@ -9,7 +9,7 @@ yarn add @jx3box/jx3box-comment-ui
 npm install @jx3box/jx3box-comment-ui
 ```
 
-## 使用
+## ES6使用
 
 
 ```javascript
@@ -21,44 +21,22 @@ Vue.use(Comments)
 ```
 
 
+## 单个文件使用
+
+```
+yarn build
+```
+
+然后引入 `dist/comment.umd.min.js`即可. demo 见 `dist/demo.html`
+
+
 ## 本地开发
 
 ```
 yarn install
 ```
 
-然后 将`package.json`里的代理配置改为
-
-```
-"vue": {
-    "devServer": {
-        "proxy": {
-            "/api": {
-                "target": "https://api.jx3box.com"
-            }
-        }
-    }
-}
-```
-
-`service.js`：
-
-```
-将
-let domain = JX3BOX.__api
-if(domain[domain.length-1] == "/"){
-    domain = domain.substring(0, domain.length-1)
-}
-
-改为
-let domain = "/"
-
-```
-
-
-
-即可使用线上数据。 【注意 cookie中需要加入有效token】
-
+注意 cookie中需要加入有效token
 
 ```
 yarn serve
