@@ -41,6 +41,22 @@ yarn install
 }
 ```
 
+`service.js`：
+
+```
+将
+let domain = JX3BOX.__api
+if(domain[domain.length-1] == "/"){
+    domain = domain.substring(0, domain.length-1)
+}
+
+改为
+let domain = "/"
+
+```
+
+
+
 即可使用线上数据。 【注意 cookie中需要加入有效token】
 
 
