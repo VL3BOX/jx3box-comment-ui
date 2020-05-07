@@ -41,3 +41,10 @@ yarn install
 ```
 yarn serve
 ```
+
+## 旧版线上引用
+对gh-pages发布release
+```html
+<script src="https://cdn.jsdelivr.net/gh/JX3BOX/jx3box-comment-ui@1.0.0/comment.umd.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/JX3BOX/jx3box-comment-ui@1.0.0/comment.css" />
+```
