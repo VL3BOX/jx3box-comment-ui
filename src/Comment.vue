@@ -42,8 +42,7 @@
           style="display: block; height: 1px; width: 100%; margin: 8px 0px 20px 0px; background-color: #DCDFE6; position: relative;"
         ></div>
       </div>
-
-      <el-row>
+      <el-row v-if="commentList.length > 5">
         <el-col :span="12">
           <el-form :inline="true" :model="newComment">
             <el-form-item>

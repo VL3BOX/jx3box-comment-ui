@@ -1,6 +1,6 @@
 {
     "name": "@jx3box/jx3box-comment-ui",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "scripts": {
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build --target lib --name comment src/Comment.vue && cp index.html dist/demo.html",
