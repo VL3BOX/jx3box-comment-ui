@@ -67,21 +67,17 @@ export const POST = function (url, queryParams, body) {
 
 export const DELETE = function (url, queryParams) {
     let options = {
-        "method": "DELETE",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
+        "method": "DELETE"
     }
     return __fetch(url, queryParams, options)
 }
 
 function __fetch(url, queryParams, options) {
-    let domain = process.env.NODE_ENV == "production" ? JX3BOX.__api : "/"
-    if (domain[domain.length - 1] == "/") {
-        domain = domain.substring(0, domain.length - 1)
-    }
-    url = domain + url
+    // let domain = process.env.NODE_ENV == "production" ? JX3BOX.__api : "/"
+    // if (domain[domain.length - 1] == "/") {
+    //     domain = domain.substring(0, domain.length - 1)
+    // }
+    // url = domain + url
     if (queryParams) {
         let queryQueue = []
         Object.keys(queryParams).forEach((key) => {
