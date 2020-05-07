@@ -73,11 +73,12 @@ export const DELETE = function (url, queryParams) {
 }
 
 function __fetch(url, queryParams, options) {
-    // let domain = process.env.NODE_ENV == "production" ? JX3BOX.__api : "/"
-    // if (domain[domain.length - 1] == "/") {
-    //     domain = domain.substring(0, domain.length - 1)
-    // }
-    // url = domain + url
+    let domain = process.env.NODE_ENV == "production" ? JX3BOX.__api : "/"
+    if (domain[domain.length - 1] == "/") {
+        domain = domain.substring(0, domain.length - 1)
+    }
+    url = domain + url
+    options.credentials = 'include'
     if (queryParams) {
         let queryQueue = []
         Object.keys(queryParams).forEach((key) => {
