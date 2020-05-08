@@ -116,6 +116,7 @@ export default {
         padding:10px;
         .u-text{
             padding-bottom:20px;
+            line-height: 1.715;
         }
     }
     .c-comment-subbox{

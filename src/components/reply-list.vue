@@ -2,8 +2,6 @@
   <div class="c-comment-replylist" v-if="replyList.length">
     <el-row class="c-comment-reply" v-for="reply in replyList" :key="reply.comment.id">
       <Avatar
-        class="u-avatar"
-        :avatar-size="34"
         :user-avatar="showAvatar(reply.user.avatar)"
         :user-href="profileLink + reply.user.id"
         :username="reply.user.displayName"
@@ -136,22 +134,31 @@ export default {
   border-bottom: 1px dotted #eee;
   padding-bottom: 10px;
   margin-bottom: 10px;
-  display: flex;
 
   .c-comment-avatar {
-    width: 40px;
     margin-right: 10px;
+    width:auto;
+  }
+  .u-avatar {
+    float: left;
+  }
+  .u-avatar-pic{
+    width: 28px;
+    height: 28px;
+    margin-right:10px;
   }
 
   .u-name {
     font-size: 12px;
+    line-height:28px;
     padding: 0 !important;
-    color: #999;
+    display: inline;
+    white-space:nowrap;
   }
 
   .u-reply {
     padding: 5px;
-    flex-grow: 1;
+    line-height: 1.715;
   }
 }
 .c-comment-reply-pages {

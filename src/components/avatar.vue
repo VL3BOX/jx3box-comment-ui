@@ -27,7 +27,9 @@ export default {
 
 <style lang="less">
 .c-comment-avatar {
-    width:68px;
+    vertical-align: top;
+    margin-right: 20px;
+    width: 68px;
     a:hover {
         &:after {
             display: none;
@@ -38,16 +40,27 @@ export default {
     }
     .u-avatar-pic {
         display: block;
-        margin: 5px auto;
+        background-color: #fff;
+        width: 48px;
+        height: 48px;
+        margin-left:auto;
+        margin-right:auto;
     }
     .u-name {
         display: block;
         text-align: center;
-        white-space: nowrap;
         overflow: hidden;
-        width:100%;
-        padding:5px 0;
-        font-size:14px;
+        width: 100%;
+        padding: 5px 0;
+        font-size: 12px;
+        word-break: break-all;
+        line-height: 1.4;
+    }
+}
+@media screen and (max-width: 767px) {
+    .c-comment-avatar {
+        width:48px;
+        margin-right: 10px;
     }
 }
 </style>

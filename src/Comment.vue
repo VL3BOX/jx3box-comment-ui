@@ -19,7 +19,6 @@
 
       <div v-for="item in commentList" :key="item.comment.id" class="c-comment-list">
         <Avatar
-          :avatar-size="68"
           :user-avatar="showAvatar(item.user.avatar)"
           :user-href="profileLink + item.user.id"
           :username="item.user.displayName"
@@ -171,11 +170,6 @@ export default {
   margin-bottom: 10px;
   border-bottom: 1px solid #eee;
   display: flex;
-}
-.c-comment-avatar {
-  vertical-align: top;
-  margin-right: 20px;
-  width: 68px;
 }
 .c-comment-cmt {
   flex-grow: 1;
