@@ -7,7 +7,6 @@
         :username="reply.user.displayName"
       />
       <CommentContentSimple
-        class="u-reply"
         :post-id="postId"
         :comment-id="reply.comment.id"
         :date="reply.comment.commentDate"
@@ -127,11 +126,11 @@ export default {
 
 <style lang="less">
 .c-comment-replylist {
-  padding: 10px;
+  padding: 10px 0;
   border-top: 1px dashed #eee;
 }
 .c-comment-reply {
-  border-bottom: 1px dotted #eee;
+  border-bottom: 1px dashed #eee;
   padding-bottom: 10px;
   margin-bottom: 10px;
 

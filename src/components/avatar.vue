@@ -9,7 +9,7 @@
                 :src="userAvatar"
             ></el-avatar
         ></el-link>
-        <el-link
+        <el-link 
             class="u-name"
             type="primary"
             target="_blank"
@@ -47,7 +47,7 @@ export default {
         margin-right:auto;
     }
     .u-name {
-        display: block;
+        display: none;
         text-align: center;
         overflow: hidden;
         width: 100%;

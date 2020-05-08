@@ -1,32 +1,30 @@
 <template>
     <div class="u-cmt">
         <div class="u-text">{{ content }}</div>
-        <div class="u-toolbar">
+        <div class="u-action">
             <el-button
+                class="u-action-reply"
                 size="mini"
                 round
                 icon="el-icon-chat-round"
                 @click="showForm = true"
                 >回复</el-button
             >
-            <div style="float:right">
-                <el-button
-                    v-if="canDelete"
-                    type="text"
-                    icon="el-icon-delete"
-                    size="mini"
-                    @click="deleteComment()"
-                    >删除</el-button
-                >
+        </div>
 
-                <el-button
-                    type="text"
-                    icon="el-icon-time"
-                    disabled
-                    size="mini"
-                    >{{ dataFormat(date) }}</el-button
-                >
-            </div>
+        <div class="u-toolbar">
+            <el-button
+                class="u-admin"
+                v-if="canDelete"
+                type="text"
+                icon="el-icon-delete"
+                size="mini"
+                @click="deleteComment()"
+                >删除</el-button
+            >
+            <time class="u-date"
+                ><i class="el-icon-time"></i>{{ dataFormat(date) }}</time
+            >
         </div>
         <el-form
             v-if="showForm"
@@ -112,14 +110,44 @@ export default {
 </script>
 
 <style lang="less">
-    .u-cmt{
-        padding:10px;
-        .u-text{
-            padding-bottom:20px;
-            line-height: 1.715;
+.c-comment-cmt {
+    flex-grow: 1;
+    position: relative;
+    .u-toolbar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 12px;
+    }
+    .u-date {
+        color: #c0c4cc;
+        i {
+            margin-right: 5px;
         }
     }
-    .c-comment-subbox{
-        margin-top:10px;
+    .u-admin {
+        margin-right: 10px;
     }
+    .u-cmt {
+        padding: 5px 0 10px 0;
+        .u-text {
+            line-height: 1.715;
+        }
+        .u-action{
+            margin-top:10px;
+        }
+    }
+}
+@media screen and (max-width:767px){
+    .c-comment-cmt{
+        .u-toolbar{
+            position: static;
+            margin-top:10px;
+        }
+    }
+}
+
+.c-comment-subbox {
+    margin-top: 10px;
+}
 </style>

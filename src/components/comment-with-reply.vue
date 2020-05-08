@@ -1,5 +1,12 @@
 <template>
     <div class="c-comment-cmt">
+        <el-link
+            class="u-name"
+            type="primary"
+            target="_blank"
+            :href="userHref"
+            >{{ username || '人字榜800线无名小侠' }}</el-link
+        >
         <CommentContent
             :post-id="postId"
             :comment-id="item.comment.id"
@@ -24,7 +31,7 @@ import CommentContent from "./comment-content.vue";
 import ReplyList from "./reply-list.vue";
 
 export default {
-    props: ["item", "postId", "power"],
+    props: ["item", "postId", "power", "user-href", "username"],
     components: {
         CommentContent,
         ReplyList,
