@@ -19,12 +19,12 @@ jobs:
           npm run build
 
       - name: Github Pages
-        uses: JamesIves/github-pages-deploy-action@master
-        env:
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
           FOLDER: dist
-          CLEAN: true
+          CLEAN: false
           CLEAN_EXCLUDE: '["css", "js"]'
 
       - name: OSS
@@ -33,6 +33,7 @@ jobs:
           endpoint: "oss-cn-hangzhou.aliyuncs.com"
           access-key-id: ${{secrets.AccessKey_ID}}
           access-key-secret: ${{secrets.Access_Key_Secret}}
+      - run: ossutil cp -rf dist oss://jx3box-www/comment
       - run: ossutil cp -rf dist oss://jx3box/static/comment
 
   publish-npm:
@@ -58,7 +59,7 @@ jobs:
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
-          scope: '@jx3box'
+          scope: "@jx3box"
       # - run: npm ci
       - run: npm publish
         env:

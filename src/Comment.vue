@@ -96,7 +96,7 @@ export default {
             },
             commentList: [],
             showAvatar: Utils.showAvatar,
-            profileLink: JX3BOX.__Links.author + "",
+            profileLink: JX3BOX.__Links.author + "/?uid=",
             newComment: {},
             pager: {
                 index: 1,
