@@ -29,7 +29,7 @@ export default {
 .c-comment-avatar {
     vertical-align: top;
     margin-right: 20px;
-    width: 68px;
+    width: 48px;
     a:hover {
         &:after {
             display: none;
@@ -43,8 +43,6 @@ export default {
         background-color: #fff;
         width: 48px;
         height: 48px;
-        margin-left:auto;
-        margin-right:auto;
     }
     .u-name {
         display: none;
@@ -59,7 +57,6 @@ export default {
 }
 @media screen and (max-width: 767px) {
     .c-comment-avatar {
-        width:48px;
         margin-right: 10px;
     }
 }
