@@ -166,6 +166,9 @@ export default {
 </script>
 
 <style lang="less">
+.c-comment .el-main{
+    padding:0;
+}
 .c-comment-box {
     margin: 12px 0;
     border-bottom: 1px solid #eee;
