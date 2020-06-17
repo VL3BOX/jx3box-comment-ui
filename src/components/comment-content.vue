@@ -132,6 +132,7 @@ export default {
         padding: 5px 0 10px 0;
         .u-text {
             line-height: 1.715;
+            white-space: pre-wrap;
         }
         .u-action{
             margin-top:10px;
