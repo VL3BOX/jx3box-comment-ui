@@ -7,34 +7,34 @@ on: [push]
 #     types: [created]
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@master
+  # build-and-deploy:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@master
 
-      - name: Install && Build
-        run: |
-          npm install
-          npm run build
+  #     - name: Install && Build
+  #       run: |
+  #         npm install
+  #         npm run build
 
-      - name: Github Pages
-        uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: dist
-          CLEAN: false
-          CLEAN_EXCLUDE: '["css", "js"]'
+  #     - name: Github Pages
+  #       uses: JamesIves/github-pages-deploy-action@releases/v3
+  #       with:
+  #         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+  #         BRANCH: gh-pages
+  #         FOLDER: dist
+  #         CLEAN: false
+  #         CLEAN_EXCLUDE: '["css", "js"]'
 
-      - name: OSS
-        uses: manyuanrong/setup-ossutil@v1.0
-        with:
-          endpoint: "oss-cn-hangzhou.aliyuncs.com"
-          access-key-id: ${{secrets.AccessKey_ID}}
-          access-key-secret: ${{secrets.Access_Key_Secret}}
-      - run: ossutil cp -rf dist oss://jx3box-www/comment
-      - run: ossutil cp -rf dist oss://jx3box/static/comment
+  #     - name: OSS
+  #       uses: manyuanrong/setup-ossutil@v1.0
+  #       with:
+  #         endpoint: "oss-cn-hangzhou.aliyuncs.com"
+  #         access-key-id: ${{secrets.AccessKey_ID}}
+  #         access-key-secret: ${{secrets.Access_Key_Secret}}
+  #     - run: ossutil cp -rf dist oss://jx3box-www/comment
+  #     - run: ossutil cp -rf dist oss://jx3box/static/comment
 
   publish-npm:
     # needs: build
