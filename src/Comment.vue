@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { JX3BOX, Utils } from "@jx3box/jx3box-common";
+import { Utils } from "@jx3box/jx3box-common";
 import Avatar from "./components/avatar.vue";
 import CommmentWithReply from "./components/comment-with-reply.vue";
 import { GET, POST, DELETE } from "./service";
