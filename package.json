@@ -9,7 +9,7 @@
     },
     "main": "index.js",
     "dependencies": {
-        "@jx3box/jx3box-common": "^1.6.0",
+        "@jx3box/jx3box-common": "^5.0.6",
         "core-js": "^3.6.4",
         "element-ui": "^2.13.1",
         "vue": "^2.6.11"

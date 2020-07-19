@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { JX3BOX, Utils } from "@jx3box/jx3box-common";
+import { Utils } from "@jx3box/jx3box-common";
 import { GET, DELETE } from "../service";
 import CommentContentSimple from "./comment-content-simple.vue";
 import Avatar from "./avatar.vue";
@@ -59,9 +59,9 @@ export default {
       showPager: false
     };
   },
-  filters : {
-    profileLink : function (uid){
-      return Utils.authorLink(uid)
+  filters: {
+    profileLink: function(uid) {
+      return Utils.authorLink(uid);
     }
   },
   mounted() {
