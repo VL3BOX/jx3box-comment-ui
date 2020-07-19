@@ -29,7 +29,7 @@
             >
                 <Avatar
                     :user-avatar="showAvatar(item.user.avatar)"
-                    :user-href="profileLink + item.user.id"
+                    :user-href="item.user.id | profileLink"
                     :username="item.user.displayName"
                 />
                 <CommmentWithReply
@@ -37,7 +37,7 @@
                     :post-id="postId"
                     :power="commentPower"
                     @deteleComment="deteleComment"
-                    :user-href="profileLink + item.user.id"
+                    :user-href="item.user.id | profileLink"
                     :username="item.user.displayName"
                 />
             </div>
@@ -96,7 +96,6 @@ export default {
             },
             commentList: [],
             showAvatar: Utils.showAvatar,
-            profileLink: JX3BOX.__Links.author + "?uid=",
             newComment: {},
             pager: {
                 index: 1,
@@ -153,7 +152,11 @@ export default {
                 .catch(() => {});
         },
     },
-
+    filters: {
+        profileLink: function(uid) {
+            return Utils.authorLink(uid);
+        },
+    },
     mounted() {
         this.reloadCommentList(1);
         GET(`/api/post/${this.postId}/can-i-delete-comment`)
@@ -166,8 +169,8 @@ export default {
 </script>
 
 <style lang="less">
-.c-comment .el-main{
-    padding:0;
+.c-comment .el-main {
+    padding: 0;
 }
 .c-comment-box {
     margin: 12px 0;

@@ -1,7 +1,7 @@
 <template>
     <div class="c-comment-avatar">
         <!-- TODO:头像框 -->
-        <el-link class="u-avatar" :href="userHref"
+        <el-link class="u-avatar" :href="userHref" target="_blank"
             ><el-avatar
                 class="u-avatar-pic"
                 shape="square"

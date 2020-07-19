@@ -3,7 +3,7 @@
     <el-row class="c-comment-reply" v-for="reply in replyList" :key="reply.comment.id">
       <Avatar
         :user-avatar="showAvatar(reply.user.avatar)"
-        :user-href="profileLink + reply.user.id"
+        :user-href="reply.user.id | profileLink"
         :username="reply.user.displayName"
       />
       <CommentContentSimple
@@ -49,9 +49,7 @@ export default {
   backReplyList: [],
   data: function() {
     return {
-      profileLink: JX3BOX.__Links.author,
       replyList: [],
-
       pager: {
         index: 1,
         pageSize: 10,
@@ -60,6 +58,11 @@ export default {
       },
       showPager: false
     };
+  },
+  filters : {
+    profileLink : function (uid){
+      return Utils.authorLink(uid)
+    }
   },
   mounted() {
     this.backReplyList = this.originReplyList || [];
@@ -136,23 +139,23 @@ export default {
 
   .c-comment-avatar {
     margin-right: 10px;
-    width:auto;
+    width: auto;
   }
   .u-avatar {
     float: left;
   }
-  .u-avatar-pic{
+  .u-avatar-pic {
     width: 28px;
     height: 28px;
-    margin-right:10px;
+    margin-right: 10px;
   }
 
   .u-name {
     font-size: 12px;
-    line-height:28px;
+    line-height: 28px;
     padding: 0 !important;
     display: inline;
-    white-space:nowrap;
+    white-space: nowrap;
   }
 
   .u-reply {
