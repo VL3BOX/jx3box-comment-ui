@@ -1,17 +1,19 @@
 <template>
   <div class="c-comment-replylist" v-if="replyList.length">
-    <el-row class="c-comment-reply" v-for="reply in replyList" :key="reply.comment.id">
+    <el-row class="c-comment-reply" v-for="reply in replyList" :key="reply.id">
       <Avatar
-        :user-avatar="showAvatar(reply.user.avatar)"
-        :user-href="reply.user.id | profileLink"
-        :username="reply.user.displayName"
+        :user-avatar="showAvatar(reply.avatar)"
+        :user-href="reply.userId | profileLink"
+        :username="reply.displayName"
       />
       <CommentContentSimple
         :post-id="postId"
-        :comment-id="reply.comment.id"
-        :date="reply.comment.commentDate"
-        :content="reply.comment.content"
-        :can-delete="power.allow || power.uid == reply.user.id"
+        :comment-id="reply.id"
+        :date="reply.commentDate"
+        :content="reply.content"
+        :can-delete="power.allow || power.uid == reply.userId"
+        :can-reply="power.uid != reply.userId"
+        :userId="reply.userId"
         @deleteReply="deleteReply"
       />
     </el-row>
