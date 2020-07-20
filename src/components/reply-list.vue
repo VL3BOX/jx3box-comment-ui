@@ -1,22 +1,15 @@
 <template>
   <div class="c-comment-replylist" v-if="replyList.length">
-    <el-row class="c-comment-reply" v-for="reply in replyList" :key="reply.id">
-      <Avatar
-        :user-avatar="showAvatar(reply.avatar)"
-        :user-href="reply.userId | profileLink"
-        :username="reply.displayName"
-      />
-      <CommentContentSimple
-        :post-id="postId"
-        :comment-id="reply.id"
-        :date="reply.commentDate"
-        :content="reply.content"
-        :can-delete="power.allow || power.uid == reply.userId"
-        :can-reply="power.uid != reply.userId"
-        :userId="reply.userId"
-        @deleteReply="deleteReply"
-      />
-    </el-row>
+    <reply-item
+      class="c-comment-reply"
+      v-for="reply in replyList"
+      :key="reply.id"
+      :reply="reply"
+      :power="power"
+      @deleteReply="deleteReply"
+      @addReply="addReply"
+    />
+    <!-- 分页 -->
     <el-row>
       <el-col :span="1" v-if="replyList.length >= 3 || showPager">
         <el-button type="text" v-show="showPager" @click="showLess()">收起</el-button>
@@ -39,14 +32,12 @@
 
 <script>
 import { Utils } from "@jx3box/jx3box-common";
-import { GET, DELETE } from "../service";
-import CommentContentSimple from "./comment-content-simple.vue";
-import Avatar from "./avatar.vue";
+import { GET, DELETE, POST } from "../service";
+import ReplyItem from "./reply-item";
 export default {
   props: ["postId", "commentId", "originReplyList", "power"],
   components: {
-    Avatar,
-    CommentContentSimple
+    ReplyItem
   },
   backReplyList: [],
   data: function() {
@@ -71,9 +62,9 @@ export default {
     this.replyList = this.backReplyList;
     this.$on("refresh", () => {
       if (this.showPager) {
-        this.loadCommentList(this.pager.index);
+        this.loadReplyList(this.pager.index);
       } else {
-        this.loadCommentList(1, 3);
+        this.loadReplyList(1, 3);
       }
     });
   },
@@ -81,14 +72,14 @@ export default {
     showAvatar: Utils.showAvatar,
     showMore() {
       this.showPager = true;
-      this.loadCommentList(1);
+      this.loadReplyList(1);
     },
     showLess() {
       this.showPager = false;
       this.replyList = this.backReplyList;
     },
     handleCurrentChange(gotoIndex) {
-      this.loadCommentList(gotoIndex);
+      this.loadReplyList(gotoIndex);
     },
     deleteReply(id) {
       DELETE(`/api/post/${this.postId}/comment/${id}`)
@@ -102,14 +93,36 @@ export default {
           });
 
           if (this.showPager) {
-            this.loadCommentList(this.pager.index);
+            this.loadReplyList(this.pager.index);
           } else {
-            this.loadCommentList(this.pager.index, 3);
+            this.loadReplyList(this.pager.index, 3);
           }
         })
         .catch(() => {});
     },
-    loadCommentList(index, pageSize) {
+    addReply(data) {
+      POST(
+        `/api/post/${this.postId}/comment/${this.commentId}/reply`,
+        null,
+        data
+      )
+        .then(() => {
+          this.$notify({
+            title: "",
+            message: "评论成功!",
+            type: "success",
+            duration: 3000,
+            position: "bottom-right"
+          });
+          if (this.showPager) {
+            this.loadReplyList(this.pager.index);
+          } else {
+            this.loadReplyList(this.pager.index, 3);
+          }
+        })
+        .catch(() => {});
+    },
+    loadReplyList(index, pageSize) {
       if (!pageSize) {
         pageSize = 6;
       }
