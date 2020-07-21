@@ -24,8 +24,9 @@
           :username="item.displayName"
         />
         <CommmentWithReply
+          :base-api="baseAPI"
           :item="item"
-          :post-id="postId"
+          :category="category"
           :power="commentPower"
           @deteleComment="deteleComment"
           :user-href="item.userId | profileLink"
@@ -68,13 +69,14 @@ import CommmentWithReply from "./components/comment-with-reply.vue";
 import { GET, POST, DELETE } from "./service";
 export default {
   name: "Comment",
-  props: ["postId"],
+  props: ["id", "category"],
   components: {
     Avatar,
     CommmentWithReply
   },
   data: function() {
     return {
+      baseAPI: "",
       commentPower: {
         allow: false,
         uid: -1
@@ -92,7 +94,7 @@ export default {
   },
   methods: {
     deteleComment(id) {
-      DELETE(`/api/post/${this.postId}/comment/${id}`)
+      DELETE(`${this.baseAPI}/comment/${id}`)
         .then(() => {
           this.$notify({
             title: "",
@@ -106,7 +108,7 @@ export default {
         .catch(() => {});
     },
     reloadCommentList(index) {
-      GET(`/api/post/${this.postId}/comment/page/${index}`)
+      GET(`${this.baseAPI}/comment/page/${index}`)
         .then(resp => {
           this.commentList = resp.data || [];
           this.pager = resp.page;
@@ -117,7 +119,7 @@ export default {
       this.reloadCommentList(gotoIndex);
     },
     onSubmit() {
-      POST(`/api/post/${this.postId}/comment`, null, {
+      POST(`${this.baseAPI}/comment`, null, {
         content: this.newComment.content
       })
         .then(() => {
@@ -142,9 +144,13 @@ export default {
       return Utils.authorLink(uid);
     }
   },
+  created() {
+    this.baseAPI = `/api/comment/${this.category}/article/${this.id}`;
+  },
   mounted() {
     this.reloadCommentList(1);
-    GET(`/api/post/${this.postId}/can-i-delete-comment`)
+
+    GET(`${this.baseAPI}/i-am-author`)
       .then(power => {
         this.commentPower = power;
       })

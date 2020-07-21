@@ -1,5 +1,5 @@
 <template>
-  <Comment post-id="100" />
+  <Comment id="100" category="post" />
 </template>
 
 <script>

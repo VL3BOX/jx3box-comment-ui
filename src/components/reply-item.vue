@@ -66,6 +66,7 @@ export default {
       };
 
       this.$emit("addReply", data);
+      this.showReplyForReplyFrom = false;
     }
   }
 };
