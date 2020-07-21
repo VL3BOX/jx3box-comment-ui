@@ -21,8 +21,8 @@ Vue.use(Comments)
 
 // id 分类下的主键id, 比如　，如果该评论属于文章，那么id 应该为　文章的id, 如果该评论为试卷的评论，那么该id 应该为试卷的id
 // category 评论所属分类，比如　文章，试卷，试题，百科等．
-// 为了对消息通知有好， 一般消息wp_messages表中的sourceType需要什么就填什么，［文章除外，文章类型使用　'post', 服务器会进行处理，需要二次查询文章具体类别］
-//　比如对于试卷的评论组件，comments表中的sourceType需要的是 paper 那么　category="paper"
+// 为了对消息通知有好， 一般消息 wp_messages 表中的sourceType需要什么就填什么，［文章除外，文章类型使用　'post', 服务器会进行处理，需要二次查询文章具体类别］
+//　比如对于试卷的评论组件， wp_messages 表中的sourceType需要的是 paper 那么　category="paper"
 ```
 
 
