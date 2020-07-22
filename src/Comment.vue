@@ -11,9 +11,20 @@
             v-model="newComment.content"
             placeholder="参与讨论..."
           ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit" class="u-publish">发表评论</el-button>
+          <Uploader
+            ref="uploader"
+            @onFinish="attachmentUploadFinish"
+            @onError="attachmentUplodError"
+          />
+          <div class="u-toolbar">
+            <el-button class="u-admin" type="text" icon="el-icon-picture" size="mini">图片</el-button>
+            <el-button
+              type="primary"
+              @click="onSubmit"
+              class="u-publish"
+              :disabled="disableSubmitBtn"
+            >发表评论</el-button>
+          </div>
         </el-form-item>
       </el-form>
 
@@ -41,7 +52,7 @@
               <el-input show-word-limit v-model="newComment.content" placeholder="参与讨论"></el-input>
             </el-form-item>
             <el-form-item class="u-btn">
-              <el-button type="primary" @click="onSubmit">提交</el-button>
+              <el-button type="primary" @click="onSubmit" :disabled="disableSubmitBtn">提交</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -65,6 +76,7 @@
 <script>
 import { Utils } from "@jx3box/jx3box-common";
 import Avatar from "./components/avatar.vue";
+import Uploader from "./components/upload.vue";
 import CommmentWithReply from "./components/comment-with-reply.vue";
 import { GET, POST, DELETE } from "./service";
 export default {
@@ -72,10 +84,12 @@ export default {
   props: ["id", "category"],
   components: {
     Avatar,
+    Uploader,
     CommmentWithReply
   },
   data: function() {
     return {
+      disableSubmitBtn: false,
       baseAPI: "",
       commentPower: {
         allow: false,
@@ -119,8 +133,15 @@ export default {
       this.reloadCommentList(gotoIndex);
     },
     onSubmit() {
+      this.disableSubmitBtn = true;
+      this.$refs.uploader.upload();
+    },
+    // 文件上传完成后，进行数据提交
+    attachmentUploadFinish(data) {
+      this.disableSubmitBtn = false;
       POST(`${this.baseAPI}/comment`, null, {
-        content: this.newComment.content
+        content: this.newComment.content,
+        attachmentList: data.list || []
       })
         .then(() => {
           this.$notify({
@@ -137,6 +158,9 @@ export default {
           }
         })
         .catch(() => {});
+    },
+    attachmentUplodError() {
+      this.disableSubmitBtn = false;
     }
   },
   filters: {
@@ -171,6 +195,7 @@ export default {
   }
   .u-publish {
     float: right;
+    margin-top: 10px;
   }
 }
 
