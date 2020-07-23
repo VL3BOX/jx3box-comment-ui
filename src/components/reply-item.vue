@@ -11,6 +11,7 @@
       :comment-id="reply.id"
       :date="reply.commentDate"
       :content="reply.content"
+      :attachments="reply.attachments | stringToArray"
       :can-delete="power.allow || power.uid == reply.userId"
       :can-reply="power.uid != reply.userId"
       :user-href="reply.replyForUID | profileLink"
@@ -40,34 +41,36 @@ export default {
   components: {
     Avatar,
     CommentContentSimple,
-    ReplyForReply
+    ReplyForReply,
   },
   backReplyList: [],
-  data: function() {
+  data: function () {
     return {
-      showReplyForReplyFrom: false
+      showReplyForReplyFrom: false,
     };
   },
   filters: {
-    profileLink: function(uid) {
+    profileLink: function (uid) {
       return Utils.authorLink(uid);
-    }
+    },
+    stringToArray: function (str) {
+      if (!str) {
+        return [];
+      }
+      return JSON.parse(str);
+    },
   },
   methods: {
     showAvatar: Utils.showAvatar,
     deleteReply(id) {
       this.$emit("deleteReply", id);
     },
-    doReply(content) {
-      let data = {
-        content: content,
-        replyForUID: this.reply.userId,
-        replyForCommentId: this.reply.id
-      };
-
-      this.$emit("addReply", data);
+    doReply(replyData) {
+      (replyData.replyForUID = this.reply.userId),
+        (replyData.replyForCommentId = this.reply.id),
+        this.$emit("addReply", replyData);
       this.showReplyForReplyFrom = false;
-    }
-  }
+    },
+  },
 };
 </script>

@@ -9,6 +9,7 @@
     <CommentContent
       :date="item.commentDate"
       :content="item.content"
+      :attachments="item.attachments | stringToArray"
       :can-delete="power.allow || power.uid == item.userId"
       @addNewReply="addNewReply"
       @deteleComment="deteleComment"
@@ -33,18 +34,26 @@ export default {
   props: ["item", "baseApi", "power", "user-href", "username"],
   components: {
     CommentContent,
-    ReplyList
+    ReplyList,
   },
-  data: function() {
+  data: function () {
     return {
       replyList: [],
       pager: {
         index: 1,
         pageSize: 10,
         pageTotal: 1,
-        total: 0
-      }
+        total: 0,
+      },
     };
+  },
+  filters: {
+    stringToArray: function (str) {
+      if (!str) {
+        return [];
+      }
+      return JSON.parse(str);
+    },
   },
   created() {
     this.replyList = this.item.reply || [];
@@ -61,7 +70,7 @@ export default {
             message: "评论成功!",
             type: "success",
             duration: 3000,
-            position: "bottom-right"
+            position: "bottom-right",
           });
 
           this.loadReplyList(this.pager.index);
@@ -76,7 +85,7 @@ export default {
             message: "删除成功!",
             type: "success",
             duration: 3000,
-            position: "bottom-right"
+            position: "bottom-right",
           });
           this.loadReplyList(this.pager.index);
         })
@@ -89,7 +98,7 @@ export default {
       GET(
         `${this.baseApi}/comment/${this.item.id}/reply/page/${index}?pageSize=${pageSize}`
       )
-        .then(resp => {
+        .then((resp) => {
           if (index == 1 && pageSize == 3) {
             this.item.reply = resp.data || [];
           }
@@ -100,7 +109,7 @@ export default {
     },
     resetReply() {
       this.loadReplyList(1, 3);
-    }
-  }
+    },
+  },
 };
 </script>

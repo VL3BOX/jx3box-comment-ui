@@ -1,17 +1,23 @@
 <template>
   <div class="u-cmt">
-    <div class="u-text">{{ content }}</div>
-    <div class="u-action">
-      <el-button
-        class="u-action-reply"
-        size="mini"
-        round
-        icon="el-icon-chat-round"
-        @click="showForm = true"
-      >回复</el-button>
+    <div class="u-text" v-if="content != ''">{{ content }}</div>
+    <div class="u-attachements" v-if="attachments.length">
+      <el-image
+        v-for="url in attachments"
+        :key="url"
+        :src="url+'?x-oss-process=style/comment_thumb'"
+        :preview-src-list="attachments"
+        lazy
+      ></el-image>
     </div>
-
     <div class="u-toolbar">
+      <el-button
+        class="u-admin"
+        type="text"
+        size="mini"
+        icon="el-icon-chat-round"
+        @click="showForm = !showForm"
+      >回复</el-button>
       <el-button
         class="u-admin"
         v-if="canDelete"
@@ -28,9 +34,24 @@
     <el-form v-if="showForm" ref="form" :model="newComment" class="c-comment-subbox">
       <el-form-item>
         <el-input type="textarea" v-model="newComment.content"></el-input>
+        <el-button
+          class="u-admin"
+          type="text"
+          icon="el-icon-picture"
+          size="mini"
+          @click="showUploader = !showUploader"
+        >图片</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button size="mini" type="primary" @click="submit()">提交</el-button>
+        <Uploader
+          v-if="showUploader"
+          ref="uploader"
+          @onFinish="attachmentUploadFinish"
+          @onError="attachmentUplodError"
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-button size="mini" type="primary" @click="submit()" :disabled="disableSubmitBtn">提交</el-button>
         <el-button size="mini" type="text" @click="showForm = false">收起</el-button>
       </el-form-item>
     </el-form>
@@ -38,11 +59,24 @@
 </template>
 
 <script>
+import Uploader from "./upload.vue";
+
 function fillZero(num) {
   return num > 9 ? num : `0${num}`;
 }
 export default {
-  props: ["content", "date", "hasReply", "canDelete"],
+  props: ["content", "date", "hasReply", "canDelete", "attachments"],
+  components: {
+    Uploader,
+  },
+  data: function () {
+    return {
+      newComment: {},
+      showForm: false,
+      disableSubmitBtn: false,
+      showUploader: false,
+    };
+  },
   methods: {
     deleteComment() {
       this.$emit("deteleComment");
@@ -63,20 +97,30 @@ export default {
         fillZero(d.getSeconds())
       );
     },
-    submit() {
+
+    attachmentUploadFinish(data) {
+      this.disableSubmitBtn = false;
       this.$emit("addNewReply", {
-        content: this.newComment.content
+        content: this.newComment.content,
+        attachmentList: data,
       });
+      this.showUploader = false;
       this.newComment = {};
     },
-    hideForm() {}
+    attachmentUplodError() {
+      this.disableSubmitBtn = false;
+    },
+
+    submit() {
+      this.disableSubmitBtn = true;
+      if (this.$refs.uploader) {
+        this.$refs.uploader.upload();
+      } else {
+        this.attachmentUploadFinish([]);
+      }
+    },
+    hideForm() {},
   },
-  data: function() {
-    return {
-      newComment: {},
-      showForm: false
-    };
-  }
 };
 </script>
 
@@ -85,9 +129,6 @@ export default {
   flex-grow: 1;
   position: relative;
   .u-toolbar {
-    position: absolute;
-    top: 0;
-    right: 0;
     font-size: 12px;
   }
   .u-date {
@@ -108,6 +149,11 @@ export default {
     .u-action {
       margin-top: 10px;
     }
+    .u-attachements {
+      .el-image {
+        margin-left: 20px;
+      }
+    }
   }
 }
 @media screen and (max-width: 767px) {
@@ -121,5 +167,8 @@ export default {
 
 .c-comment-subbox {
   margin-top: 10px;
+  .el-form-item {
+    margin-bottom: 0px;
+  }
 }
 </style>

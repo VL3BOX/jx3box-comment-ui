@@ -12,12 +12,20 @@
             placeholder="参与讨论..."
           ></el-input>
           <Uploader
+            class="u-uploader"
             ref="uploader"
             @onFinish="attachmentUploadFinish"
             @onError="attachmentUplodError"
+            v-if="showUploader"
           />
           <div class="u-toolbar">
-            <el-button class="u-admin" type="text" icon="el-icon-picture" size="mini">图片</el-button>
+            <el-button
+              class="u-admin"
+              type="text"
+              icon="el-icon-picture"
+              size="mini"
+              @click="showUploader = !showUploader"
+            >图片</el-button>
             <el-button
               type="primary"
               @click="onSubmit"
@@ -85,15 +93,16 @@ export default {
   components: {
     Avatar,
     Uploader,
-    CommmentWithReply
+    CommmentWithReply,
   },
-  data: function() {
+  data: function () {
     return {
+      showUploader: false,
       disableSubmitBtn: false,
       baseAPI: "",
       commentPower: {
         allow: false,
-        uid: -1
+        uid: -1,
       },
       commentList: [],
       showAvatar: Utils.showAvatar,
@@ -102,8 +111,8 @@ export default {
         index: 1,
         pageSize: 10,
         pageTotal: 1,
-        total: 0
-      }
+        total: 0,
+      },
     };
   },
   methods: {
@@ -115,7 +124,7 @@ export default {
             message: "删除成功!",
             type: "success",
             duration: 3000,
-            position: "bottom-right"
+            position: "bottom-right",
           });
           this.reloadCommentList(this.pager.index);
         })
@@ -123,7 +132,7 @@ export default {
     },
     reloadCommentList(index) {
       GET(`${this.baseAPI}/comment/page/${index}`)
-        .then(resp => {
+        .then((resp) => {
           this.commentList = resp.data || [];
           this.pager = resp.page;
         })
@@ -134,14 +143,18 @@ export default {
     },
     onSubmit() {
       this.disableSubmitBtn = true;
-      this.$refs.uploader.upload();
+      if (this.$refs.uploader) {
+        this.$refs.uploader.upload();
+      } else {
+        this.attachmentUploadFinish([]);
+      }
     },
     // 文件上传完成后，进行数据提交
     attachmentUploadFinish(data) {
       this.disableSubmitBtn = false;
       POST(`${this.baseAPI}/comment`, null, {
         content: this.newComment.content,
-        attachmentList: data.list || []
+        attachmentList: data,
       })
         .then(() => {
           this.$notify({
@@ -149,9 +162,10 @@ export default {
             message: "评论成功!",
             type: "success",
             duration: 3000,
-            position: "bottom-right"
+            position: "bottom-right",
           });
           this.newComment = {};
+          this.showUploader = false;
           // 位于第一页时才去更新数据,否则没必要,等用户自己触发
           if (this.pager.index == 1) {
             this.reloadCommentList(this.pager.index);
@@ -161,12 +175,12 @@ export default {
     },
     attachmentUplodError() {
       this.disableSubmitBtn = false;
-    }
+    },
   },
   filters: {
-    profileLink: function(uid) {
+    profileLink: function (uid) {
       return Utils.authorLink(uid);
-    }
+    },
   },
   created() {
     this.baseAPI = `/api/comment/${this.category}/article/${this.id}`;
@@ -175,15 +189,18 @@ export default {
     this.reloadCommentList(1);
 
     GET(`${this.baseAPI}/i-am-author`)
-      .then(power => {
+      .then((power) => {
         this.commentPower = power;
       })
       .catch(() => {});
-  }
+  },
 };
 </script>
 
 <style lang="less">
+.u-uploader {
+  margin-top: 10px;
+}
 .c-comment .el-main {
   padding: 0;
 }

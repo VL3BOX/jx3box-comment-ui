@@ -36,17 +36,17 @@ import ReplyItem from "./reply-item";
 export default {
   props: ["data", "power", "pager"],
   components: {
-    ReplyItem
+    ReplyItem,
   },
-  data: function() {
+  data: function () {
     return {
-      showPager: false
+      showPager: false,
     };
   },
   filters: {
-    profileLink: function(uid) {
+    profileLink: function (uid) {
       return Utils.authorLink(uid);
-    }
+    },
   },
   methods: {
     showAvatar: Utils.showAvatar,
@@ -66,8 +66,8 @@ export default {
     },
     addReply(data) {
       this.$emit("addNewReply", data);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -105,6 +105,11 @@ export default {
   .u-reply {
     padding: 5px;
     line-height: 1.715;
+    .u-attachements {
+      .el-image {
+        margin-left: 20px;
+      }
+    }
   }
 }
 .c-comment-reply-pages {

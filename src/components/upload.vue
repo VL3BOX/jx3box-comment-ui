@@ -30,7 +30,8 @@ export default {
     return {
       dialogImageUrl: "",
       dialogVisible: false,
-      fileList: []
+      fileList: [],
+      successList: [],
     };
   },
   methods: {
@@ -44,7 +45,7 @@ export default {
         message: "文件超过数量!",
         type: "error",
         duration: 3000,
-        position: "bottom-right"
+        position: "bottom-right",
       });
     },
     onChange(file, fileList) {
@@ -55,7 +56,7 @@ export default {
             message: "图片大小不能超过500kb!",
             type: "error",
             duration: 3000,
-            position: "bottom-right"
+            position: "bottom-right",
           });
           fileList.pop();
         } else {
@@ -64,17 +65,19 @@ export default {
       }
     },
     upload() {
-      console.log(1111999);
       if (this.fileList.length > 0) {
-        console.log(88888888888888888);
         this.$refs.upload.submit();
       } else {
         this.$emit("onFinish", []);
       }
     },
     onSuccess(response) {
-      this.$emit("onFinish", response.data || {});
-      this.fileList = [];
+      this.successList = this.successList.concat(response.data.list);
+      if (this.successList.length == this.fileList.length) {
+        this.$emit("onFinish", this.successList || []);
+        this.fileList = [];
+        this.successList = [];
+      }
     },
     onError() {
       this.$notify({
@@ -82,10 +85,11 @@ export default {
         message: "图片上传失败!",
         type: "error",
         duration: 3000,
-        position: "bottom-right"
+        position: "bottom-right",
       });
       this.$emit("onError");
-    }
-  }
+      this.fileList = [];
+    },
+  },
 };
 </script>

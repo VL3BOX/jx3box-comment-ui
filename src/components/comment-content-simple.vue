@@ -12,6 +12,15 @@
       </span>
       {{ content }}
     </div>
+    <div class="u-attachements" v-if="attachments.length">
+      <el-image
+        v-for="url in attachments"
+        :key="url"
+        :src="url+'?x-oss-process=style/comment_thumb'"
+        :preview-src-list="attachments"
+        lazy
+      ></el-image>
+    </div>
     <div class="u-toolbar">
       <el-button
         class="u-admin"
@@ -46,23 +55,24 @@ export default {
   props: [
     "commentId",
     "content",
+    "attachments",
     "date",
     "hasReply",
     "canDelete",
     "canReply",
     "userHref",
     "replyForUsername",
-    "replyForUserId"
+    "replyForUserId",
   ],
-  data: function() {
+  data: function () {
     return {
-      showInput: false
+      showInput: false,
     };
   },
   filters: {
-    profileLink: function(uid) {
+    profileLink: function (uid) {
       return Utils.authorLink(uid);
-    }
+    },
   },
   methods: {
     deleteComment() {
@@ -86,7 +96,7 @@ export default {
     },
     showReplyForReplyInput() {
       this.$emit("showReplyInput");
-    }
-  }
+    },
+  },
 };
 </script>
