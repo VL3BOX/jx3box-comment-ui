@@ -1,40 +1,7 @@
 <template>
   <el-container class="c-comment">
     <el-main>
-      <el-form ref="form" :model="newComment" class="c-comment-box">
-        <el-form-item>
-          <el-input
-            rows="3"
-            type="textarea"
-            maxlength="300"
-            show-word-limit
-            v-model="newComment.content"
-            placeholder="参与讨论..."
-          ></el-input>
-          <Uploader
-            class="u-uploader"
-            ref="uploader"
-            @onFinish="attachmentUploadFinish"
-            @onError="attachmentUplodError"
-            v-if="showUploader"
-          />
-          <div class="u-toolbar">
-            <el-button
-              class="u-admin"
-              type="text"
-              icon="el-icon-picture"
-              size="mini"
-              @click="showUploader = !showUploader"
-            >图片</el-button>
-            <el-button
-              type="primary"
-              @click="onSubmit"
-              class="u-publish"
-              :disabled="disableSubmitBtn"
-            >发表评论</el-button>
-          </div>
-        </el-form-item>
-      </el-form>
+      <CommentInputForm @submit="userSubmitInputForm" />
 
       <div v-for="item in commentList" :key="item.id" class="c-comment-list">
         <Avatar
@@ -53,17 +20,8 @@
         />
       </div>
 
-      <div class="c-comment-pages" v-if="commentList.length > 5">
-        <div class="u-quickreply">
-          <el-form class="u-form" :inline="true" :model="newComment">
-            <el-form-item class="u-input">
-              <el-input show-word-limit v-model="newComment.content" placeholder="参与讨论"></el-input>
-            </el-form-item>
-            <el-form-item class="u-btn">
-              <el-button type="primary" @click="onSubmit" :disabled="disableSubmitBtn">提交</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
+      <div class="c-comment-pages">
+        <CommentInputForm @submit="userSubmitInputForm" v-if="commentList.length > 5" />
         <div class="u-pages">
           <el-pagination
             style="text-align:right"
@@ -84,7 +42,7 @@
 <script>
 import { Utils } from "@jx3box/jx3box-common";
 import Avatar from "./components/avatar.vue";
-import Uploader from "./components/upload.vue";
+import CommentInputForm from "./components/comment-input-form.vue";
 import CommmentWithReply from "./components/comment-with-reply.vue";
 import { GET, POST, DELETE } from "./service";
 export default {
@@ -92,13 +50,11 @@ export default {
   props: ["id", "category"],
   components: {
     Avatar,
-    Uploader,
     CommmentWithReply,
+    CommentInputForm,
   },
   data: function () {
     return {
-      showUploader: false,
-      disableSubmitBtn: false,
       baseAPI: "",
       commentPower: {
         allow: false,
@@ -106,7 +62,6 @@ export default {
       },
       commentList: [],
       showAvatar: Utils.showAvatar,
-      newComment: {},
       pager: {
         index: 1,
         pageSize: 10,
@@ -141,21 +96,8 @@ export default {
     handleCurrentChange(gotoIndex) {
       this.reloadCommentList(gotoIndex);
     },
-    onSubmit() {
-      this.disableSubmitBtn = true;
-      if (this.$refs.uploader) {
-        this.$refs.uploader.upload();
-      } else {
-        this.attachmentUploadFinish([]);
-      }
-    },
-    // 文件上传完成后，进行数据提交
-    attachmentUploadFinish(data) {
-      this.disableSubmitBtn = false;
-      POST(`${this.baseAPI}/comment`, null, {
-        content: this.newComment.content,
-        attachmentList: data,
-      })
+    userSubmitInputForm(data) {
+      POST(`${this.baseAPI}/comment`, null, data)
         .then(() => {
           this.$notify({
             title: "",
@@ -164,17 +106,12 @@ export default {
             duration: 3000,
             position: "bottom-right",
           });
-          this.newComment = {};
-          this.showUploader = false;
           // 位于第一页时才去更新数据,否则没必要,等用户自己触发
           if (this.pager.index == 1) {
             this.reloadCommentList(this.pager.index);
           }
         })
         .catch(() => {});
-    },
-    attachmentUplodError() {
-      this.disableSubmitBtn = false;
     },
   },
   filters: {
