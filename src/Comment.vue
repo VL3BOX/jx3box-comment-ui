@@ -142,11 +142,14 @@ export default {
 </script>
 
 <style lang="less">
-.c-comment{
-  font-size:14px;
-  .el-link{
-    vertical-align:baseline !important;
-  }
+.c-comment {
+    font-size: 14px;
+    .el-link {
+        vertical-align: baseline !important;
+    }
+    .el-icon-circle-close {
+        color: #fff !important;
+    }
 }
 .u-uploader {
     margin-top: 10px;

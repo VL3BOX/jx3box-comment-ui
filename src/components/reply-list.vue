@@ -107,7 +107,7 @@ export default {
     line-height: 1.715;
     .u-attachements {
       .el-image {
-        margin-left: 20px;
+        margin-right: 20px;
       }
     }
   }
