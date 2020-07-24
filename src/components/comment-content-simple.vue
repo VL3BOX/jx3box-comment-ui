@@ -4,7 +4,6 @@
             <span class="u-reply-label" v-if="replyForUserId != 0">
                 回复
                 <el-link
-                    class="u-name"
                     type="primary"
                     target="_blank"
                     :href="userHref"
@@ -106,11 +105,4 @@ export default {
 </script>
 
 <style lang="less">
-.u-reply-label {
-    font-size: 12px;
-    .el-link {
-        line-height: inherit !important;
-        vertical-align: 0 !important;
-    }
-}
 </style>
