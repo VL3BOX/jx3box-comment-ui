@@ -1,7 +1,7 @@
 <template>
   <el-form ref="form" class="c-comment-subbox">
     回复
-    <el-link class="u-name" type="primary" target="_blank" :href="userHref">＠{{ username }}</el-link>：
+    <el-link class="u-name" type="primary" target="_blank" :href="userHref">＠{{ username }}</el-link> ：
     <el-form-item>
       <el-input type="textarea" v-model="content"></el-input>
       <el-button

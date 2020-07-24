@@ -16,7 +16,7 @@
       :on-error="onError"
     >
       <i class="el-icon-plus"></i>
-      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500k的３张图片</div>
+      <div slot="tip" class="el-upload__tip">只能上传jpg/png/gif文件，且不超过500k的３张图片</div>
     </el-upload>
     <el-dialog :visible.sync="dialogVisible">
       <img width="60%" :src="dialogImageUrl" alt />
