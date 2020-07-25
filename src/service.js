@@ -1,13 +1,7 @@
 //import { Notification } from 'element-ui';
 import { JX3BOX } from "@jx3box/jx3box-common"
-import Vue from "vue"
-var Notification = null
+import {Notification} from "element-ui"
 
-if (process.env.NODE_ENV == "production") {
-    Notification = Vue.prototype.$notify
-} else {
-    Notification = require("element-ui").Notification
-}
 
 export const GET = function (url, queryParams) {
     let options = {
