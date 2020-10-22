@@ -9,7 +9,7 @@
                 class="c-comment-list"
             >
                 <Avatar
-                    :user-avatar="showAvatar(item.avatar)"
+                    :user-avatar="item.avatar | showAvatar"
                     :user-href="item.userId | profileLink"
                     :username="item.displayName"
                 />
@@ -47,7 +47,8 @@
 </template>
 
 <script>
-import { Utils } from "@jx3box/jx3box-common";
+import { getThumbnail, authorLink } from "@jx3box/jx3box-common/js/utils";
+import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
 import Avatar from "./components/avatar.vue";
 import CommentInputForm from "./components/comment-input-form.vue";
 import CommmentWithReply from "./components/comment-with-reply.vue";
@@ -68,7 +69,6 @@ export default {
                 uid: -1,
             },
             commentList: [],
-            showAvatar: Utils.showAvatar,
             pager: {
                 index: 1,
                 pageSize: 10,
@@ -123,7 +123,12 @@ export default {
     },
     filters: {
         profileLink: function(uid) {
-            return Utils.authorLink(uid);
+            return authorLink(uid);
+        },
+        showAvatar: function(val) {
+            return val
+                ? getThumbnail(val, 48, true)
+                : getThumbnail(default_avatar, 48);
         },
     },
     created() {

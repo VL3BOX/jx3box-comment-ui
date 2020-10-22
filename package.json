@@ -1,6 +1,6 @@
 {
     "name": "@jx3box/jx3box-comment-ui",
-    "version": "1.2.8",
+    "version": "1.2.9",
     "scripts": {
         "dev": "env DEV_SERVER=true vue-cli-service serve",
         "serve": "vue-cli-service serve",
@@ -10,7 +10,7 @@
     },
     "main": "index.js",
     "dependencies": {
-        "@jx3box/jx3box-common": "^5.0.6",
+        "@jx3box/jx3box-common": "^5.3.2",
         "core-js": "^3.6.4",
         "element-ui": "^2.13.1",
         "vue": "^2.6.11"

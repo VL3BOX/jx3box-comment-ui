@@ -67,7 +67,7 @@ export const DELETE = function (url, queryParams) {
 }
 
 function __fetch(url, queryParams, options) {
-    let domain = process.env.NODE_ENV == "production" ? JX3BOX.__api : "/"
+    let domain = process.env.NODE_ENV == "production" ? JX3BOX.__next : "/"
     if (domain[domain.length - 1] == "/") {
         domain = domain.substring(0, domain.length - 1)
     }
@@ -78,7 +78,7 @@ function __fetch(url, queryParams, options) {
         Object.keys(queryParams).forEach((key) => {
             queryQueue.push(key + "=" + queryParams[key])
         })
-        let domain = JX3BOX.__api
+        let domain = JX3BOX.__next
         if (domain[domain.length - 1] == "/") {
             domain = domain.substring(0, domain.length - 1)
         }
