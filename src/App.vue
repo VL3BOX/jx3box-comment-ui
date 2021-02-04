@@ -1,12 +1,12 @@
 <template>
-  <Comment id="100" category="post" />
+    <Comment id="19382" category="post" />
 </template>
 
 <script>
 import Comment from "./Comment.vue";
 export default {
-  components: {
-    Comment
-  }
+    components: {
+        Comment,
+    },
 };
 </script>
