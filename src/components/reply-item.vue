@@ -2,9 +2,11 @@
     <el-row>
         <!--用户头像-->
         <Avatar
-            :user-avatar="showAvatar(reply.avatar)"
+            :user-avatar="reply.avatar | showAvatar"
             :user-href="reply.userId | profileLink"
             :username="reply.displayName"
+            :avatarFrame="reply.avatarFrame"
+            :withFrame="false"
         />
         <!--评论主体内容-->
         <CommentContentSimple
@@ -60,13 +62,13 @@ export default {
             }
             return JSON.parse(str);
         },
-    },
-    methods: {
         showAvatar: function(val) {
             return val
                 ? getThumbnail(val, 28, true)
                 : getThumbnail(default_avatar, 28);
         },
+    },
+    methods: {
         deleteReply(id) {
             this.$emit("deleteReply", id);
         },

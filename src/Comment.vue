@@ -12,6 +12,8 @@
                     :user-avatar="item.avatar | showAvatar"
                     :user-href="item.userId | profileLink"
                     :username="item.displayName"
+                    :avatarFrame="item.avatarFrame"
+                    :withFrame="true"
                 />
                 <CommmentWithReply
                     :base-api="baseAPI"
@@ -53,6 +55,8 @@ import Avatar from "./components/avatar.vue";
 import CommentInputForm from "./components/comment-input-form.vue";
 import CommmentWithReply from "./components/comment-with-reply.vue";
 import { GET, POST, DELETE } from "./service";
+import axios from "axios";
+import { __dataPath } from "@jx3box/jx3box-common/js/jx3box.json";
 export default {
     name: "Comment",
     props: ["id", "category"],
@@ -120,6 +124,13 @@ export default {
                 })
                 .catch(() => {});
         },
+        loadFrames: function() {
+            axios
+                .get(__dataPath + "data/box/user_avatar_frame.json")
+                .then((res) => {
+                    this.$store.state.frames = res.data;
+                });
+        },
     },
     filters: {
         profileLink: function(uid) {
@@ -136,6 +147,8 @@ export default {
     },
     mounted() {
         this.reloadCommentList(1);
+
+        this.loadFrames()
 
         GET(`${this.baseAPI}/i-am-author`)
             .then((power) => {

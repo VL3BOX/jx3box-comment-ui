@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { authorLink, showAvatar } from "@jx3box/jx3box-common/js/utils";
+import { authorLink } from "@jx3box/jx3box-common/js/utils";
 import ReplyItem from "./reply-item";
 export default {
     props: ["data", "power", "pager"],
@@ -53,7 +53,6 @@ export default {
         },
     },
     methods: {
-        showAvatar: showAvatar,
         showMore() {
             this.showPager = true;
             this.$emit("goto", 1);
