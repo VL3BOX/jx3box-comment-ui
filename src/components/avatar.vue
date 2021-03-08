@@ -67,6 +67,12 @@ export default {
         position: absolute;
         left:-6px;
         top:-6px;
+        width:60px;
+        height:60px;
+        img{
+            width:100%;
+            height:100%;
+        }
     }
     .u-name {
         display: none;

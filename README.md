@@ -28,3 +28,10 @@ import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 <script src="https://cdn.jsdelivr.net/gh/JX3BOX/jx3box-comment-ui@1.0.0/comment.umd.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/JX3BOX/jx3box-comment-ui@1.0.0/comment.css" />
 ```
+
+## 使用评论的项目
++ cms
++ item
++ collection
++ knowledge
++ exam

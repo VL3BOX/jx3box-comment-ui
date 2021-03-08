@@ -12,7 +12,7 @@
                     :user-avatar="item.avatar | showAvatar"
                     :user-href="item.userId | profileLink"
                     :username="item.displayName"
-                    :avatarFrame="item.avatarFrame"
+                    :avatarFrame="item.user_avatar_frame"
                     :withFrame="true"
                 />
                 <CommmentWithReply

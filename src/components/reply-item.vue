@@ -5,8 +5,6 @@
             :user-avatar="reply.avatar | showAvatar"
             :user-href="reply.userId | profileLink"
             :username="reply.displayName"
-            :avatarFrame="reply.avatarFrame"
-            :withFrame="false"
         />
         <!--评论主体内容-->
         <CommentContentSimple
