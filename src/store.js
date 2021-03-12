@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 Vue.use(Vuex);
-import frames from "@jx3box/jx3box-data/data/box/user_avatar_frame.json";
+import frames from "@jx3box/jx3box-common/data/user_avatar_frame.json";
 
 // 默认仓储
 let store = {

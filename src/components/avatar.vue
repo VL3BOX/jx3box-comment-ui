@@ -6,8 +6,11 @@
                 shape="square"
                 :size="avatarSize"
                 :src="userAvatar"
+                :class="{ isCircle }"
             ></el-avatar>
-            <i class="u-avatar-frame" v-if="withFrame && avatarFrame"><img :src="showFrame(avatarFrame)"/></i>
+            <i class="u-avatar-frame" v-if="frame"
+                ><img :src="frame"
+            /></i>
         </a>
         <el-link
             class="u-name"
@@ -22,22 +25,34 @@
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
 export default {
-    props: ["avatarSize", "userAvatar", "userHref", "username", "avatarFrame",'withFrame'],
+    props: [
+        "avatarSize",
+        "userAvatar",
+        "userHref",
+        "username",
+        "avatarFrame",
+        "withFrame",
+    ],
     data: function() {
         return {};
     },
-    computed : {
-        frames : function (){
-            return this.$store.state.frames
-        }
-    },
-    methods: {
-        showFrame: function(name) {
-            // name = name || 'default'
-            let filename = this.frames[name].files.xs.file
-            return __imgPath + `image/avatar/${name}/${filename}`;
+    computed: {
+        frames: function() {
+            return this.$store.state.frames;
+        },
+        frame: function() {
+            if(this.withFrame && this.avatarFrame){
+                let name = this.avatarFrame || 'default'
+                let filename = this.frames[name].files.xs.file;
+                return __imgPath + `image/avatar/${name}/${filename}`;
+            }
+            return ''
+        },
+        isCircle: function() {
+            return this.frame && this.frames[this.avatarFrame] && this.frames[this.avatarFrame].style == "circle";
         },
     },
+    methods: {},
     mounted: function() {},
 };
 </script>
@@ -55,23 +70,27 @@ export default {
     .u-avatar {
         display: block;
         position: relative;
-        margin-left:6px;
+        margin-left: 6px;
     }
     .u-avatar-pic {
         display: block;
         background-color: #fff;
         width: 48px;
         height: 48px;
+
+        &.isCircle {
+            border-radius: 100%;
+        }
     }
-    .u-avatar-frame{
+    .u-avatar-frame {
         position: absolute;
-        left:-6px;
-        top:-6px;
-        width:60px;
-        height:60px;
-        img{
-            width:100%;
-            height:100%;
+        left: -6px;
+        top: -6px;
+        width: 60px;
+        height: 60px;
+        img {
+            width: 100%;
+            height: 100%;
         }
     }
     .u-name {
