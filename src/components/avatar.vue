@@ -8,8 +8,8 @@
                 :src="userAvatar"
                 :class="{ isCircle }"
             ></el-avatar>
-            <i class="u-avatar-frame" v-if="frame"
-                ><img :src="frame"
+            <i class="u-avatar-frame" v-if="frameName"
+                ><img :src="frameUrl"
             /></i>
         </a>
         <el-link
@@ -40,16 +40,18 @@ export default {
         frames: function() {
             return this.$store.state.frames;
         },
-        frame: function() {
-            if(this.withFrame && this.avatarFrame){
-                let name = this.avatarFrame || 'default'
-                let filename = this.frames[name].files.xs.file;
-                return __imgPath + `image/avatar/${name}/${filename}`;
+        frameName : function (){
+            return (this.avatarFrame && this.frames[this.avatarFrame]) ? this.avatarFrame : ''
+        },
+        frameUrl : function (){
+            if(this.frameName){
+                let fileName = this.frames[this.frameName].files.s.file
+                return __imgPath + `image/avatar/${this.frameName}/${fileName}`
             }
             return ''
         },
         isCircle: function() {
-            return this.frame && this.frames[this.avatarFrame] && this.frames[this.avatarFrame].style == "circle";
+            return this.frameName && this.frames[this.frameName].style == "circle";
         },
     },
     methods: {},
