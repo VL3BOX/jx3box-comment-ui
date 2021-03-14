@@ -49,14 +49,13 @@
 </template>
 
 <script>
-import { getThumbnail, authorLink } from "@jx3box/jx3box-common/js/utils";
-import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
+import { showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
 import Avatar from "./components/avatar.vue";
 import CommentInputForm from "./components/comment-input-form.vue";
 import CommmentWithReply from "./components/comment-with-reply.vue";
 import { GET, POST, DELETE } from "./service";
 import axios from "axios";
-import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "Comment",
     props: ["id", "category"],
@@ -139,9 +138,7 @@ export default {
             return authorLink(uid);
         },
         showAvatar: function(val) {
-            return val
-                ? getThumbnail(val, 48, true)
-                : getThumbnail(default_avatar, 48);
+            return showAvatar(val,48)
         },
     },
     created() {

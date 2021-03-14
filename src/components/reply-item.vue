@@ -32,8 +32,7 @@
 </template>
 
 <script>
-import { getThumbnail, authorLink } from "@jx3box/jx3box-common/js/utils";
-import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
+import { showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
 import CommentContentSimple from "./comment-content-simple.vue";
 import ReplyForReply from "./reply-for-reply";
 import Avatar from "./avatar.vue";
@@ -61,9 +60,7 @@ export default {
             return JSON.parse(str);
         },
         showAvatar: function(val) {
-            return val
-                ? getThumbnail(val, 28, true)
-                : getThumbnail(default_avatar, 28);
+            return showAvatar(val,28)
         },
     },
     methods: {
