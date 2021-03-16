@@ -106,9 +106,9 @@ export default {
         line-height: 1.4;
     }
 }
-@media screen and (max-width: 767px) {
-    .c-comment-avatar {
-        margin-right: 10px;
-    }
-}
+// @media screen and (max-width: 767px) {
+//     .c-comment-avatar {
+//         margin-right: 10px;
+//     }
+// }
 </style>
