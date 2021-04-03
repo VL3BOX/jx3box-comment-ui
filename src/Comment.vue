@@ -3,6 +3,7 @@
         <el-main>
             <CommentInputForm @submit="userSubmitInputForm" />
 
+            <template v-if="isNormal">
             <div
                 v-for="item in commentList"
                 :key="item.id"
@@ -44,6 +45,7 @@
                     ></el-pagination>
                 </div>
             </div>
+            </template>
         </el-main>
     </el-container>
 </template>
@@ -58,7 +60,7 @@ import axios from "axios";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "Comment",
-    props: ["id", "category"],
+    props: ["id", "category","normal"],
     components: {
         Avatar,
         CommmentWithReply,
@@ -79,6 +81,11 @@ export default {
                 total: 0,
             },
         };
+    },
+    computed : {
+        isNormal : function (){
+            return this.normal === undefined || this.normal
+        }
     },
     methods: {
         deteleComment(id) {
