@@ -1,5 +1,5 @@
 <template>
-    <el-container class="c-comment">
+    <el-container class="c-comment" v-loading="loading">
         <el-main>
             <CommentInputForm @submit="userSubmitInputForm" />
             <div class="c-comment-order">
@@ -79,6 +79,7 @@ export default {
                 total: 0,
             },
             isDesc: this.order == "desc",
+            loading : false
         };
     },
     computed: {
@@ -106,6 +107,7 @@ export default {
                 .catch(() => {});
         },
         reloadCommentList(index) {
+            this.loading = true
             let orderQuery = {};
             if (this.isDesc) {
                 orderQuery["desc"] = true;
@@ -115,7 +117,10 @@ export default {
                     this.commentList = resp.data || [];
                     this.pager = resp.page;
                 })
-                .catch(() => {});
+                .catch(() => {})
+                .finally(() => {
+                    this.loading = false
+                })
         },
         handleCurrentChange(gotoIndex) {
             this.reloadCommentList(gotoIndex);
