@@ -55,6 +55,7 @@ import CommmentWithReply from "./components/comment-with-reply.vue";
 import { GET, POST, DELETE } from "./service";
 import axios from "axios";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { getOrderMode, setOrderMode } from "./options";
 export default {
     name: "Comment",
     props: ["id", "category", "normal", "order"],
@@ -88,6 +89,7 @@ export default {
     methods: {
         changeOrder() {
             this.reloadCommentList(this.pager.index);
+            setOrderMode(this.isDesc ? "desc" : "asc");
         },
         deteleComment(id) {
             DELETE(`${this.baseAPI}/comment/${id}`)
@@ -155,15 +157,21 @@ export default {
         this.baseAPI = `/api/comment/${this.category}/article/${this.id}`;
     },
     mounted() {
-        this.reloadCommentList(1);
-
-        this.loadFrames();
-
-        GET(`${this.baseAPI}/i-am-author`)
-            .then((power) => {
-                this.commentPower = power;
+        getOrderMode()
+            .then((mode) => {
+                this.isDesc = mode == "desc";
             })
-            .catch(() => {});
+            .then(() => {
+                this.reloadCommentList(1);
+
+                this.loadFrames();
+
+                GET(`${this.baseAPI}/i-am-author`)
+                    .then((power) => {
+                        this.commentPower = power;
+                    })
+                    .catch(() => {});
+            });
     },
 };
 </script>
@@ -243,16 +251,16 @@ export default {
 }
 .c-comment-order {
     background-color: #fafbfc;
-    padding:8px 10px;
+    padding: 8px 10px;
     border-radius: 3px;
-    border:1px solid #eee;
+    border: 1px solid #eee;
     margin: 10px 0;
-    span{
-      color:#666;
-      margin-right:10px;
+    span {
+        color: #666;
+        margin-right: 10px;
     }
-    b{
-      color:#0366d6;
+    b {
+        color: #0366d6;
     }
 }
 </style>
