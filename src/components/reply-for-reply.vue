@@ -7,7 +7,8 @@
             ：
         </div>
         <el-form-item>
-            <el-input type="textarea" v-model="content"></el-input>
+            <Emotion @selected="handleEmotionSelected" />
+            <el-input type="textarea" v-model="content" :id="'id' + inputId"></el-input>
             <el-button
                 class="u-admin"
                 type="text"
@@ -42,17 +43,23 @@
 
 <script>
 import Uploader from "./upload.vue";
+import Emotion from "@jx3box/jx3box-emotion/src/Emotion.vue"
 export default {
-    props: ["username", "userHref"],
+    props: ["username", "userHref", 'currentId'],
     data: function() {
         return {
             content: "",
             showUploader: false,
             disableSubmitBtn: false,
+            inputId: ''
         };
     },
     components: {
         Uploader,
+        Emotion
+    },
+    mounted() {
+        if (this.currentId) this.inputId = this.currentId
     },
     methods: {
         submintReply() {
@@ -78,6 +85,29 @@ export default {
         attachmentUplodError() {
             this.disableSubmitBtn = false;
         },
+        async handleEmotionSelected(value) {
+            const myField = document.querySelector(`#id${this.inputId}`);
+            console.log(myField, value)
+            if (myField.selectionStart || myField.selectionStart === 0) {
+                let startPos = myField.selectionStart;
+                let endPos = myField.selectionEnd;
+
+                this.content =
+                    myField.value.substring(0, startPos) +
+                    value +
+                    myField.value.substring(endPos, myField.value.length);
+
+                await this.$nextTick();
+
+                myField.focus();
+                myField.setSelectionRange(
+                    endPos + value.length,
+                    endPos + value.length
+                );
+            } else {
+                this.content = value;
+            }
+        }
     },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class="u-cmt">
-        <div class="u-text" v-if="content != ''">{{ content }}</div>
+        <div class="u-text" v-if="content != ''" v-html="formatContent(content)"></div>
         <div class="u-attachements" v-if="attachments.length">
             <el-image
                 v-for="url in attachments"
@@ -40,9 +40,12 @@
             class="c-comment-subbox"
         >
             <el-form-item>
+                <Emotion @selected="handleEmotionSelected"></Emotion>
                 <el-input
                     type="textarea"
                     v-model="newComment.content"
+                    placeholder="参与评论..."
+                    :id="'id' + inputId"
                 ></el-input>
                 <el-button
                     class="u-admin"
@@ -80,22 +83,31 @@
 <script>
 import Uploader from "./upload.vue";
 import { resolveImagePath } from "@jx3box/jx3box-common/js/utils";
+import { formatContent } from '../utils'
+import Emotion from "@jx3box/jx3box-emotion/src/Emotion.vue"
 
 function fillZero(num) {
     return num > 9 ? num : `0${num}`;
 }
 export default {
-    props: ["content", "date", "hasReply", "canDelete", "attachments"],
+    props: ["content", "date", "hasReply", "canDelete", "attachments", "commentId"],
     components: {
         Uploader,
+        Emotion
     },
     data: function() {
         return {
-            newComment: {},
+            newComment: {
+                content: ''
+            },
             showForm: false,
             disableSubmitBtn: false,
             showUploader: false,
+            inputId: ''
         };
+    },
+    mounted() {
+        if (this.commentId) this.inputId = this.commentId
     },
     computed : {
         _attachments : function (){
@@ -132,7 +144,9 @@ export default {
                 attachmentList: data,
             });
             this.showUploader = false;
-            this.newComment = {};
+            this.newComment = {
+                content: ''
+            };
         },
         attachmentUplodError() {
             this.disableSubmitBtn = false;
@@ -147,11 +161,35 @@ export default {
             }
         },
         hideForm() {},
+        formatContent,
+        async handleEmotionSelected(value) {
+            const myField = document.querySelector(`#id${this.inputId}`);
+            console.log(myField, value)
+            if (myField.selectionStart || myField.selectionStart === 0) {
+                let startPos = myField.selectionStart;
+                let endPos = myField.selectionEnd;
+
+                this.newComment.content =
+                    myField.value.substring(0, startPos) +
+                    value +
+                    myField.value.substring(endPos, myField.value.length);
+
+                await this.$nextTick();
+
+                myField.focus();
+                myField.setSelectionRange(
+                    endPos + value.length,
+                    endPos + value.length
+                );
+            } else {
+                this.newComment.content = value;
+            }
+        }
     },
     filters : {
         showAttachment : function (val){
             return resolveImagePath(val) + '?x-oss-process=style/comment_thumb'
-        }
+        },
     }
 };
 </script>
@@ -176,7 +214,10 @@ export default {
         padding: 5px 0 10px 0;
         .u-text {
             line-height: 1.715;
-            white-space: pre-wrap;
+            // white-space: pre-wrap;
+            img {
+                vertical-align: -3px;
+            }
         }
         .u-action {
             margin-top: 10px;

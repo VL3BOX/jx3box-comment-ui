@@ -10,8 +10,8 @@
             @addReply="addReply"
         />
         <!-- 分页 -->
-        <el-row>
-            <el-col :span="1" v-if="data.length >= 3 || showPager">
+        <el-row v-if="data.length >= 3 || showPager">
+            <el-col :span="1">
                 <el-button type="text" v-show="showPager" @click="showLess()"
                     >收起</el-button
                 >
@@ -80,9 +80,11 @@ export default {
     border-top: 1px dashed #eee;
 }
 .c-comment-reply {
-    border-bottom: 1px dashed #eee;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+    &:not(:last-of-type) {
+        border-bottom: 1px dashed #eee;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
 
     .c-comment-avatar {
         margin-right: 10px;

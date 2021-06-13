@@ -25,6 +25,7 @@
             v-if="showReplyForReplyFrom"
             :username="reply.displayName"
             :user-href="reply.userId | profileLink"
+            :current-id="reply.id"
             @hideForm="showReplyForReplyFrom = false"
             @doReply="doReply"
         />

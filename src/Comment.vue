@@ -28,7 +28,11 @@
                 </div>
 
                 <div class="c-comment-pages">
-                    <CommentInputForm @submit="userSubmitInputForm" v-if="commentList.length > 5" />
+                    <CommentInputForm
+                        @submit="userSubmitInputForm"
+                        :isBottom="commentList.length > 5"
+                        v-if="commentList.length > 5"
+                    />
                     <div class="u-pages">
                         <el-pagination
                             style="text-align: right"

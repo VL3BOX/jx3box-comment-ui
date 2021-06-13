@@ -8,7 +8,7 @@
                 >
                 :
             </span>
-            <p v-for="(p, index) in getPList(content)" :key="index">{{ p }}</p>
+            <p v-for="(p, index) in getPList(content)" :key="index" v-html="formatContent(p)"></p>
         </div>
         <div class="u-attachements" v-if="attachments.length">
             <el-image
@@ -48,6 +48,7 @@
 
 <script>
 import { resolveImagePath,authorLink } from "@jx3box/jx3box-common/js/utils";
+import { formatContent } from '../utils'
 function fillZero(num) {
     return num > 9 ? num : `0${num}`;
 }
@@ -85,6 +86,7 @@ export default {
         }
     },
     methods: {
+        formatContent,
         getPList(content) {
             return content.split("\n");
         },
@@ -120,7 +122,11 @@ export default {
         padding: 0;
         margin: 0;
         line-height: 1.75;
-        white-space: pre-wrap;
+        // white-space: pre-wrap;
+
+        img {
+            vertical-align: -3px;
+        }
     }
 }
 </style>

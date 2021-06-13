@@ -10,6 +10,7 @@
         <CommentContent
             :date="item.commentDate"
             :content="item.content"
+            :comment-id="item.id"
             :attachments="item.attachments | stringToArray"
             :can-delete="power.allow || power.uid == item.userId"
             @addNewReply="addNewReply"
