@@ -1,17 +1,17 @@
 {
     "name": "@jx3box/jx3box-comment-ui",
-    "version": "1.4.3",
+    "version": "1.4.4",
     "scripts": {
         "dev": "env DEV_SERVER=true vue-cli-service serve",
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build --target lib --name comment src/Comment.vue && cp index.html dist/demo.html",
         "lint": "vue-cli-service lint",
-        "update": "npm install @jx3box/jx3box-common@latest"
+        "update": "npm install @jx3box/jx3box-common@latest @jx3box/jx3box-emotion@latest"
     },
     "main": "index.js",
     "dependencies": {
-        "@jx3box/jx3box-common": "^6.4.2",
-        "@jx3box/jx3box-emotion": "^1.0.4",
+        "@jx3box/jx3box-common": "^6.4.7",
+        "@jx3box/jx3box-emotion": "^1.0.5",
         "core-js": "^3.6.4",
         "element-ui": "^2.13.1",
         "vue": "^2.6.11",

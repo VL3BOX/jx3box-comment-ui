@@ -40,7 +40,7 @@
             class="c-comment-subbox"
         >
             <el-form-item>
-                <Emotion @selected="handleEmotionSelected"></Emotion>
+                <Emotion class="c-comment-emotion" @selected="handleEmotionSelected"></Emotion>
                 <el-input
                     type="textarea"
                     v-model="newComment.content"
@@ -244,4 +244,5 @@ export default {
         margin-bottom: 0px;
     }
 }
+
 </style>

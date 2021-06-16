@@ -31,8 +31,6 @@ import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 ```
 
 ## 使用评论的项目
-+ cms
-+ item
-+ collection
-+ knowledge
-+ exam
++ cms (macro,jx3dat,fb,bps,tool,bbs,share)
++ wiki (item,collection,knowledge,quest)
++ app (exam,battle,dbm,team)

@@ -1,7 +1,7 @@
 <template>
   <el-form ref="form" :model="newComment" class="c-comment-box">
     <el-form-item>
-      <Emotion @selected="handleEmotionSelected"></Emotion>
+      <Emotion class="c-comment-emotion" @selected="handleEmotionSelected"></Emotion>
       <el-input
         rows="3"
         type="textarea"

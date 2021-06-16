@@ -7,7 +7,7 @@
             ：
         </div>
         <el-form-item>
-            <Emotion @selected="handleEmotionSelected" />
+            <Emotion class="c-comment-emotion" @selected="handleEmotionSelected" />
             <el-input type="textarea" v-model="content" :id="'id' + inputId"></el-input>
             <el-button
                 class="u-admin"
