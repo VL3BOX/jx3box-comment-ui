@@ -214,9 +214,11 @@ export default {
         padding: 5px 0 10px 0;
         .u-text {
             line-height: 1.715;
-            // white-space: pre-wrap;
             img {
                 vertical-align: -3px;
+            }
+            div{
+                white-space: pre-line;
             }
         }
         .u-action {

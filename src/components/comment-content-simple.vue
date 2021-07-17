@@ -8,7 +8,8 @@
                 >
                 :
             </span>
-            <p v-for="(p, index) in getPList(content)" :key="index" v-html="formatContent(p)"></p>
+            <div class="u-reply-text" v-html="formatContent(content)"></div>
+            <!-- <p v-for="(p, index) in getPList(content)" :key="index" v-html="formatContent(p)"></p> -->
         </div>
         <div class="u-attachements" v-if="attachments.length">
             <el-image
@@ -118,15 +119,19 @@ export default {
 
 <style lang="less">
 .u-reply-content {
-    p {
+    div,p {
         padding: 0;
         margin: 0;
         line-height: 1.75;
-        // white-space: pre-wrap;
-
+        font-size:14px;
         img {
             vertical-align: -3px;
         }
+    }
+}
+.u-reply-text{
+    div{
+        white-space: pre-line;
     }
 }
 </style>
