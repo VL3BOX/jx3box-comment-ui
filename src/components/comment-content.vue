@@ -1,6 +1,7 @@
 <template>
     <div class="u-cmt">
-        <div class="u-text" v-if="content != ''" v-html="formatContent(content)"></div>
+        <!-- <div class="u-text" v-if="content != ''" v-html="formatContent(content)"></div> -->
+        <div class="u-text" v-if="content != ''" v-html="content"></div>
         <div class="u-attachements" v-if="attachments.length">
             <el-image
                 v-for="url in attachments"
@@ -217,14 +218,13 @@ export default {
             img {
                 vertical-align: -3px;
             }
-            div{
-                white-space: pre-line;
-            }
+            white-space: pre-line;
         }
         .u-action {
             margin-top: 10px;
         }
         .u-attachements {
+            margin-top: 10px;
             .el-image {
                 margin-right: 20px;
             }

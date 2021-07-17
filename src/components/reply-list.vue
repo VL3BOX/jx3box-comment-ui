@@ -111,6 +111,7 @@ export default {
         padding: 5px;
         line-height: 1.715;
         .u-attachements {
+            margin-top: 10px;
             .el-image {
                 margin-right: 20px;
             }
