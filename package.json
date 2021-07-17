@@ -11,7 +11,7 @@
     "main": "index.js",
     "dependencies": {
         "@jx3box/jx3box-common": "^6.4.7",
-        "@jx3box/jx3box-emotion": "^1.0.5",
+        "@jx3box/jx3box-emotion": "^1.0.6",
         "core-js": "^3.6.4",
         "element-ui": "^2.13.1",
         "vue": "^2.6.11",

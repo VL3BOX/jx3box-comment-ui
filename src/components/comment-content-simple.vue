@@ -8,8 +8,8 @@
                 >
                 :
             </span>
-            <!-- <div class="u-reply-text" v-html="formatContent(content)"></div> -->
-            <div class="u-reply-text" v-html="content"></div>
+            <div class="u-reply-text" v-html="formatContent(content)"></div>
+            <!-- <div class="u-reply-text" v-html="content"></div> -->
             <!-- <p v-for="(p, index) in getPList(content)" :key="index" v-html="formatContent(p)"></p> -->
         </div>
         <div class="u-attachements" v-if="attachments.length">

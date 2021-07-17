@@ -1,7 +1,6 @@
 <template>
     <div class="u-cmt">
-        <!-- <div class="u-text" v-if="content != ''" v-html="formatContent(content)"></div> -->
-        <div class="u-text" v-if="content != ''" v-html="content"></div>
+        <div class="u-text" v-if="content != ''" v-html="formatContent(content)"></div>
         <div class="u-attachements" v-if="attachments.length">
             <el-image
                 v-for="url in attachments"
