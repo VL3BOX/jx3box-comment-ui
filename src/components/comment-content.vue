@@ -2,13 +2,14 @@
     <div class="u-cmt">
         <div class="u-text" v-if="content != ''" v-html="formatContent(content)"></div>
         <div class="u-attachements" v-if="attachments.length">
-            <el-image
+            <!-- <el-image
                 v-for="url in attachments"
                 :key="url"
                 :src="url | showAttachment"
                 :preview-src-list="_attachments"
                 lazy
-            ></el-image>
+            ></el-image> -->
+            <img v-for="(url, index) in attachments" :key="url" :src="url | showAttachment" @click="previewImg(index)">
         </div>
         <div class="u-toolbar">
             <el-button
@@ -184,6 +185,15 @@ export default {
             } else {
                 this.newComment.content = value;
             }
+        },
+        previewImg (i) {
+            this.$hevueImgPreview({
+                multiple: true,
+                nowImgIndex: i,
+                imgList: this._attachments,
+                controlBar: false,
+                clickMaskCLose: true
+            })
         }
     },
     filters : {
