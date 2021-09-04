@@ -13,14 +13,13 @@
             <!-- <p v-for="(p, index) in getPList(content)" :key="index" v-html="formatContent(p)"></p> -->
         </div>
         <div class="u-attachements" v-if="attachments.length">
-           <!--  <el-image
+           <el-image
                 v-for="url in attachments"
                 :key="url"
                 :src="url | showAttachment"
-                :preview-src-list="_attachments"
+                :preview-src-list="[showPreview(url)]"
                 lazy
-            ></el-image> -->
-            <img v-for="(url, index) in attachments" :key="url" :src="url | showAttachment" @click="previewImg(index)">
+            ></el-image>
         </div>
         <div class="u-toolbar">
             <el-button
@@ -52,7 +51,6 @@
 <script>
 import { resolveImagePath,authorLink } from "@jx3box/jx3box-common/js/utils";
 import { formatContent } from '../utils';
-// import renderImgPreview from "../renderImgPreview"
 function fillZero(num) {
     return num > 9 ? num : `0${num}`;
 }
@@ -124,6 +122,9 @@ export default {
                 controlBar: false,
                 clickMaskCLose: true
             })
+        },
+        showPreview: function (val){
+            return resolveImagePath(val)
         }
     },
 };
