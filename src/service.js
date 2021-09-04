@@ -67,8 +67,7 @@ export const DELETE = function (url, queryParams) {
 }
 
 function __fetch(url, queryParams, options) {
-    // let domain = process.env.NODE_ENV == "production" ? JX3BOX.__next : "/"  //TODO:待统一
-    let domain = process.env.NODE_ENV == "production" ? 'https://next2.jx3box.com/' : "/"
+    let domain = process.env.NODE_ENV == "production" ? JX3BOX.__next2 : "/"
     if (domain[domain.length - 1] == "/") {
         domain = domain.substring(0, domain.length - 1)
     }
@@ -79,8 +78,7 @@ function __fetch(url, queryParams, options) {
         Object.keys(queryParams).forEach((key) => {
             queryQueue.push(key + "=" + queryParams[key])
         })
-        // let domain = JX3BOX.__next
-        let domain = 'https://next2.jx3box.com/'
+        let domain = JX3BOX.__next2
         if (domain[domain.length - 1] == "/") {
             domain = domain.substring(0, domain.length - 1)
         }
