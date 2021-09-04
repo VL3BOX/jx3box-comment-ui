@@ -1,13 +1,13 @@
 <template>
     <div>
         <el-upload
-            action="https://server.jx3box.com/upload"
+            action="https://cms.jx3box.com/upload"
             ref="upload"
             list-type="picture-card"
             :on-preview="handlePictureCardPreview"
             :auto-upload="false"
             :file-list="fileList"
-            :limit="3"
+            :limit="5"
             multiple
             with-credentials
             :on-exceed="onExceed"
@@ -17,7 +17,7 @@
         >
             <i class="el-icon-plus"></i>
             <div slot="tip" class="el-upload__tip">
-                只能上传jpg/png/gif文件，且不超过500k的３张图片
+                只能上传jpg/png/gif文件，且不超过2M的5张图片
             </div>
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
@@ -52,7 +52,7 @@ export default {
         },
         onChange(file, fileList) {
             if (file.status == "ready") {
-                if (file.size > 500 * 1024) {
+                if (file.size > 2000 * 1024) {
                     this.$notify({
                         title: "",
                         message: "图片大小不能超过500kb!",
@@ -74,7 +74,7 @@ export default {
             }
         },
         onSuccess(response) {
-            this.successList = this.successList.concat(response.data.list);
+            this.successList = this.successList.concat(response.data);
             if (this.successList.length == this.fileList.length) {
                 this.$emit("onFinish", this.successList || []);
                 this.fileList = [];
