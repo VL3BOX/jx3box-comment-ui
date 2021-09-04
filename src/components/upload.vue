@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-upload
-            action="https://cms.jx3box.com/upload"
+            action="https://cms.jx3box.com/api/cms/upload"
             ref="upload"
             list-type="picture-card"
             :on-preview="handlePictureCardPreview"
