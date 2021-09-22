@@ -38,7 +38,7 @@ export default {
     },
     computed: {
         frames: function() {
-            return this.$store.state.frames;
+            return this.$store?.state?.frames || [];
         },
         frameName : function (){
             return (this.avatarFrame && this.frames[this.avatarFrame]) ? this.avatarFrame : ''
