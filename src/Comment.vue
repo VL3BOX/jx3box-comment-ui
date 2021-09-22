@@ -254,8 +254,8 @@ export default {
                 width: 100%;
             }
         }
-        .u-btn {
-        }
+        /* .u-btn {
+        } */
     }
 }
 .c-comment-order {
