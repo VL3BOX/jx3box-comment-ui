@@ -148,7 +148,7 @@ export default {
         },
         loadFrames: function () {
             axios.get(__imgPath + "data/user_avatar_frame.json").then((res) => {
-                if (res.data) {
+                if (res.data && this.$store) {
                     this.$store.state.frames = res.data;
                 }
             });
