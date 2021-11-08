@@ -1,6 +1,6 @@
 {
     "name": "@jx3box/jx3box-comment-ui",
-    "version": "1.6.1",
+    "version": "1.6.2",
     "scripts": {
         "dev": "env DEV_SERVER=true vue-cli-service serve",
         "serve": "vue-cli-service serve",
@@ -11,7 +11,7 @@
     "main": "index.js",
     "dependencies": {
         "@jx3box/jx3box-common": "^6.7.2",
-        "@jx3box/jx3box-emotion": "^1.0.9",
+        "@jx3box/jx3box-emotion": "^1.0.10",
         "core-js": "^3.6.4",
         "element-ui": "^2.13.1",
         "hevue-img-preview": "^5.0.0",
@@ -19,6 +19,8 @@
         "vuex": "^3.6.2"
     },
     "devDependencies": {
+        "@babel/plugin-proposal-nullish-coalescing-operator": "^7.16.0",
+        "@babel/plugin-proposal-optional-chaining": "^7.16.0",
         "@vue/cli-plugin-babel": "~4.3.0",
         "@vue/cli-plugin-eslint": "~4.3.0",
         "@vue/cli-service": "~4.3.0",
