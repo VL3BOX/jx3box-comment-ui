@@ -24,21 +24,21 @@
         <div class="u-toolbar">
             <el-button
                 class="u-admin"
-                v-if="canDelete"
-                type="text"
-                icon="el-icon-delete"
-                size="mini"
-                @click="deleteComment()"
-                >删除</el-button
-            >
-            <el-button
-                class="u-admin"
                 v-if="canReply"
                 type="text"
                 icon="el-icon-chat-line-round"
                 size="mini"
                 @click="showReplyForReplyInput()"
                 >回复</el-button
+            >
+            <el-button
+                class="u-admin"
+                v-if="canDelete"
+                type="text"
+                icon="el-icon-delete"
+                size="mini"
+                @click="deleteComment()"
+                >删除</el-button
             >
             <time class="u-date">
                 <i class="el-icon-time"></i>
