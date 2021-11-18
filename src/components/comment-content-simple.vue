@@ -93,7 +93,13 @@ export default {
             return content.split("\n");
         },
         deleteComment() {
-            this.$emit("delete", this.commentId);
+            this.$confirm("确定删除该评论吗？", '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$emit("delete", this.commentId);
+            }).catch(() => {});
         },
         dataFormat(str) {
             let d = new Date(str);
