@@ -57,7 +57,17 @@ export const POST = function (url, queryParams, body) {
     }
     return __fetch(url, queryParams, options)
 }
-
+export const PUT = function (url, queryParams, body) {
+    let options = {
+        "method": "PUT",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    }
+    return __fetch(url, queryParams, options)
+}
 
 export const DELETE = function (url, queryParams) {
     let options = {
