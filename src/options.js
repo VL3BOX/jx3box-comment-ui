@@ -7,9 +7,9 @@ async function getOrderMode() {
     if (User.isLogin()) {
         return $cms()
             .get(`/api/cms/user/conf`, {
-                // params: {
-                //     key: KEY
-                // }
+                params: {
+                    key: KEY
+                }
             })
             .then(res => {
                 return res.data.data;
