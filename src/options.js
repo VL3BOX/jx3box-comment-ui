@@ -3,7 +3,6 @@ import User from "@jx3box/jx3box-common/js/user";
 const KEY = "cmt_order";
 
 async function getOrderMode() {
-    // console.log(User.isLogin())
     if (User.isLogin()) {
         return $cms()
             .get(`/api/cms/user/conf`, {
