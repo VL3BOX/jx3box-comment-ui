@@ -9,8 +9,8 @@
                     @change="changeOrder"
                     size="mini"
                 >
-                    <el-radio-button label="desc">最后靠前</el-radio-button>
-                    <el-radio-button label="asc">最早靠前</el-radio-button>
+                    <el-radio-button label="DESC">最后靠前</el-radio-button>
+                    <el-radio-button label="ASC">最早靠前</el-radio-button>
                 </el-radio-group>
             </div>
             <template v-if="isNormal">
@@ -93,7 +93,7 @@ export default {
                 pageTotal: 1,
                 total: 0,
             },
-            isDesc: "desc",
+            isDesc: "DESC",
             loading: false,
         };
     },
@@ -105,7 +105,7 @@ export default {
     methods: {
         changeOrder() {
             this.reloadCommentList(this.pager.index);
-            setOrderMode(this.isDesc ? "desc" : "asc");
+            setOrderMode(this.isDesc ? "DESC" : "ASC");
         },
         setTopComment(id, setTop) {
             var action = setTop ? "set" : "cancel";
@@ -132,7 +132,7 @@ export default {
         reloadCommentList(index) {
             this.loading = true;
             let orderQuery = {};
-            if (this.isDesc === "desc") {
+            if (this.isDesc === "DESC") {
                 orderQuery["desc"] = true;
             }
             GET(`${this.baseAPI}/comment/page/${index}`, orderQuery)
@@ -190,8 +190,7 @@ export default {
                 this.isDesc = mode;
             })
             .then(() => {
-                this.reloadCommentList(1);
-
+                
                 this.loadFrames();
 
                 GET(`${this.baseAPI}/i-am-author`)
@@ -199,6 +198,8 @@ export default {
                         this.commentPower = power;
                     })
                     .catch(() => {});
+            }).finally(() => {
+                this.reloadCommentList(1);
             });
     },
 };

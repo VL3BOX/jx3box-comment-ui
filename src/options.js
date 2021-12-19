@@ -4,7 +4,7 @@ const KEY = "cmt_order";
 
 async function getOrderMode() {
     if (User.isLogin()) {
-        return $cms()
+        return $cms({ mute: true })
             .get(`/api/cms/user/conf`, {
                 params: {
                     key: KEY
@@ -15,7 +15,7 @@ async function getOrderMode() {
             });
     } else {
         return new Promise(resolve => {
-            const key = localStorage.getItem(KEY) || 'desc'
+            const key = localStorage.getItem(KEY) || 'DESC'
             resolve(key);
         });
     }
