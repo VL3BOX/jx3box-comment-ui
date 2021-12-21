@@ -1,6 +1,6 @@
 <template>
-    <Comment id="19382" category="post" order="desc" />
-    <!-- <Comment id="24423" category="post" order="desc" /> -->
+    <!-- <Comment id="19382" category="post" order="desc" /> -->
+    <Comment :id="100" category="post" order="desc" />
 </template>
 
 <script>
