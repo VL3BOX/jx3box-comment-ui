@@ -16,9 +16,12 @@
       :can-delete="power.allow || power.uid == item.userId"
       :can-set-top="power.is_author && !item.is_top"
       :can-cancel-top="power.is_author && item.is_top"
+      :can-set-star="!item.is_star && power.group >= 64"
+      :can-cancel-star="item.is_star && power.group >= 64"
       @addNewReply="addNewReply"
       @deteleComment="deteleComment"
       @setTopComment="setTopComment"
+      @setStarComment="setStarComment"
     />
     <ReplyList
       :data="replyList"
@@ -70,6 +73,9 @@ export default {
     },
     setTopComment(setTop) {
       this.$emit("setTopComment", this.item.id, setTop);
+    },
+    setStarComment(setStar) {
+      this.$emit("setStarComment", this.item.id, setStar);
     },
     addNewReply(data) {
       POST(`${this.baseApi}/comment/${this.item.id}/reply`, null, data)
