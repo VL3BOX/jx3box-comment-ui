@@ -108,7 +108,7 @@ export default {
         })
         .catch(() => {});
     },
-    setTopComment(id, setStar) {
+    setStarComment(id, setStar) {
       var action = setStar ? "set" : "cancel";
       PUT(`${this.baseAPI}/comment/${id}/star/${action}`)
         .then(() => {

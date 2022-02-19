@@ -176,7 +176,7 @@ export default {
       this.$emit("setTopComment", setTop);
     },
     starComment(setStar) {
-      this.$emit("setStarComment", setsetStarTop);
+      this.$emit("setStarComment", setStar);
     },
     deleteComment() {
       this.$confirm("确定删除该评论吗？", "提示", {
