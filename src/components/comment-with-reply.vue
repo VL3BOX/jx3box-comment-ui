@@ -4,8 +4,11 @@
       <el-link class="u-name" type="primary" target="_blank" :href="userHref">{{
         username || "人字榜800线无名小侠"
       }}</el-link>
-      <span class="u-top" v-if="item.is_top"
+      <span class="u-mark u-top" v-if="item.is_top"
         ><i class="el-icon-top"></i>置顶</span
+      >
+      <span class="u-mark u-star" v-if="item.is_star"
+        ><i class="el-icon-star-off"></i>精华</span
       >
     </div>
     <CommentContent
@@ -131,14 +134,21 @@ export default {
 
 <style lang="less">
 .c-comment-cmt {
-  .u-top {
+  .u-mark {
     font-style: normal;
     font-size: 12px;
     padding: 1px 5px 2px 5px;
     border-radius: 2px;
-    background-color: #6f42c1;
     color: #fff;
     margin-left: 5px;
+    cursor: default;
+  }
+  .u-top {
+    background-color: #6f42c1;
+  }
+  .u-star {
+    background-color: #f39;
+    i{margin-right:2px;}
   }
 }
 </style>

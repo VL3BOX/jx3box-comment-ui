@@ -54,7 +54,7 @@
         class="u-admin"
         v-if="canSetStar"
         type="text"
-        icon="el-icon-top"
+        icon="el-icon-star-off"
         size="mini"
         @click="starComment(true)"
         >加精</el-button
@@ -63,7 +63,7 @@
         class="u-admin"
         v-if="canCancelStar"
         type="text"
-        icon="el-icon-top"
+        icon="el-icon-star-on"
         size="mini"
         @click="starComment(false)"
         >取消加精</el-button
@@ -269,15 +269,16 @@ export default {
   position: relative;
   .u-toolbar {
     font-size: 12px;
+    .el-button+.el-button{
+      margin-left:20px;
+    }
   }
   .u-date {
     color: #c0c4cc;
+    margin-left:20px;
     i {
       margin-right: 5px;
     }
-  }
-  .u-admin {
-    margin-right: 10px;
   }
   .u-cmt {
     padding: 5px 0 10px 0;
