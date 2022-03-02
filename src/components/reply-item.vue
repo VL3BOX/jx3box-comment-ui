@@ -1,7 +1,7 @@
 <template>
     <el-row>
         <!--用户头像-->
-        <Avatar
+        <CommentAvatar
             :user-avatar="reply.avatar | showAvatar"
             :user-href="reply.userId | profileLink"
             :username="reply.displayName"
@@ -36,11 +36,11 @@
 import { showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
 import CommentContentSimple from "./comment-content-simple.vue";
 import ReplyForReply from "./reply-for-reply";
-import Avatar from "./avatar.vue";
+import CommentAvatar from "./avatar.vue";
 export default {
     props: ["reply", "power"],
     components: {
-        Avatar,
+        CommentAvatar,
         CommentContentSimple,
         ReplyForReply,
     },

@@ -1,5 +1,5 @@
 //import { Notification } from 'element-ui';
-import { JX3BOX } from "@jx3box/jx3box-common"
+import { __Links,__next } from "@jx3box/jx3box-common/data/jx3box.json"
 import {Notification} from "element-ui"
 
 
@@ -77,7 +77,7 @@ export const DELETE = function (url, queryParams) {
 }
 
 function __fetch(url, queryParams, options) {
-    let domain = process.env.NODE_ENV == "production" ? JX3BOX.__next2 : "/"
+    let domain = process.env.NODE_ENV == "production" ? __next : "/"
     if (domain[domain.length - 1] == "/") {
         domain = domain.substring(0, domain.length - 1)
     }
@@ -88,7 +88,7 @@ function __fetch(url, queryParams, options) {
         Object.keys(queryParams).forEach((key) => {
             queryQueue.push(key + "=" + queryParams[key])
         })
-        let domain = JX3BOX.__next2
+        let domain = __next
         if (domain[domain.length - 1] == "/") {
             domain = domain.substring(0, domain.length - 1)
         }
@@ -100,13 +100,13 @@ function __fetch(url, queryParams, options) {
             case 200:
                 break
             case 401:
-                window.location.href = JX3BOX.__Links.account.login + "?redirect=" + encodeURIComponent(window.location.href)
+                window.location.href = __Links.account.login + "?redirect=" + encodeURIComponent(window.location.href)
                 throw new Error("错误:" + resp.statusText)
             case 403:
-                window.location.href = JX3BOX.__Links.account.login + "?redirect=" + encodeURIComponent(window.location.href)
+                window.location.href = __Links.account.login + "?redirect=" + encodeURIComponent(window.location.href)
                 throw new Error("错误:" + resp.statusText)
             case 423:
-                window.location.href = JX3BOX.__Links.account.email_verify + "?redirect=" + encodeURIComponent(window.location.href)
+                window.location.href = __Links.account.email_verify + "?redirect=" + encodeURIComponent(window.location.href)
                 throw new Error("错误:" + resp.statusText)
             case 406:
                 resp.text().then((body) => {

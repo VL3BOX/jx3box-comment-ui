@@ -6,11 +6,7 @@
                 shape="square"
                 :size="avatarSize"
                 :src="userAvatar"
-                :class="{ isCircle }"
             ></el-avatar>
-            <i class="u-avatar-frame" v-if="frameName"
-                ><img :src="frameUrl"
-            /></i>
         </a>
         <el-link
             class="u-name"
@@ -23,7 +19,6 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     props: [
         "avatarSize",
@@ -37,22 +32,6 @@ export default {
         return {};
     },
     computed: {
-        frames: function() {
-            return this.$store?.state?.frames || [];
-        },
-        frameName : function (){
-            return (this.avatarFrame && this.frames[this.avatarFrame]) ? this.avatarFrame : ''
-        },
-        frameUrl : function (){
-            if(this.frameName){
-                let fileName = this.frames[this.frameName].files.s.file
-                return __imgPath + `image/avatar/${this.frameName}/${fileName}`
-            }
-            return ''
-        },
-        isCircle: function() {
-            return this.frameName && this.frames[this.frameName].style == "circle";
-        },
     },
     methods: {},
     mounted: function() {},
