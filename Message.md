@@ -131,7 +131,7 @@ horse|jx3box_query/horse_std_index和horse_origin_index|ID|无
 book|jx3box_query/book_std_index和book_origin_index|ID|无
 exterior|jx3box_query/exterior_std_index和exterior_origin_index|暂不确认|无
 
-# 评论加精
+### 评论加精
 此类游戏类的表，没有创作者，不需要提醒作者，但存在评论加精。
 source_id | source_type | type | subtype | content 
 ---|---|---|---|---
