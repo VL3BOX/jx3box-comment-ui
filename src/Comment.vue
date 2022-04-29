@@ -26,12 +26,12 @@
                         :avatarFrame="item.user_avatar_frame"
                         :withFrame="true"
                     />
-                    <CommmentWithReply
+                    <CommentWithReply
                         :base-api="baseAPI"
                         :item="item"
                         :category="category"
                         :power="commentPower"
-                        @deteleComment="deteleComment"
+                        @deleteComment="deleteComment"
                         @setTopComment="setTopComment"
                         @setStarComment="setStarComment"
                         :user-href="item.userId | profileLink"
@@ -67,7 +67,7 @@
 import { showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
 import CommentAvatar from "./components/avatar.vue";
 import CommentInputForm from "./components/comment-input-form.vue";
-import CommmentWithReply from "./components/comment-with-reply.vue";
+import CommentWithReply from "./components/comment-with-reply.vue";
 import { GET, POST, DELETE, PUT } from "./service";
 import { getOrderMode, setOrderMode } from "./options";
 export default {
@@ -75,7 +75,7 @@ export default {
     props: ["id", "category", "normal", "order"],
     components: {
         CommentAvatar,
-        CommmentWithReply,
+        CommentWithReply,
         CommentInputForm
     },
     data: function() {
@@ -122,7 +122,7 @@ export default {
                 })
                 .catch(() => {});
         },
-        deteleComment(id) {
+        deleteComment(id) {
             DELETE(`${this.baseAPI}/comment/${id}`)
                 .then(() => {
                     this.$notify({
@@ -178,7 +178,7 @@ export default {
             return authorLink(uid);
         },
         showAvatar: function(val) {
-            return showAvatar(val, 48);
+            return showAvatar(val, 144);
         }
     },
     created() {

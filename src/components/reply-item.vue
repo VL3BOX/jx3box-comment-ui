@@ -61,7 +61,7 @@ export default {
             return JSON.parse(str);
         },
         showAvatar: function(val) {
-            return showAvatar(val,28)
+            return showAvatar(val,84)
         },
     },
     methods: {
