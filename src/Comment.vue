@@ -25,6 +25,7 @@
                         :username="item.displayName"
                         :avatarFrame="item.user_avatar_frame"
                         :withFrame="true"
+                        :avatarSize="48"
                     />
                     <CommentWithReply
                         :base-api="baseAPI"

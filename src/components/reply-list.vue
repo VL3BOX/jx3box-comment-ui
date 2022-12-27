@@ -94,8 +94,8 @@ export default {
         float: left;
     }
     .u-avatar-pic {
-        width: 28px;
-        height: 28px;
+        // width: 28px;
+        // height: 28px;
         margin-right: 10px;
     }
 
