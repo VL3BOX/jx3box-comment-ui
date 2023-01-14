@@ -25,6 +25,7 @@
                         :username="item.displayName"
                         :avatarFrame="item.user_avatar_frame"
                         :withFrame="true"
+                        :avatarSize="48"
                     />
                     <CommentWithReply
                         :base-api="baseAPI"
@@ -157,7 +158,17 @@ export default {
         },
         userSubmitInputForm(data) {
             POST(`${this.baseAPI}/comment`, null, data)
-                .then(() => {
+                .then((responseJSON) => {
+                    if(responseJSON && ~~responseJSON.code > 0){
+                        this.$notify({
+                            title: "评论失败",
+                            message: responseJSON.msg || "",
+                            type: "error",
+                            duration: 3000,
+                            position: "bottom-right"
+                         });
+                        return
+                    }
                     this.$notify({
                         title: "",
                         message: "评论成功!",

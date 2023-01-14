@@ -26,7 +26,7 @@
             :can-set-star="!item.is_star && power.group >= 64"
             :can-cancel-star="item.is_star && power.group >= 64"
             @addNewReply="addNewReply"
-            @deteleComment="deteleComment"
+            @deleteComment="deleteComment"
             @setTopComment="setTopComment"
             @setStarComment="setStarComment"
         />
@@ -75,8 +75,8 @@ export default {
         this.replyList = this.item.reply || [];
     },
     methods: {
-        deteleComment() {
-            this.$emit("deteleComment", this.item.id);
+        deleteComment() {
+            this.$emit("deleteComment", this.item.id);
         },
         setTopComment(setTop) {
             this.$emit("setTopComment", this.item.id, setTop);

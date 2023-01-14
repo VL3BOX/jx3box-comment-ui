@@ -185,7 +185,7 @@ export default {
                 type: "warning"
             })
                 .then(() => {
-                    this.$emit("deteleComment");
+                    this.$emit("deleteComment");
                 })
                 .catch(() => {});
         },
