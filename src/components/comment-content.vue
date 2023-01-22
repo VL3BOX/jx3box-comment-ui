@@ -126,6 +126,7 @@
 <script>
 import Uploader from "./upload.vue";
 import { resolveImagePath } from "@jx3box/jx3box-common/js/utils";
+import { __dataPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { formatContent } from "../utils";
 import Emotion from "@jx3box/jx3box-emotion/src/Emotion.vue";
 
@@ -143,33 +144,34 @@ export default {
         "canSetStar",
         "canCancelStar",
         "attachments",
-        "commentId"
+        "commentId",
     ],
     components: {
         Uploader,
-        Emotion
+        Emotion,
     },
-    data: function() {
+    data: function () {
         return {
             newComment: {
-                content: ""
+                content: "",
             },
             showForm: false,
             disableSubmitBtn: false,
             showUploader: false,
             inputId: "",
-            previewList: []
+            previewList: [],
         };
     },
     mounted() {
         if (this.commentId) this.inputId = this.commentId;
+        this.loadEmotionList();
     },
     computed: {
-        _attachments: function() {
-            return this.attachments.map(val => {
+        _attachments: function () {
+            return this.attachments.map((val) => {
                 return resolveImagePath(val);
             });
-        }
+        },
     },
     methods: {
         topComment(setTop) {
@@ -182,7 +184,7 @@ export default {
             this.$confirm("确定删除该评论吗？", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
-                type: "warning"
+                type: "warning",
             })
                 .then(() => {
                     this.$emit("deleteComment");
@@ -210,11 +212,11 @@ export default {
             this.disableSubmitBtn = false;
             this.$emit("addNewReply", {
                 content: this.newComment.content,
-                attachmentList: data
+                attachmentList: data,
             });
             this.showUploader = false;
             this.newComment = {
-                content: ""
+                content: "",
             };
         },
         attachmentUplodError() {
@@ -231,9 +233,10 @@ export default {
         },
         hideForm() {},
         formatContent,
-        async handleEmotionSelected(value) {
+        async handleEmotionSelected(emotionVal) {
+            console.log(emotionVal);
             const myField = document.querySelector(`#id${this.inputId}`);
-            console.log(myField, value);
+            const value = emotionVal.key;
             if (myField.selectionStart || myField.selectionStart === 0) {
                 let startPos = myField.selectionStart;
                 let endPos = myField.selectionEnd;
@@ -254,15 +257,42 @@ export default {
                 this.newComment.content = value;
             }
         },
-        showPreview: function(val) {
+        showPreview: function (val) {
             return resolveImagePath(val);
-        }
+        },
+        // 获取全部表情
+        loadEmotionList() {
+            try {
+                const emotion = sessionStorage.getItem("jx3_emotion");
+                if (emotion) {
+                    return;
+                } else {
+                    fetch(`${__dataPath}emotion/output/catalog.json`)
+                        .then((response) => response.json())
+                        .then((data) => {
+                            sessionStorage.setItem(
+                                "jx3_emotion",
+                                JSON.stringify(data)
+                            );
+                        });
+                }
+            } catch (e) {
+                fetch(`${__dataPath}emotion/output/catalog.json`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        sessionStorage.setItem(
+                            "jx3_emotion",
+                            JSON.stringify(data)
+                        );
+                    });
+            }
+        },
     },
     filters: {
-        showAttachment: function(val) {
+        showAttachment: function (val) {
             return resolveImagePath(val) + "?x-oss-process=style/comment_thumb";
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -316,6 +346,9 @@ export default {
     margin-top: 10px;
     .el-form-item {
         margin-bottom: 0px;
+    }
+    textarea {
+        font-family: inherit;
     }
 }
 </style>

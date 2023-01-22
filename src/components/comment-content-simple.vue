@@ -13,7 +13,7 @@
             <!-- <p v-for="(p, index) in getPList(content)" :key="index" v-html="formatContent(p)"></p> -->
         </div>
         <div class="u-attachements" v-if="attachments.length">
-           <el-image
+            <el-image
                 v-for="url in attachments"
                 :key="url"
                 :src="url | showAttachment"
@@ -49,8 +49,9 @@
 </template>
 
 <script>
-import { resolveImagePath,authorLink } from "@jx3box/jx3box-common/js/utils";
-import { formatContent } from '../utils';
+import { resolveImagePath, authorLink } from "@jx3box/jx3box-common/js/utils";
+import { __dataPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { formatContent } from "../utils";
 function fillZero(num) {
     return num > 9 ? num : `0${num}`;
 }
@@ -67,25 +68,28 @@ export default {
         "replyForUsername",
         "replyForUserId",
     ],
-    data: function() {
+    data: function () {
         return {
             showInput: false,
         };
     },
-    computed : {
-        _attachments : function (){
+    computed: {
+        _attachments: function () {
             return this.attachments.map((val) => {
-                return resolveImagePath(val)
-            })            
-        }
+                return resolveImagePath(val);
+            });
+        },
     },
     filters: {
-        profileLink: function(uid) {
+        profileLink: function (uid) {
             return authorLink(uid);
         },
-        showAttachment : function (val){
-            return resolveImagePath(val) + '?x-oss-process=style/comment_thumb'
-        }
+        showAttachment: function (val) {
+            return resolveImagePath(val) + "?x-oss-process=style/comment_thumb";
+        },
+    },
+    mounted() {
+        this.loadEmotionList();
     },
     methods: {
         formatContent,
@@ -93,13 +97,15 @@ export default {
             return content.split("\n");
         },
         deleteComment() {
-            this.$confirm("确定删除该评论吗？", '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                this.$emit("delete", this.commentId);
-            }).catch(() => {});
+            this.$confirm("确定删除该评论吗？", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning",
+            })
+                .then(() => {
+                    this.$emit("delete", this.commentId);
+                })
+                .catch(() => {});
         },
         dataFormat(str) {
             let d = new Date(str);
@@ -120,38 +126,66 @@ export default {
         showReplyForReplyInput() {
             this.$emit("showReplyInput");
         },
-        previewImg (i) {
+        previewImg(i) {
             this.$hevueImgPreview({
                 multiple: true,
                 nowImgIndex: i,
                 imgList: this._attachments,
                 controlBar: false,
-                clickMaskCLose: true
-            })
+                clickMaskCLose: true,
+            });
         },
-        showPreview: function (val){
-            return resolveImagePath(val)
-        }
+        showPreview: function (val) {
+            return resolveImagePath(val);
+        },
+        // 获取全部表情
+        loadEmotionList() {
+            try {
+                const emotion = sessionStorage.getItem("jx3_emotion");
+                if (emotion) {
+                    return;
+                } else {
+                    fetch(`${__dataPath}emotion/output/catalog.json`)
+                        .then((response) => response.json())
+                        .then((data) => {
+                            sessionStorage.setItem(
+                                "jx3_emotion",
+                                JSON.stringify(data)
+                            );
+                        });
+                }
+            } catch (e) {
+                fetch(`${__dataPath}emotion/output/catalog.json`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        sessionStorage.setItem(
+                            "jx3_emotion",
+                            JSON.stringify(data)
+                        );
+                    });
+            }
+        },
     },
 };
 </script>
 
 <style lang="less">
 .u-reply-content {
-    div,p {
+    div,
+    p {
         padding: 0;
         margin: 0;
         line-height: 1.75;
-        font-size:14px;
+        font-size: 14px;
         img {
             vertical-align: -3px;
         }
     }
 }
-.u-reply-text{
+.u-reply-text {
     white-space: pre-line;
 }
-.u-attachements{
-    margin-top:10px;
+.u-attachements {
+    margin-top: 10px;
 }
 </style>
