@@ -71,36 +71,37 @@ import CommentInputForm from "./components/comment-input-form.vue";
 import CommentWithReply from "./components/comment-with-reply.vue";
 import { GET, POST, DELETE, PUT } from "./service";
 import { getOrderMode, setOrderMode } from "./options";
+import { __dataPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "Comment",
     props: ["id", "category", "normal", "order"],
     components: {
         CommentAvatar,
         CommentWithReply,
-        CommentInputForm
+        CommentInputForm,
     },
-    data: function() {
+    data: function () {
         return {
             baseAPI: "",
             commentPower: {
                 allow: false,
-                uid: -1
+                uid: -1,
             },
             commentList: [],
             pager: {
                 index: 1,
                 pageSize: 10,
                 pageTotal: 1,
-                total: 0
+                total: 0,
             },
             isDesc: "DESC",
-            loading: false
+            loading: false,
         };
     },
     computed: {
-        isNormal: function() {
+        isNormal: function () {
             return this.normal === undefined || this.normal;
-        }
+        },
     },
     methods: {
         changeOrder() {
@@ -131,7 +132,7 @@ export default {
                         message: "删除成功!",
                         type: "success",
                         duration: 3000,
-                        position: "bottom-right"
+                        position: "bottom-right",
                     });
                     this.reloadCommentList(this.pager.index);
                 })
@@ -144,7 +145,7 @@ export default {
                 orderQuery["desc"] = true;
             }
             GET(`${this.baseAPI}/comment/page/${index}`, orderQuery)
-                .then(resp => {
+                .then((resp) => {
                     this.commentList = resp.data || [];
                     this.pager = resp.page;
                 })
@@ -159,22 +160,22 @@ export default {
         userSubmitInputForm(data) {
             POST(`${this.baseAPI}/comment`, null, data)
                 .then((responseJSON) => {
-                    if(responseJSON && ~~responseJSON.code > 0){
+                    if (responseJSON && ~~responseJSON.code > 0) {
                         this.$notify({
                             title: "评论失败",
                             message: responseJSON.msg || "",
                             type: "error",
                             duration: 3000,
-                            position: "bottom-right"
-                         });
-                        return
+                            position: "bottom-right",
+                        });
+                        return;
                     }
                     this.$notify({
                         title: "",
                         message: "评论成功!",
                         type: "success",
                         duration: 3000,
-                        position: "bottom-right"
+                        position: "bottom-right",
                     });
                     // 位于第一页时才去更新数据,否则没必要,等用户自己触发
                     if (this.pager.index == 1) {
@@ -182,27 +183,54 @@ export default {
                     }
                 })
                 .catch(() => {});
-        }
+        },
+        // 获取全部表情
+        loadEmotionList() {
+            try {
+                const emotion = sessionStorage.getItem("jx3_emotion");
+                if (emotion) {
+                    return;
+                } else {
+                    fetch(`${__dataPath}emotion/output/catalog.json`)
+                        .then((response) => response.json())
+                        .then((data) => {
+                            sessionStorage.setItem(
+                                "jx3_emotion",
+                                JSON.stringify(data)
+                            );
+                        });
+                }
+            } catch (e) {
+                fetch(`${__dataPath}emotion/output/catalog.json`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        sessionStorage.setItem(
+                            "jx3_emotion",
+                            JSON.stringify(data)
+                        );
+                    });
+            }
+        },
     },
     filters: {
-        profileLink: function(uid) {
+        profileLink: function (uid) {
             return authorLink(uid);
         },
-        showAvatar: function(val) {
+        showAvatar: function (val) {
             return showAvatar(val, 144);
-        }
+        },
     },
     created() {
         this.baseAPI = `/api/comment/${this.category}/article/${this.id}`;
     },
     mounted() {
         getOrderMode()
-            .then(mode => {
+            .then((mode) => {
                 this.isDesc = mode;
             })
             .then(() => {
                 GET(`${this.baseAPI}/i-am-author`)
-                    .then(power => {
+                    .then((power) => {
                         this.commentPower = power;
                     })
                     .catch(() => {});
@@ -210,7 +238,8 @@ export default {
             .finally(() => {
                 this.reloadCommentList(1);
             });
-    }
+        this.loadEmotionList();
+    },
 };
 </script>
 

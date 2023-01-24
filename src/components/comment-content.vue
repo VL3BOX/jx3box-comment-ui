@@ -126,7 +126,6 @@
 <script>
 import Uploader from "./upload.vue";
 import { resolveImagePath } from "@jx3box/jx3box-common/js/utils";
-import { __dataPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { formatContent } from "../utils";
 import Emotion from "@jx3box/jx3box-emotion/src/Emotion.vue";
 
@@ -164,7 +163,6 @@ export default {
     },
     mounted() {
         if (this.commentId) this.inputId = this.commentId;
-        this.loadEmotionList();
     },
     computed: {
         _attachments: function () {
@@ -259,33 +257,6 @@ export default {
         },
         showPreview: function (val) {
             return resolveImagePath(val);
-        },
-        // 获取全部表情
-        loadEmotionList() {
-            try {
-                const emotion = sessionStorage.getItem("jx3_emotion");
-                if (emotion) {
-                    return;
-                } else {
-                    fetch(`${__dataPath}emotion/output/catalog.json`)
-                        .then((response) => response.json())
-                        .then((data) => {
-                            sessionStorage.setItem(
-                                "jx3_emotion",
-                                JSON.stringify(data)
-                            );
-                        });
-                }
-            } catch (e) {
-                fetch(`${__dataPath}emotion/output/catalog.json`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        sessionStorage.setItem(
-                            "jx3_emotion",
-                            JSON.stringify(data)
-                        );
-                    });
-            }
         },
     },
     filters: {

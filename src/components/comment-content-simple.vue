@@ -50,7 +50,6 @@
 
 <script>
 import { resolveImagePath, authorLink } from "@jx3box/jx3box-common/js/utils";
-import { __dataPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { formatContent } from "../utils";
 function fillZero(num) {
     return num > 9 ? num : `0${num}`;
@@ -87,9 +86,6 @@ export default {
         showAttachment: function (val) {
             return resolveImagePath(val) + "?x-oss-process=style/comment_thumb";
         },
-    },
-    mounted() {
-        this.loadEmotionList();
     },
     methods: {
         formatContent,
@@ -137,33 +133,6 @@ export default {
         },
         showPreview: function (val) {
             return resolveImagePath(val);
-        },
-        // 获取全部表情
-        loadEmotionList() {
-            try {
-                const emotion = sessionStorage.getItem("jx3_emotion");
-                if (emotion) {
-                    return;
-                } else {
-                    fetch(`${__dataPath}emotion/output/catalog.json`)
-                        .then((response) => response.json())
-                        .then((data) => {
-                            sessionStorage.setItem(
-                                "jx3_emotion",
-                                JSON.stringify(data)
-                            );
-                        });
-                }
-            } catch (e) {
-                fetch(`${__dataPath}emotion/output/catalog.json`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        sessionStorage.setItem(
-                            "jx3_emotion",
-                            JSON.stringify(data)
-                        );
-                    });
-            }
         },
     },
 };
