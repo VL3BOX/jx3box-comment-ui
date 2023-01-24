@@ -98,7 +98,6 @@ export default {
         },
         // 处理表情
         handleEmotionSelected(key) {
-            console.log(key);
             this.insertVariable(key);
         },
         /**
