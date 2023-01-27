@@ -9,7 +9,7 @@
                 >{{ username || "人字榜800线无名小侠" }}</el-link
             >
             <span class="u-mark u-top" v-if="item.is_top"
-                ><i class="el-icon-top"></i>置顶</span
+                ><i class="el-icon-download"></i>置顶</span
             >
             <span class="u-mark u-star" v-if="item.is_star"
                 ><i class="el-icon-star-off"></i>精华</span
@@ -149,6 +149,9 @@ export default {
     }
     .u-top {
         background-color: #6f42c1;
+        i{
+            transform: rotate(180deg);
+        }
     }
     .u-star {
         background-color: #f39;
