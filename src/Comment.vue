@@ -71,7 +71,6 @@ import CommentInputForm from "./components/comment-input-form.vue";
 import CommentWithReply from "./components/comment-with-reply.vue";
 import { GET, POST, DELETE, PUT } from "./service";
 import { getOrderMode, setOrderMode } from "./options";
-import { __dataPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "Comment",
     props: ["id", "category", "normal", "order"],
@@ -184,33 +183,6 @@ export default {
                 })
                 .catch(() => {});
         },
-        // 获取全部表情
-        loadEmotionList() {
-            try {
-                const emotion = sessionStorage.getItem("jx3_emotion");
-                if (emotion) {
-                    return;
-                } else {
-                    fetch(`${__dataPath}emotion/output/catalog.json`)
-                        .then((response) => response.json())
-                        .then((data) => {
-                            sessionStorage.setItem(
-                                "jx3_emotion",
-                                JSON.stringify(data)
-                            );
-                        });
-                }
-            } catch (e) {
-                fetch(`${__dataPath}emotion/output/catalog.json`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        sessionStorage.setItem(
-                            "jx3_emotion",
-                            JSON.stringify(data)
-                        );
-                    });
-            }
-        },
     },
     filters: {
         profileLink: function (uid) {
@@ -238,7 +210,6 @@ export default {
             .finally(() => {
                 this.reloadCommentList(1);
             });
-        this.loadEmotionList();
     },
 };
 </script>
