@@ -85,9 +85,9 @@ export default {
         attachmentUplodError() {
             this.disableSubmitBtn = false;
         },
-        async handleEmotionSelected(value) {
+        async handleEmotionSelected(emotion) {
             const myField = document.querySelector(`#id${this.inputId}`);
-            console.log(myField, value)
+            const value = emotion.key;
             if (myField.selectionStart || myField.selectionStart === 0) {
                 let startPos = myField.selectionStart;
                 let endPos = myField.selectionEnd;

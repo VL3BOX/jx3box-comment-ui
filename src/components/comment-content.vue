@@ -232,7 +232,6 @@ export default {
         hideForm() {},
         formatContent,
         async handleEmotionSelected(emotionVal) {
-            console.log(emotionVal);
             const myField = document.querySelector(`#id${this.inputId}`);
             const value = emotionVal.key;
             if (myField.selectionStart || myField.selectionStart === 0) {
