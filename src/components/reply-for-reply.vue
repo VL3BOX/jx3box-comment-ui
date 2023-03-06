@@ -1,24 +1,33 @@
 <template>
     <el-form ref="form" class="c-comment-subbox">
         <div class="u-subbox-label">
-            回复 <el-link type="primary" target="_blank" :href="userHref"
+            回复
+            <el-link type="primary" target="_blank" :href="userHref"
                 >＠{{ username }}</el-link
             >
             ：
         </div>
         <el-form-item>
-            <Emotion class="c-comment-emotion" @selected="handleEmotionSelected" />
-            <el-input type="textarea" v-model="content" :id="'id' + inputId"></el-input>
-            <el-button
-                class="u-admin"
-                type="text"
-                icon="el-icon-picture"
-                size="mini"
-                @click="showUploader = !showUploader"
-                >图片</el-button
-            >
+            <el-input
+                type="textarea"
+                v-model="content"
+                :id="'id' + inputId"
+                placeholder="输入回复..."
+            ></el-input>
         </el-form-item>
         <el-form-item>
+            <div class="c-comment-tools">
+                <i
+                    class="el-icon-picture-outline u-upload-icon"
+                    @click="showUploader = !showUploader"
+                ></i>
+                <Emotion
+                    class="c-comment-emotion"
+                    @selected="handleEmotionSelected"
+                    type="pop"
+                    :max="6"
+                ></Emotion>
+            </div>
             <Uploader
                 v-if="showUploader"
                 ref="uploader"
@@ -43,23 +52,23 @@
 
 <script>
 import Uploader from "./upload.vue";
-import Emotion from "@jx3box/jx3box-emotion/src/Emotion.vue"
+import Emotion from "@jx3box/jx3box-emotion/src/Emotion.vue";
 export default {
-    props: ["username", "userHref", 'currentId'],
-    data: function() {
+    props: ["username", "userHref", "currentId"],
+    data: function () {
         return {
             content: "",
             showUploader: false,
             disableSubmitBtn: false,
-            inputId: ''
+            inputId: "",
         };
     },
     components: {
         Uploader,
-        Emotion
+        Emotion,
     },
     mounted() {
-        if (this.currentId) this.inputId = this.currentId
+        if (this.currentId) this.inputId = this.currentId;
     },
     methods: {
         submintReply() {
@@ -107,7 +116,7 @@ export default {
             } else {
                 this.content = value;
             }
-        }
+        },
     },
 };
 </script>
@@ -115,7 +124,7 @@ export default {
 <style lang="less">
 .c-comment {
     .u-subbox-label {
-        margin-bottom:5px;
+        margin-bottom: 10px;
     }
 }
 </style>

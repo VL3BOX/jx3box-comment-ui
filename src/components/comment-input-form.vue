@@ -1,10 +1,6 @@
 <template>
     <el-form ref="form" :model="newComment" class="c-comment-box">
         <el-form-item>
-            <Emotion
-                class="c-comment-emotion"
-                @selected="handleEmotionSelected"
-            ></Emotion>
             <el-input
                 rows="3"
                 type="textarea"
@@ -14,6 +10,15 @@
                 placeholder="参与讨论..."
                 :id="inputId"
             ></el-input>
+            <div class="c-comment-tools">
+                <i class="el-icon-picture-outline u-upload-icon" @click="showUploader = !showUploader"></i>
+                <Emotion
+                    class="c-comment-emotion"
+                    @selected="handleEmotionSelected"
+                    type="pop"
+                    :max="6"
+                ></Emotion>
+            </div>
             <Uploader
                 class="u-uploader"
                 ref="uploader"
@@ -22,14 +27,6 @@
                 v-if="showUploader"
             />
             <div class="u-toolbar">
-                <el-button
-                    class="u-admin"
-                    type="text"
-                    icon="el-icon-picture"
-                    size="mini"
-                    @click="showUploader = !showUploader"
-                    >图片</el-button
-                >
                 <el-button
                     type="primary"
                     @click="onSubmit"

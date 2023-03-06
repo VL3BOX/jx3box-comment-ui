@@ -242,6 +242,33 @@ export default {
     }
 }
 
+.c-comment-tools {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    height: 48px;
+
+    .u-upload-icon {
+        font-size: 24px;
+        cursor: pointer;
+        margin-right: 10px;
+        // margin-left: 10px;
+        color: #3d454d;
+
+        &:hover {
+            color: #23ade5;
+        }
+    }
+    .c-jx3box-emotion {
+        margin: 0;
+        position: relative;
+        top: 7px;
+    }
+    .c-comment-emotion {
+        overflow: hidden;
+    }
+}
+
 .c-comment-list {
     padding: 10px 0;
     margin-bottom: 10px;

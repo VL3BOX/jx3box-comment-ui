@@ -80,26 +80,23 @@
             class="c-comment-subbox"
         >
             <el-form-item>
-                <Emotion
-                    class="c-comment-emotion"
-                    @selected="handleEmotionSelected"
-                ></Emotion>
                 <el-input
                     type="textarea"
                     v-model="newComment.content"
                     placeholder="参与评论..."
                     :id="'id' + inputId"
                 ></el-input>
-                <el-button
-                    class="u-admin"
-                    type="text"
-                    icon="el-icon-picture"
-                    size="mini"
-                    @click="showUploader = !showUploader"
-                    >图片</el-button
-                >
             </el-form-item>
             <el-form-item>
+                <div class="c-comment-tools">
+                    <i class="el-icon-picture-outline u-upload-icon" @click="showUploader = !showUploader"></i>
+                    <Emotion
+                        class="c-comment-emotion"
+                        @selected="handleEmotionSelected"
+                        type="pop"
+                        :max="6"
+                    ></Emotion>
+                </div>
                 <Uploader
                     v-if="showUploader"
                     ref="uploader"
