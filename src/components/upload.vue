@@ -7,7 +7,8 @@
             :on-preview="handlePictureCardPreview"
             :auto-upload="false"
             :file-list="fileList"
-            :limit="5"
+            :limit="maxCount"
+            :accept="'.jpg,.png,.gif'"
             multiple
             with-credentials
             :on-exceed="onExceed"
@@ -17,7 +18,8 @@
         >
             <i class="el-icon-plus"></i>
             <div slot="tip" class="el-upload__tip">
-                只能上传jpg/png/gif文件，且不超过2M的5张图片
+                只能上传最多 {{ maxCount }} 张 JPG / PNG / GIF 格式图片，单张图片不能超过
+                {{ maxSize / 1024 / 1024 }} M
             </div>
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
@@ -34,6 +36,9 @@ export default {
             dialogVisible: false,
             fileList: [],
             successList: [],
+
+            maxCount: 5,
+            maxSize: 2 * 1024 * 1024,
         };
     },
     methods: {
@@ -44,7 +49,7 @@ export default {
         onExceed() {
             this.$notify({
                 title: "",
-                message: "文件超过数量!",
+                message: `最多上传 ${this.maxCount} 张图片！`,
                 type: "error",
                 duration: 3000,
                 position: "bottom-right",
@@ -55,7 +60,7 @@ export default {
                 if (file.size > 2000 * 1024) {
                     this.$notify({
                         title: "",
-                        message: "图片大小不能超过500kb!",
+                        message: `单张图片大小不能超过 ${this.maxSize / 1024 / 1024} M！`,
                         type: "error",
                         duration: 3000,
                         position: "bottom-right",
