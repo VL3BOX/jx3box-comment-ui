@@ -8,7 +8,7 @@
             :auto-upload="false"
             :file-list="fileList"
             :limit="maxCount"
-            :accept="'.jpg,.png,.gif'"
+            :accept="acceptedExtensions.reduce((acc, cur) => acc + `.${cur},`, '')"
             multiple
             with-credentials
             :on-exceed="onExceed"
@@ -18,8 +18,8 @@
         >
             <i class="el-icon-plus"></i>
             <div slot="tip" class="el-upload__tip">
-                只能上传最多 {{ maxCount }} 张 JPG / PNG / GIF 格式图片，单张图片不能超过
-                {{ maxSize / 1024 / 1024 }} M
+                最多上传 {{ maxCount }} 张 {{ acceptedExtensions.join(" / ").toUpperCase() }} 格式图片，单张图片不能超过
+                {{ maxSize / 1024 / 1024 }} MB
             </div>
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
@@ -37,6 +37,7 @@ export default {
             fileList: [],
             successList: [],
 
+            acceptedExtensions: ["jpg", "jpeg", "png", "gif"],
             maxCount: 5,
             maxSize: 2 * 1024 * 1024,
         };
@@ -60,7 +61,7 @@ export default {
                 if (file.size > 2000 * 1024) {
                     this.$notify({
                         title: "",
-                        message: `单张图片大小不能超过 ${this.maxSize / 1024 / 1024} M！`,
+                        message: `单张图片大小不能超过 ${this.maxSize / 1024 / 1024} MB！`,
                         type: "error",
                         duration: 3000,
                         position: "bottom-right",
