@@ -58,7 +58,7 @@ export default {
         },
         onChange(file, fileList) {
             if (file.status == "ready") {
-                if (file.size > 2000 * 1024) {
+                if (file.size > this.maxSize) {
                     this.$notify({
                         title: "",
                         message: `单张图片大小不能超过 ${this.maxSize / 1024 / 1024} MB！`,
