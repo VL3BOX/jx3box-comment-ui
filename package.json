@@ -49,5 +49,8 @@
     },
     "browserslist": [
         "last 5 chrome versions"
-    ]
+    ],
+    "engines": {
+        "node": ">= 14 < 17"
+    }
 }
