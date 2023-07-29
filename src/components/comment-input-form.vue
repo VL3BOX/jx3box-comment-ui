@@ -4,7 +4,7 @@
             <el-input
                 rows="3"
                 type="textarea"
-                maxlength="300"
+                :maxlength="maxLength"
                 show-word-limit
                 v-model="newComment.content"
                 placeholder="参与讨论..."
@@ -60,6 +60,7 @@ export default {
     },
     data: function() {
         return {
+            maxLength: 500,
             showUploader: false,
             disableSubmitBtn: false,
             newComment: {
