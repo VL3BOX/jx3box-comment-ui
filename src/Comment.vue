@@ -12,6 +12,14 @@
                     <el-radio-button label="DESC">最后靠前</el-radio-button>
                     <el-radio-button label="ASC">最早靠前</el-radio-button>
                 </el-radio-group>
+                <el-switch
+                    class="c-comment-order-likes"
+                    v-model="orderByLikes"
+                    @change="changeOrderByLikes"
+                    active-text="点赞最多靠前"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949">
+                </el-switch>
             </div>
             <template v-if="isNormal">
                 <div
@@ -95,6 +103,7 @@ export default {
                 total: 0,
             },
             isDesc: "DESC",
+            orderByLikes: false,
             loading: false,
         };
     },
@@ -108,8 +117,11 @@ export default {
             this.reloadCommentList(this.pager.index);
             setOrderMode(this.isDesc ? "DESC" : "ASC");
         },
+        changeOrderByLikes() {
+            this.reloadCommentList(this.pager.index);
+            setOrderMode(this.orderByLikes ? false : true);
+        },
         setLikeComment(id, isLike){
-            console.log(id, isLike,99999)
             var action = isLike ? "like" : "unlike";
             PUT(`${this.baseAPI}/comment/${id}/${action}`)
                 .then(() => {
@@ -153,6 +165,7 @@ export default {
             if (this.isDesc === "DESC") {
                 orderQuery["desc"] = true;
             }
+            orderQuery["orderby_likes"] = this.orderByLikes;
             GET(`${this.baseAPI}/comment/page/${index}`, orderQuery)
                 .then((resp) => {
                     this.commentList = resp.data || [];
@@ -341,5 +354,8 @@ export default {
 .c-comment-emotion {
     max-height: 168px;
     overflow: auto;
+}
+.c-comment-order-likes{
+    margin-left: 10px;
 }
 </style>
