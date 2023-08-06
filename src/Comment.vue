@@ -35,6 +35,7 @@
                         @deleteComment="deleteComment"
                         @setTopComment="setTopComment"
                         @setStarComment="setStarComment"
+                        @setLikeComment="setLikeComment"
                         :user-href="item.userId | profileLink"
                         :username="item.displayName"
                     />
@@ -106,6 +107,15 @@ export default {
         changeOrder() {
             this.reloadCommentList(this.pager.index);
             setOrderMode(this.isDesc ? "DESC" : "ASC");
+        },
+        setLikeComment(id, isLike){
+            console.log(id, isLike,99999)
+            var action = isLike ? "like" : "unlike";
+            PUT(`${this.baseAPI}/comment/${id}/${action}`)
+                .then(() => {
+                  //  this.reloadCommentList(this.pager.index);
+                })
+                .catch(() => {});
         },
         setTopComment(id, setTop) {
             var action = setTop ? "set" : "cancel";

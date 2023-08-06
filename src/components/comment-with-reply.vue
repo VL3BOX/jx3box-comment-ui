@@ -25,10 +25,13 @@
             :can-cancel-top="power.is_author && item.is_top"
             :can-set-star="!item.is_star && power.group >= 64"
             :can-cancel-star="item.is_star && power.group >= 64"
+            :is-like="item.is_likes == 1"
+            :likes="~~item.likes"
             @addNewReply="addNewReply"
             @deleteComment="deleteComment"
             @setTopComment="setTopComment"
             @setStarComment="setStarComment"
+            @setLikeComment="setLikeComment"
         />
         <ReplyList
             :data="replyList"
@@ -38,6 +41,7 @@
             @deleteReply="deleteReply"
             @goto="gotoReplyListIndex"
             @resetReply="resetReply"
+            @setLikeComment="setLikeReply"
         />
     </div>
 </template>
@@ -83,6 +87,12 @@ export default {
         },
         setStarComment(setStar) {
             this.$emit("setStarComment", this.item.id, setStar);
+        },
+        setLikeComment(setLike) {
+            this.$emit("setLikeComment", this.item.id, setLike);
+        },
+        setLikeReply(id, setLike) {
+            this.$emit("setLikeComment", id, setLike);
         },
         addNewReply(data) {
             POST(`${this.baseApi}/comment/${this.item.id}/reply`, null, data)

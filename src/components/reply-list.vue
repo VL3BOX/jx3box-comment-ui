@@ -8,6 +8,7 @@
             :power="power"
             @deleteReply="deleteReply"
             @addReply="addReply"
+            @setLikeComment="setLikeComment"
         />
         <!-- 分页 -->
         <el-row v-if="data.length >= 3 || showPager">
@@ -66,6 +67,9 @@ export default {
         },
         deleteReply(id) {
             this.$emit("deleteReply", id);
+        },
+        setLikeComment(id, isLike) {
+            this.$emit("setLikeComment", id, isLike);
         },
         addReply(data) {
             this.$emit("addNewReply", data);
