@@ -12,6 +12,14 @@
                     <el-radio-button label="DESC">最后靠前</el-radio-button>
                     <el-radio-button label="ASC">最早靠前</el-radio-button>
                 </el-radio-group>
+                <el-switch
+                    class="c-comment-order-likes"
+                    v-model="orderByLikes"
+                    @change="changeOrderByLikes"
+                    active-text="点赞最多靠前"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949">
+                </el-switch>
             </div>
             <template v-if="isNormal">
                 <div
@@ -35,6 +43,7 @@
                         @deleteComment="deleteComment"
                         @setTopComment="setTopComment"
                         @setStarComment="setStarComment"
+                        @setLikeComment="setLikeComment"
                         :user-href="item.userId | profileLink"
                         :username="item.displayName"
                     />
@@ -94,6 +103,7 @@ export default {
                 total: 0,
             },
             isDesc: "DESC",
+            orderByLikes: false,
             loading: false,
         };
     },
@@ -106,6 +116,18 @@ export default {
         changeOrder() {
             this.reloadCommentList(this.pager.index);
             setOrderMode(this.isDesc ? "DESC" : "ASC");
+        },
+        changeOrderByLikes() {
+            this.reloadCommentList(this.pager.index);
+            setOrderMode(this.orderByLikes ? false : true);
+        },
+        setLikeComment(id, isLike){
+            var action = isLike ? "like" : "unlike";
+            PUT(`${this.baseAPI}/comment/${id}/${action}`)
+                .then(() => {
+                  //  this.reloadCommentList(this.pager.index);
+                })
+                .catch(() => {});
         },
         setTopComment(id, setTop) {
             var action = setTop ? "set" : "cancel";
@@ -143,6 +165,7 @@ export default {
             if (this.isDesc === "DESC") {
                 orderQuery["desc"] = true;
             }
+            orderQuery["orderby_likes"] = this.orderByLikes;
             GET(`${this.baseAPI}/comment/page/${index}`, orderQuery)
                 .then((resp) => {
                     this.commentList = resp.data || [];
@@ -331,5 +354,8 @@ export default {
 .c-comment-emotion {
     max-height: 168px;
     overflow: auto;
+}
+.c-comment-order-likes{
+    margin-left: 10px;
 }
 </style>

@@ -24,6 +24,24 @@
         <div class="u-toolbar">
             <el-button
                 class="u-admin"
+                v-if="!currentUserHadLike"
+                type="text"
+                size="mini"
+                icon="el-icon-circle-check"
+                @click="doLike(true)"
+                >点赞{{ likesFormat(hasLikeCount) }}</el-button
+            >
+            <el-button
+                class="u-admin"
+                type="text"
+                size="mini"
+                icon="el-icon-success"
+                v-if="currentUserHadLike"
+                @click="doLike(false)"
+                >已赞{{ likesFormat(hasLikeCount) }}</el-button
+            >
+            <el-button
+                class="u-admin"
                 v-if="canReply"
                 type="text"
                 icon="el-icon-chat-line-round"
@@ -63,6 +81,8 @@ export default {
         "hasReply",
         "canDelete",
         "canReply",
+        "isLike", // 是否已点赞
+        "likes", // 点赞数
         "userHref",
         "replyForUsername",
         "replyForUserId",
@@ -70,6 +90,8 @@ export default {
     data: function () {
         return {
             showInput: false,
+            currentUserHadLike: this.isLike,
+            hasLikeCount: this.likes,
         };
     },
     computed: {
@@ -92,6 +114,14 @@ export default {
         getPList(content) {
             return content.split("\n");
         },
+        doLike(setLike){
+            if(setLike === this.currentUserHadLike){
+                return
+            }
+            this.currentUserHadLike = setLike;
+            this.hasLikeCount = setLike ? this.hasLikeCount + 1 : this.hasLikeCount - 1;
+            this.$emit("setLikeComment", setLike);
+        },
         deleteComment() {
             this.$confirm("确定删除该评论吗？", "提示", {
                 confirmButtonText: "确定",
@@ -102,6 +132,10 @@ export default {
                     this.$emit("delete", this.commentId);
                 })
                 .catch(() => {});
+        },
+        
+        likesFormat(count){
+            return count > 0 ? count : ''
         },
         dataFormat(str) {
             let d = new Date(str);

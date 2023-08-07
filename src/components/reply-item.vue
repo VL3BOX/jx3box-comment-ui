@@ -19,8 +19,11 @@
             :user-href="reply.replyForUID | profileLink"
             :reply-for-username="reply.replyForUsername"
             :reply-for-user-id="reply.replyForUID"
+            :is-like="reply.is_likes == 1"
+            :likes="~~reply.likes"
             @delete="deleteReply"
             @showReplyInput="showReplyForReplyFrom = !showReplyForReplyFrom"
+            @setLikeComment="setLikeComment"
         />
         <!--隐藏起来的回复评论的评论表单-->
         <ReplyForReply
@@ -69,6 +72,9 @@ export default {
     methods: {
         deleteReply(id) {
             this.$emit("deleteReply", id);
+        },
+        setLikeComment(setLike) {
+            this.$emit("setLikeComment", this.reply.id, setLike);
         },
         doReply(replyData) {
             (replyData.replyForUID = this.reply.userId),

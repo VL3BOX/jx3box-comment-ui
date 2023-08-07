@@ -17,6 +17,24 @@
         <div class="u-toolbar">
             <el-button
                 class="u-admin"
+                v-if="!currentUserHadLike"
+                type="text"
+                size="mini"
+                icon="el-icon-circle-check"
+                @click="doLike(true)"
+                >点赞{{ likesFormat(hasLikeCount) }}</el-button
+            >
+            <el-button
+                class="u-admin"
+                type="text"
+                size="mini"
+                icon="el-icon-success"
+                v-if="currentUserHadLike"
+                @click="doLike(false)"
+                >已赞{{ likesFormat(hasLikeCount) }}</el-button
+            >
+            <el-button
+                class="u-admin"
                 type="text"
                 size="mini"
                 icon="el-icon-chat-round"
@@ -136,6 +154,8 @@ export default {
         "hasReply",
         "canDelete",
         "canSetTop",
+        "isLike", // 是否已点赞
+        "likes", // 点赞数
         "canCancelTop",
         "canSetStar",
         "canCancelStar",
@@ -156,6 +176,9 @@ export default {
             showUploader: false,
             inputId: "",
             previewList: [],
+            
+            currentUserHadLike: this.isLike,
+            hasLikeCount: this.likes,
         };
     },
     mounted() {
@@ -169,6 +192,14 @@ export default {
         },
     },
     methods: {
+        doLike(setLike){
+            if(setLike === this.currentUserHadLike){
+                return
+            }
+            this.currentUserHadLike = setLike;
+            this.hasLikeCount = setLike ? this.hasLikeCount + 1 : this.hasLikeCount - 1;
+            this.$emit("setLikeComment", setLike);
+        },
         topComment(setTop) {
             this.$emit("setTopComment", setTop);
         },
@@ -201,6 +232,9 @@ export default {
                 ":" +
                 fillZero(d.getSeconds())
             );
+        },
+        likesFormat(count){
+            return count > 0 ? count : ''
         },
 
         attachmentUploadFinish(data) {
