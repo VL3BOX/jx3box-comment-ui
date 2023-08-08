@@ -21,7 +21,7 @@
                 type="text"
                 size="mini"
                 @click="doLike(true)"
-                ><img class="u-up" src="~@/assets/img/up.svg" alt="">点赞{{ likesFormat(hasLikeCount) }}</el-button
+                ><img class="u-up" src="../assets/img/up.svg" alt="">点赞{{ likesFormat(hasLikeCount) }}</el-button
             >
             <el-button
                 class="u-admin"
@@ -29,7 +29,7 @@
                 size="mini"
                 v-if="currentUserHadLike"
                 @click="doLike(false)"
-                ><img class="u-up" src="~@/assets/img/uped.svg" alt="">已赞{{ likesFormat(hasLikeCount) }}</el-button
+                ><img class="u-up" src="../assets/img/uped.svg" alt="">已赞{{ likesFormat(hasLikeCount) }}</el-button
             >
             <el-button
                 class="u-admin"
