@@ -24,7 +24,7 @@ async function getOrderMode() {
 async function setOrderMode(val) {
     if (User.isLogin()) {
         return $cms()
-            .post(
+            .put(
                 `/api/cms/user/conf`,
                 {
                     val: val

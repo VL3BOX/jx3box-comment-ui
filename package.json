@@ -1,10 +1,10 @@
 {
     "name": "@jx3box/jx3box-comment-ui",
-    "version": "1.7.14",
+    "version": "1.7.15",
     "scripts": {
-        "dev": "env DEV_SERVER=true NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve",
-        "serve": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
-        "build": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build --target lib --name comment src/Comment.vue && cp index.html dist/demo.html",
+        "dev": "env DEV_SERVER=true vue-cli-service serve",
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build --target lib --name comment src/Comment.vue && cp index.html dist/demo.html",
         "lint": "vue-cli-service lint",
         "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common@latest @jx3box/jx3box-emotion@latest"
     },

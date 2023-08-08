@@ -16,9 +16,7 @@
                     class="c-comment-order-likes"
                     v-model="orderByLikes"
                     @change="changeOrderByLikes"
-                    active-text="点赞最多靠前"
-                    active-color="#13ce66"
-                    inactive-color="#ff4949">
+                    active-text="点赞最多靠前">
                 </el-switch>
             </div>
             <template v-if="isNormal">
@@ -115,11 +113,11 @@ export default {
     methods: {
         changeOrder() {
             this.reloadCommentList(this.pager.index);
-            setOrderMode(this.isDesc ? "DESC" : "ASC");
+            setOrderMode(this.isDesc === "ASC" ? "DESC" : "ASC");
         },
         changeOrderByLikes() {
             this.reloadCommentList(this.pager.index);
-            setOrderMode(this.orderByLikes ? false : true);
+            // setOrderMode(this.orderByLikes ? false : true);
         },
         setLikeComment(id, isLike){
             var action = isLike ? "like" : "unlike";
