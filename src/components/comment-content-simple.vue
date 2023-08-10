@@ -27,18 +27,16 @@
                 v-if="!currentUserHadLike"
                 type="text"
                 size="mini"
-                icon="el-icon-circle-check"
                 @click="doLike(true)"
-                >点赞{{ likesFormat(hasLikeCount) }}</el-button
+                ><img class="u-up" src="../assets/img/up.svg" alt="">点赞{{ likesFormat(hasLikeCount) }}</el-button
             >
             <el-button
                 class="u-admin"
                 type="text"
                 size="mini"
-                icon="el-icon-success"
                 v-if="currentUserHadLike"
                 @click="doLike(false)"
-                >已赞{{ likesFormat(hasLikeCount) }}</el-button
+                ><img class="u-up" src="../assets/img/uped.svg" alt="">已赞{{ likesFormat(hasLikeCount) }}</el-button
             >
             <el-button
                 class="u-admin"
@@ -190,5 +188,12 @@ export default {
 }
 .u-attachements {
     margin-top: 10px;
+}
+.u-up {
+    width: 12px;
+    height: 12px;
+    position: relative;
+    top: 1px;
+    margin-right: 5px;
 }
 </style>
