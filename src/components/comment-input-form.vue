@@ -18,6 +18,7 @@
                     type="pop"
                     :max="6"
                 ></Emotion>
+                <quickReply></quickReply>
             </div>
             <Uploader
                 class="u-uploader"
@@ -42,11 +43,14 @@
 <script>
 import Uploader from "./upload.vue";
 import Emotion from "@jx3box/jx3box-emotion/src/Emotion.vue";
+import quickReply from "./quick-reply.vue";
 
 export default {
+    name: "CommentInputForm",
     components: {
         Uploader,
-        Emotion
+        Emotion,
+        quickReply
     },
     props: {
         // 用于判定该评论组件是否在底部
