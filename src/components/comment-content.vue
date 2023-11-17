@@ -1,130 +1,133 @@
 <template>
     <div class="u-cmt">
-        <div
+        <div 
             class="u-text"
             v-if="content != ''"
             v-html="formatContent(content)"
-        ></div>
+            ></div>
         <div class="u-attachements" v-if="attachments.length">
             <el-image
-                v-for="url in attachments"
-                :key="url"
+                v-for="url in attachments" 
+                :key="url" 
                 :src="url | showAttachment"
-                :preview-src-list="[showPreview(url)]"
+                :preview-src-list="[showPreview(url)]" 
                 lazy
-            ></el-image>
+                ></el-image>
         </div>
         <div class="u-toolbar">
-            <el-button
-                class="u-admin"
-                v-if="!currentUserHadLike"
-                type="text"
-                size="mini"
-                @click="doLike(true)"
-                ><img class="u-up" src="../assets/img/up.svg" alt="">点赞{{ likesFormat(hasLikeCount) }}</el-button
+            <el-button 
+            class="u-admin" 
+            v-if="!currentUserHadLike" 
+            type="text" 
+            size="mini" 
+            @click="doLike(true)"
+            ><img class="u-up" src="../assets/img/up.svg" alt="">点赞{{ likesFormat(hasLikeCount) }}</el-button
             >
-            <el-button
-                class="u-admin"
-                type="text"
-                size="mini"
-                v-if="currentUserHadLike"
+            <el-button 
+                class="u-admin" 
+                type="text" 
+                size="mini" 
+                v-if="currentUserHadLike" 
                 @click="doLike(false)"
                 ><img class="u-up" src="../assets/img/uped.svg" alt="">已赞{{ likesFormat(hasLikeCount) }}</el-button
-            >
-            <el-button
-                class="u-admin"
-                type="text"
-                size="mini"
+                >
+            <el-button 
+                class="u-admin" 
+                type="text" 
+                size="mini" 
                 icon="el-icon-chat-round"
                 @click="showForm = !showForm"
                 >回复</el-button
             >
-            <el-button
-                class="u-admin"
-                v-if="canDelete"
-                type="text"
-                icon="el-icon-delete"
+            <el-button 
+                class="u-admin" 
+                v-if="canDelete" 
+                type="text" 
+                icon="el-icon-delete" 
                 size="mini"
                 @click="deleteComment()"
                 >删除</el-button
             >
-            <el-button
-                class="u-admin"
-                v-if="canSetTop"
-                type="text"
+            <el-button 
+                class="u-admin" 
+                v-if="canSetTop" 
+                type="text" 
                 icon="el-icon-top"
                 size="mini"
                 @click="topComment(true)"
-                >置顶</el-button
+            >置顶</el-button
             >
-            <el-button
-                class="u-admin"
-                v-if="canCancelTop"
-                type="text"
-                icon="el-icon-top"
+            <el-button 
+                class="u-admin" 
+                v-if="canCancelTop" 
+                type="text" 
+                icon="el-icon-top" 
                 size="mini"
                 @click="topComment(false)"
                 >取消置顶</el-button
             >
-            <el-button
-                class="u-admin"
-                v-if="canSetStar"
-                type="text"
-                icon="el-icon-star-off"
+            <el-button 
+                class="u-admin" 
+                v-if="canSetStar" 
+                type="text" 
+                icon="el-icon-star-off" 
                 size="mini"
                 @click="starComment(true)"
                 >加精</el-button
             >
-            <el-button
-                class="u-admin"
-                v-if="canCancelStar"
-                type="text"
-                icon="el-icon-star-on"
+            <el-button 
+                class="u-admin" 
+                v-if="canCancelStar" 
+                type="text" 
+                icon="el-icon-star-on" 
                 size="mini"
                 @click="starComment(false)"
                 >取消加精</el-button
             >
+            <el-button class="u-admin" v-if="canAddWhite" type="text" icon="el-icon-star-off" size="mini"
+                @click="setWhiteComment(true)">精选</el-button>
+            <el-button class="u-admin" v-if="canRemoveWhite" type="text" icon="el-icon-star-on" size="mini"
+                @click="setWhiteComment(false)">取消精选</el-button>
             <time class="u-date">
                 <i class="el-icon-time"></i>
                 {{ dataFormat(date) }}
             </time>
         </div>
-        <el-form
-            v-if="showForm"
-            ref="form"
-            :model="newComment"
-            class="c-comment-subbox"
-        >
+        <el-form 
+            v-if="showForm" 
+            ref="form" 
+            :model="newComment" 
+            class="c-comment-subbox">
             <el-form-item>
-                <el-input
-                    type="textarea"
-                    v-model="newComment.content"
+                <el-input 
+                    type="textarea" 
+                    v-model="newComment.content" 
                     placeholder="参与评论..."
                     :id="'id' + inputId"
-                ></el-input>
+                    ></el-input>
             </el-form-item>
             <el-form-item>
                 <div class="c-comment-tools">
                     <i class="el-icon-picture-outline u-upload-icon" @click="showUploader = !showUploader"></i>
-                    <Emotion
-                        class="c-comment-emotion"
-                        @selected="handleEmotionSelected"
-                        type="pop"
+                    <Emotion 
+                        class="c-comment-emotion" 
+                        @selected="handleEmotionSelected" 
+                        type="pop" 
                         :max="6"
                     ></Emotion>
                 </div>
-                <Uploader
-                    v-if="showUploader"
-                    ref="uploader"
+                <Uploader 
+                    v-if="showUploader" 
+                    ref="uploader" 
                     @onFinish="attachmentUploadFinish"
                     @onError="attachmentUplodError"
                 />
             </el-form-item>
             <el-form-item>
-                <el-button
-                    size="mini"
-                    type="primary"
-                    @click="submit()"
+                <el-button 
+                    size="mini" 
+                    type="primary" 
+                    @click="submit()" 
                     :disabled="disableSubmitBtn"
                     >提交</el-button
                 >
@@ -152,13 +155,15 @@ export default {
         "hasReply",
         "canDelete",
         "canSetTop",
+        "canCancelTop",
         "isLike", // 是否已点赞
         "likes", // 点赞数
-        "canCancelTop",
         "canSetStar",
         "canCancelStar",
         "attachments",
         "commentId",
+        "canAddWhite", // 是否可以精选
+        "canRemoveWhite", // 是否可以取消精选
     ],
     components: {
         Uploader,
@@ -174,7 +179,7 @@ export default {
             showUploader: false,
             inputId: "",
             previewList: [],
-            
+
             currentUserHadLike: this.isLike,
             hasLikeCount: this.likes,
         };
@@ -203,6 +208,9 @@ export default {
         },
         starComment(setStar) {
             this.$emit("setStarComment", setStar);
+        },
+        setWhiteComment(white) {
+            this.$emit("setWhiteComment", white);
         },
         deleteComment() {
             this.$confirm("确定删除该评论吗？", "提示", {

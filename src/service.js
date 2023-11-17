@@ -1,6 +1,6 @@
 //import { Notification } from 'element-ui';
-import { __Links,__next } from "@jx3box/jx3box-common/data/jx3box.json"
-import {Notification} from "element-ui"
+import { __Links, __next } from "@jx3box/jx3box-common/data/jx3box.json"
+import { Notification } from "element-ui"
 
 
 export const GET = function (url, queryParams) {
@@ -82,6 +82,7 @@ function __fetch(url, queryParams, options) {
         domain = domain.substring(0, domain.length - 1)
     }
     url = domain + url
+    url = url.replace("/api/", "/api/next2/")
     options.credentials = 'include'
     if (queryParams) {
         let queryQueue = []
@@ -94,7 +95,6 @@ function __fetch(url, queryParams, options) {
         }
         url = url + "?" + queryQueue.join("&")
     }
-
     return fetch(url, options).then((resp) => {
         switch (resp.status) {
             case 200:
@@ -135,7 +135,18 @@ function __fetch(url, queryParams, options) {
         contentType = contentType && contentType.split(";").shift()
         switch (contentType) {
             case "application/json":
-                return resp.json()
+                return resp.json().then((data) => {
+                    if (data && data.code > 0 && data.msg != "") {
+                        Notification.warning({
+                            title: "提示",
+                            message: data.code + ":" + data.msg,
+                            duration: 3000,
+                            position: "bottom-right"
+                        })
+                        return null
+                    }
+                    return data
+                })
             default:
                 return resp.text()
         }

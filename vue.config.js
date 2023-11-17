@@ -7,7 +7,7 @@ module.exports = {
                     request.setHeader("origin", "");
                 }
             },
-            "/api": {
+            "/api/next2": {
                 "target": process.env["DEV_SERVER"] == "true" ? "http://localhost:8000" : "https://next2.jx3box.com",
                 "onProxyReq": function (request) {
                     request.setHeader("origin", "");

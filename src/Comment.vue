@@ -4,63 +4,69 @@
             <CommentInputForm @submit="userSubmitInputForm" />
             <div class="c-comment-order">
                 <span class="u-label">排序模式：</span>
-                <el-radio-group
-                    v-model="isDesc"
-                    @change="changeOrder"
+                <el-radio-group 
+                    v-model="isDesc" 
+                    @change="changeOrder" 
                     size="mini"
                 >
                     <el-radio-button label="DESC">最后靠前</el-radio-button>
                     <el-radio-button label="ASC">最早靠前</el-radio-button>
                 </el-radio-group>
-                <el-switch
-                    class="c-comment-order-likes"
-                    v-model="orderByLikes"
+                <el-switch 
+                    class="c-comment-order-likes" 
+                    v-model="orderByLikes" 
                     @change="changeOrderByLikes"
                     active-text="点赞最多靠前">
                 </el-switch>
+
+                <el-switch class="c-comment-order-likes" v-model="openWhiteList" @change="changeWhiteList"
+                    v-if="commentPower.is_author" active-text="开启精选">
+                </el-switch>
+                <span v-if="!commentPower.is_author && openWhiteList">--------------！！！本篇文章作者已开启评论精选，被精选的评论才会被展示！！！</span>
             </div>
             <template v-if="isNormal">
-                <div
-                    v-for="item in commentList"
-                    :key="item.id"
+                <div 
+                    v-for="item in commentList" 
+                    :key="item.id" 
                     class="c-comment-list"
                 >
-                    <CommentAvatar
-                        :user-avatar="item.avatar | showAvatar"
+                    <CommentAvatar 
+                        :user-avatar="item.avatar | showAvatar" 
                         :user-href="item.userId | profileLink"
-                        :username="item.displayName"
-                        :avatarFrame="item.user_avatar_frame"
+                        :username="item.displayName" 
+                        :avatarFrame="item.user_avatar_frame" 
                         :withFrame="true"
-                        :avatarSize="48"
+                        :avatarSize="48" 
                     />
-                    <CommentWithReply
-                        :base-api="baseAPI"
-                        :item="item"
-                        :category="category"
+                    <CommentWithReply 
+                        :base-api="baseAPI" 
+                        :item="item" 
+                        :category="category" 
                         :power="commentPower"
-                        @deleteComment="deleteComment"
-                        @setTopComment="setTopComment"
+                        @deleteComment="deleteComment" 
+                        @setTopComment="setTopComment" 
                         @setStarComment="setStarComment"
-                        @setLikeComment="setLikeComment"
+                        @setWhiteComment="setWhiteComment"
+                        @setLikeComment="setLikeComment" 
                         :user-href="item.userId | profileLink"
-                        :username="item.displayName"
+                        :username="item.displayName" 
                     />
                 </div>
 
                 <div class="c-comment-pages">
-                    <CommentInputForm
-                        @submit="userSubmitInputForm"
+                    <CommentInputForm 
+                        @submit="userSubmitInputForm" 
                         :isBottom="commentList.length > 5"
-                        v-if="commentList.length > 5"
+                        v-if="commentList.length > 5" 
                     />
                     <div class="u-pages">
-                        <el-pagination
-                            style="text-align: right"
+                        <el-pagination 
+                            style="text-align: right" 
                             background
                             hide-on-single-page
-                            @current-change="handleCurrentChange"
+                            @current-change="handleCurrentChange" 
                             :current-page.sync="pager.index"
-                            :page-size="pager.pageSize"
+                            :page-size="pager.pageSize" 
                             layout="prev, pager, next, total"
                             :total="pager.total"
                         ></el-pagination>
@@ -102,6 +108,7 @@ export default {
             },
             isDesc: "DESC",
             orderByLikes: false,
+            openWhiteList: false,
             loading: false,
         };
     },
@@ -119,11 +126,18 @@ export default {
             this.reloadCommentList(this.pager.index);
             // setOrderMode(this.orderByLikes ? false : true);
         },
-        setLikeComment(id, isLike){
+        changeWhiteList() {
+            PUT(`${this.baseAPI}/meta/white-list/${this.openWhiteList ? "open" : "close"}`)
+                .then(() => {
+                    this.reloadCommentList(this.pager.index);
+                })
+                .catch(() => { });
+        },
+        setLikeComment(id, isLike) {
             var action = isLike ? "like" : "unlike";
             PUT(`${this.baseAPI}/comment/${id}/${action}`)
                 .then(() => {
-                  //  this.reloadCommentList(this.pager.index);
+                    //  this.reloadCommentList(this.pager.index);
                 })
                 .catch(() => {});
         },
@@ -142,6 +156,14 @@ export default {
                     this.reloadCommentList(this.pager.index);
                 })
                 .catch(() => {});
+        },
+        setWhiteComment(id, setWhite) { // 设置某个评论为精选
+            var action = setWhite ? "add" : "remove";
+            PUT(`${this.baseAPI}/comment/${id}/white-list/${action}`)
+                .then(() => {
+                    this.reloadCommentList(this.pager.index);
+                })
+                .catch(() => { });
         },
         deleteComment(id) {
             DELETE(`${this.baseAPI}/comment/${id}`)
@@ -225,6 +247,7 @@ export default {
                 GET(`${this.baseAPI}/i-am-author`)
                     .then((power) => {
                         this.commentPower = power;
+                        this.openWhiteList = power.is_white;
                     })
                     .catch(() => {});
             })

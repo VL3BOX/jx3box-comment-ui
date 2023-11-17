@@ -1,6 +1,6 @@
 <template>
     <!-- <Comment id="19382" category="post" order="desc" /> -->
-    <Comment :id="30015" category="post" order="desc" />
+    <Comment :id="100" category="post" order="desc" />
 </template>
 
 <script>
@@ -12,5 +12,4 @@ export default {
 };
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

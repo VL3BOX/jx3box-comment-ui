@@ -25,6 +25,8 @@
             :can-cancel-top="power.is_author && item.is_top"
             :can-set-star="!item.is_star && power.group >= 64"
             :can-cancel-star="item.is_star && power.group >= 64"
+            :can-add-white="!item.is_white && power.is_white == 1"
+            :can-remove-white="item.is_white && power.is_author == 1"
             :is-like="item.is_likes == 1"
             :likes="~~item.likes"
             @addNewReply="addNewReply"
@@ -32,6 +34,7 @@
             @setTopComment="setTopComment"
             @setStarComment="setStarComment"
             @setLikeComment="setLikeComment"
+            @setWhiteComment="setWhiteComment"
         />
         <ReplyList
             :data="replyList"
@@ -93,6 +96,9 @@ export default {
         },
         setLikeReply(id, setLike) {
             this.$emit("setLikeComment", id, setLike);
+        },
+        setWhiteComment( white) {
+            this.$emit("setWhiteComment",  this.item.id, white);
         },
         addNewReply(data) {
             POST(`${this.baseApi}/comment/${this.item.id}/reply`, null, data)
