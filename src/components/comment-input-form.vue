@@ -18,7 +18,7 @@
                     type="pop"
                     :max="6"
                 ></Emotion>
-                <quickReply></quickReply>
+                <quickReply @reply="onQuickReply"></quickReply>
             </div>
             <Uploader
                 class="u-uploader"
@@ -81,6 +81,12 @@ export default {
             } else {
                 this.attachmentUploadFinish([]);
             }
+        },
+        onQuickReply(item) {
+            this.$emit("submit", {
+                content: item,
+                attachmentList: []
+            });
         },
         // 文件上传完成后，进行数据提交
         attachmentUploadFinish(data) {
