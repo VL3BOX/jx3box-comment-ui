@@ -142,6 +142,7 @@ export default {
                 }`
             )
                 .then(() => {
+                    this.commentPower.is_white = this.openWhiteList;
                     this.reloadCommentList(this.pager.index);
                 })
                 .catch(() => {});
