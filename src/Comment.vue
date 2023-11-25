@@ -4,69 +4,78 @@
             <CommentInputForm @submit="userSubmitInputForm" />
             <div class="c-comment-order">
                 <span class="u-label">排序模式：</span>
-                <el-radio-group 
-                    v-model="isDesc" 
-                    @change="changeOrder" 
+                <el-radio-group
+                    v-model="isDesc"
+                    @change="changeOrder"
                     size="mini"
                 >
                     <el-radio-button label="DESC">最后靠前</el-radio-button>
                     <el-radio-button label="ASC">最早靠前</el-radio-button>
                 </el-radio-group>
-                <el-switch 
-                    class="c-comment-order-likes" 
-                    v-model="orderByLikes" 
+                <el-switch
+                    class="c-comment-order-likes"
+                    v-model="orderByLikes"
                     @change="changeOrderByLikes"
-                    active-text="点赞最多靠前">
+                    active-text="点赞最多靠前"
+                >
                 </el-switch>
 
-                <el-switch class="c-comment-order-likes" v-model="openWhiteList" @change="changeWhiteList"
-                    v-if="commentPower.is_author" active-text="开启精选">
+                <el-switch
+                    class="c-comment-order-likes"
+                    v-model="openWhiteList"
+                    @change="changeWhiteList"
+                    v-if="commentPower.is_author"
+                    active-text="开启精选"
+                >
                 </el-switch>
-                <span v-if="!commentPower.is_author && openWhiteList">--------------！！！本篇文章作者已开启评论精选，被精选的评论才会被展示！！！</span>
+                <span v-if="!commentPower.is_author && openWhiteList" class="c-comment-alert">
+                    <i class="el-icon-info"></i>
+                    本文章作者已开启评论精选
+                </span>
             </div>
             <template v-if="isNormal">
-                <div 
-                    v-for="item in commentList" 
-                    :key="item.id" 
+                <div
+                    v-for="item in commentList"
+                    :key="item.id"
                     class="c-comment-list"
                 >
-                    <CommentAvatar 
-                        :user-avatar="item.avatar | showAvatar" 
+                    <CommentAvatar
+                        :user-avatar="item.avatar | showAvatar"
                         :user-href="item.userId | profileLink"
-                        :username="item.displayName" 
-                        :avatarFrame="item.user_avatar_frame" 
+                        :username="item.displayName"
+                        :avatarFrame="item.user_avatar_frame"
                         :withFrame="true"
-                        :avatarSize="48" 
+                        :avatarSize="48"
                     />
-                    <CommentWithReply 
-                        :base-api="baseAPI" 
-                        :item="item" 
-                        :category="category" 
+                    <CommentWithReply
+                        :base-api="baseAPI"
+                        :item="item"
+                        :category="category"
                         :power="commentPower"
-                        @deleteComment="deleteComment" 
-                        @setTopComment="setTopComment" 
+                        @deleteComment="deleteComment"
+                        @setTopComment="setTopComment"
                         @setStarComment="setStarComment"
                         @setWhiteComment="setWhiteComment"
-                        @setLikeComment="setLikeComment" 
+                        @setLikeComment="setLikeComment"
                         :user-href="item.userId | profileLink"
-                        :username="item.displayName" 
+                        :username="item.displayName"
                     />
                 </div>
 
                 <div class="c-comment-pages">
-                    <CommentInputForm 
-                        @submit="userSubmitInputForm" 
+                    <CommentInputForm
+                        @submit="userSubmitInputForm"
                         :isBottom="commentList.length > 5"
-                        v-if="commentList.length > 5" 
+                        v-if="commentList.length > 5"
                     />
                     <div class="u-pages">
-                        <el-pagination 
-                            style="text-align: right" 
+                        <el-pagination
+                            style="text-align: right"
                             background
                             hide-on-single-page
-                            @current-change="handleCurrentChange" 
+                            @current-change="handleCurrentChange"
                             :current-page.sync="pager.index"
-                            :page-size="pager.pageSize" 
+                            :page-size="pager.pageSize"
                             layout="prev, pager, next, total"
                             :total="pager.total"
                         ></el-pagination>
@@ -127,11 +136,15 @@ export default {
             // setOrderMode(this.orderByLikes ? false : true);
         },
         changeWhiteList() {
-            PUT(`${this.baseAPI}/meta/white-list/${this.openWhiteList ? "open" : "close"}`)
+            PUT(
+                `${this.baseAPI}/meta/white-list/${
+                    this.openWhiteList ? "open" : "close"
+                }`
+            )
                 .then(() => {
                     this.reloadCommentList(this.pager.index);
                 })
-                .catch(() => { });
+                .catch(() => {});
         },
         setLikeComment(id, isLike) {
             var action = isLike ? "like" : "unlike";
@@ -157,13 +170,14 @@ export default {
                 })
                 .catch(() => {});
         },
-        setWhiteComment(id, setWhite) { // 设置某个评论为精选
+        setWhiteComment(id, setWhite) {
+            // 设置某个评论为精选
             var action = setWhite ? "add" : "remove";
             PUT(`${this.baseAPI}/comment/${id}/white-list/${action}`)
                 .then(() => {
                     this.reloadCommentList(this.pager.index);
                 })
-                .catch(() => { });
+                .catch(() => {});
         },
         deleteComment(id) {
             DELETE(`${this.baseAPI}/comment/${id}`)
@@ -359,6 +373,8 @@ export default {
     }
 }
 .c-comment-order {
+    display: flex;
+    align-items: center;
     background-color: #fafbfc;
     padding: 8px 10px;
     border-radius: 3px;
@@ -376,7 +392,13 @@ export default {
     max-height: 168px;
     overflow: auto;
 }
-.c-comment-order-likes{
+.c-comment-order-likes {
     margin-left: 10px;
+}
+.c-comment-alert {
+    
+    color: #e6a23c;
+    margin-left: 10px;
+    font-size: 12px;
 }
 </style>
