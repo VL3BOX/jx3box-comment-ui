@@ -85,7 +85,8 @@ export default {
         onQuickReply(item) {
             this.$emit("submit", {
                 content: item,
-                attachmentList: []
+                attachmentList: [],
+                is_template: 1
             });
         },
         // 文件上传完成后，进行数据提交
