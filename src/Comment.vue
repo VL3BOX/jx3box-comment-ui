@@ -19,7 +19,6 @@
                     active-text="点赞最多靠前"
                 >
                 </el-switch>
-
                 <el-switch
                     class="c-comment-order-likes"
                     v-model="openWhiteList"
@@ -28,10 +27,10 @@
                     active-text="开启精选"
                 >
                 </el-switch>
-                <span v-if="!commentPower.is_author && openWhiteList" class="c-comment-alert">
+                <!--<span v-if="!commentPower.is_author && openWhiteList" class="c-comment-alert">
                     <i class="el-icon-info"></i>
                     本文章作者已开启评论精选
-                </span>
+                </span>-->
             </div>
             <template v-if="isNormal">
                 <div
@@ -401,5 +400,10 @@ export default {
     color: #e6a23c;
     margin-left: 10px;
     font-size: 12px;
+}
+@media screen and (max-width:720px){
+    .c-comment-order-likes{
+        display:none;
+    }
 }
 </style>
