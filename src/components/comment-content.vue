@@ -210,8 +210,8 @@ export default {
         "canCancelStar",
         "attachments",
         "commentId",
-        "canAddWhite", // 是否可以精选
-        "canRemoveWhite", // 是否可以取消精选
+        "canAddWhite", // 是否可以添加到过滤白名单， 因为对于一般用户，它看不到非白名单的评论，所以“可以添加到白名单”的权限不要在加一次用户层面的权限判定
+        "canRemoveWhite", // 是否可以从过滤白名单移除
     ],
     components: {
         Uploader,

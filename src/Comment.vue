@@ -26,7 +26,7 @@
                         class="c-comment-panel-likes"
                         v-model="openWhiteList"
                         @change="changeWhiteList"
-                        v-if="commentPower.is_author || true"
+                        v-if="commentPower.is_author || commentPower.is_editor"
                         active-text="开启过滤"
                     >
                     </el-switch>
@@ -139,7 +139,9 @@ export default {
                 `${this.baseAPI}/meta/white-list/${
                     this.openWhiteList ? "open" : "close"
                 }`
-            )
+            ).then(()=>{
+                return this.reloadPower()
+            })
                 .then(() => {
                     this.commentPower.is_white = this.openWhiteList;
                     this.reloadCommentList(this.pager.index);
@@ -240,6 +242,14 @@ export default {
                 })
                 .catch(() => {});
         },
+        reloadPower(){
+            GET(`${this.baseAPI}/i-am-author`)
+                    .then((power) => {
+                        this.commentPower = power;
+                        this.openWhiteList = power.is_white;
+                    })
+                    .catch(() => {});
+        }
     },
     filters: {
         profileLink: function (uid) {
@@ -258,12 +268,7 @@ export default {
                 this.isDesc = mode;
             })
             .then(() => {
-                GET(`${this.baseAPI}/i-am-author`)
-                    .then((power) => {
-                        this.commentPower = power;
-                        this.openWhiteList = power.is_white;
-                    })
-                    .catch(() => {});
+               this.reloadPower()
             })
             .finally(() => {
                 this.reloadCommentList(1);

@@ -14,7 +14,7 @@
             :date="reply.commentDate"
             :content="reply.content"
             :attachments="reply.attachments | stringToArray"
-            :can-delete="power.allow || power.uid == reply.userId"
+            :can-delete="power.can_del || power.uid == reply.userId"
             :can-reply="power.uid != reply.userId"
             :user-href="reply.replyForUID | profileLink"
             :reply-for-username="reply.replyForUsername"
