@@ -11,7 +11,10 @@
                 :id="inputId"
             ></el-input>
             <div class="c-comment-tools">
-                <i class="el-icon-picture-outline u-upload-icon" @click="showUploader = !showUploader"></i>
+                <i
+                    class="el-icon-picture-outline u-upload-icon"
+                    @click="showUploader = !showUploader"
+                ></i>
                 <Emotion
                     class="c-comment-emotion"
                     @selected="handleEmotionSelected"
@@ -19,6 +22,22 @@
                     :max="6"
                 ></Emotion>
                 <quickReply @reply="onQuickReply"></quickReply>
+                <div class="c-comment-secret">
+                    <el-checkbox
+                        class="u-secret"
+                        v-model="is_secret"
+                        border
+                        size="mini"
+                        >悄悄话
+                        <el-tooltip
+                            class="item"
+                            effect="dark"
+                            content="勾选悄悄话后仅作者和你可见，并且不可再变更状态"
+                            placement="top"
+                        >
+                            <i class="el-icon-info"></i> </el-tooltip
+                    ></el-checkbox>
+                </div>
             </div>
             <Uploader
                 class="u-uploader"
@@ -50,27 +69,28 @@ export default {
     components: {
         Uploader,
         Emotion,
-        quickReply
+        quickReply,
     },
     props: {
         // 用于判定该评论组件是否在底部
         isBottom: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
     mounted() {
         if (this.isBottom) this.inputId = "textarea-bottom";
     },
-    data: function() {
+    data: function () {
         return {
             maxLength: 500,
             showUploader: false,
             disableSubmitBtn: false,
             newComment: {
-                content: ""
+                content: "",
             },
-            inputId: "textarea-top"
+            inputId: "textarea-top",
+            is_secret: false,
         };
     },
     methods: {
@@ -86,17 +106,17 @@ export default {
             this.$emit("submit", {
                 content: item,
                 attachmentList: [],
-                is_template: 1
+                is_template: 1,
             });
         },
         // 文件上传完成后，进行数据提交
         attachmentUploadFinish(data) {
             this.$emit("submit", {
                 content: this.newComment.content,
-                attachmentList: data
+                attachmentList: data,
             });
             this.newComment = {
-                content: ""
+                content: "",
             };
             this.showUploader = false;
 
@@ -115,7 +135,7 @@ export default {
          */
         async insertVariable(emotionVal) {
             const myField = document.querySelector(`#${this.inputId}`);
-            const value = emotionVal.key
+            const value = emotionVal.key;
             if (myField.selectionStart || myField.selectionStart === 0) {
                 let startPos = myField.selectionStart;
                 let endPos = myField.selectionEnd;
@@ -135,7 +155,13 @@ export default {
             } else {
                 this.newComment.content = value;
             }
-        }
-    }
+        },
+    },
 };
 </script>
+
+<style lang="less">
+.c-comment-secret {
+    margin-left: 15px;
+}
+</style>

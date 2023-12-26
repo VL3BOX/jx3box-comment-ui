@@ -1,6 +1,6 @@
 <template>
     <div class="c-comment-cmt">
-        <div>
+        <div class="c-comment-cmt__author">
             <el-link
                 class="u-name"
                 type="primary"
@@ -13,6 +13,9 @@
             >
             <span class="u-mark u-star" v-if="item.is_star"
                 ><i class="el-icon-star-off"></i>精华</span
+            >
+            <span class="u-mark u-secret" v-if="item.is_secret"
+                ><i class="el-icon-cherry"></i>悄悄话</span
             >
         </div>
         <CommentContent
@@ -154,14 +157,20 @@ export default {
 
 <style lang="less">
 .c-comment-cmt {
+    .u-name{
+        margin-right: 6px;
+    }
     .u-mark {
         font-style: normal;
         font-size: 12px;
-        padding: 1px 5px 2px 5px;
+        padding: 2px 5px;
         border-radius: 2px;
         color: #fff;
         margin-left: 5px;
         cursor: default;
+        display: inline-flex;
+        align-items: center;
+
     }
     .u-top {
         background-color: #6f42c1;
@@ -170,10 +179,13 @@ export default {
         }
     }
     .u-star {
-        background-color: #f39;
+        background-color: #fba524;
         i {
             margin-right: 2px;
         }
+    }
+    .u-secret{
+        background-color:#ff99cc;
     }
 }
 </style>

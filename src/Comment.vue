@@ -2,35 +2,35 @@
     <el-container class="c-comment" v-loading="loading">
         <el-main>
             <CommentInputForm @submit="userSubmitInputForm" />
-            <div class="c-comment-order">
-                <span class="u-label">排序模式：</span>
-                <el-radio-group
-                    v-model="isDesc"
-                    @change="changeOrder"
-                    size="mini"
-                >
-                    <el-radio-button label="DESC">最后靠前</el-radio-button>
-                    <el-radio-button label="ASC">最早靠前</el-radio-button>
-                </el-radio-group>
-                <el-switch
-                    class="c-comment-order-likes"
-                    v-model="orderByLikes"
-                    @change="changeOrderByLikes"
-                    active-text="点赞最多靠前"
-                >
-                </el-switch>
-                <el-switch
-                    class="c-comment-order-likes"
-                    v-model="openWhiteList"
-                    @change="changeWhiteList"
-                    v-if="commentPower.is_author"
-                    active-text="开启精选"
-                >
-                </el-switch>
-                <!--<span v-if="!commentPower.is_author && openWhiteList" class="c-comment-alert">
-                    <i class="el-icon-info"></i>
-                    本文章作者已开启评论精选
-                </span>-->
+            <div class="c-comment-panel">
+                <div class="u-order">
+                    <span class="u-label">排序模式：</span>
+                    <el-radio-group
+                        v-model="isDesc"
+                        @change="changeOrder"
+                        size="mini"
+                    >
+                        <el-radio-button label="DESC">最后靠前</el-radio-button>
+                        <el-radio-button label="ASC">最早靠前</el-radio-button>
+                    </el-radio-group>
+                </div>
+                <div class="u-op">
+                    <el-switch
+                        class="c-comment-panel-likes"
+                        v-model="orderByLikes"
+                        @change="changeOrderByLikes"
+                        active-text="获赞靠前"
+                    >
+                    </el-switch>
+                    <el-switch
+                        class="c-comment-panel-likes"
+                        v-model="openWhiteList"
+                        @change="changeWhiteList"
+                        v-if="commentPower.is_author || true"
+                        active-text="开启过滤"
+                    >
+                    </el-switch>
+                </div>
             </div>
             <template v-if="isNormal">
                 <div
@@ -372,9 +372,10 @@ export default {
         } */
     }
 }
-.c-comment-order {
+.c-comment-panel {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     background-color: #fafbfc;
     padding: 8px 10px;
     border-radius: 3px;
@@ -392,18 +393,19 @@ export default {
     max-height: 168px;
     overflow: auto;
 }
-.c-comment-order-likes {
+.c-comment-panel-likes {
     margin-left: 10px;
 }
 .c-comment-alert {
-    
     color: #e6a23c;
     margin-left: 10px;
     font-size: 12px;
 }
-@media screen and (max-width:720px){
-    .c-comment-order-likes{
-        display:none;
+@media screen and (max-width: 720px) {
+    .c-comment-panel {
+        .u-op{
+            display: none;
+        }
     }
 }
 </style>

@@ -28,7 +28,11 @@
                 type="text"
                 size="mini"
                 @click="doLike(true)"
-                ><img class="u-up" src="../assets/img/up.svg" alt="">点赞{{ likesFormat(hasLikeCount) }}</el-button
+                ><img
+                    class="u-up"
+                    src="../assets/img/heart_1.svg"
+                    alt=""
+                />点赞{{ likesFormat(hasLikeCount) }}</el-button
             >
             <el-button
                 class="u-admin"
@@ -36,7 +40,13 @@
                 size="mini"
                 v-if="currentUserHadLike"
                 @click="doLike(false)"
-                ><img class="u-up" src="../assets/img/uped.svg" alt="">已赞{{ likesFormat(hasLikeCount) }}</el-button
+                ><img
+                    class="u-up"
+                    src="../assets/img/heart_2.svg"
+                    alt=""
+                />已赞<span class="u-like-count">{{
+                    likesFormat(hasLikeCount)
+                }}</span></el-button
             >
             <el-button
                 class="u-admin"
@@ -55,6 +65,14 @@
                 size="mini"
                 @click="deleteComment()"
                 >删除</el-button
+            >
+            <el-button
+                class="u-admin"
+                type="text"
+                size="mini"
+                icon="el-icon-delete"
+            >
+                黑洞</el-button
             >
             <time class="u-date">
                 <i class="el-icon-time"></i>
@@ -112,12 +130,14 @@ export default {
         getPList(content) {
             return content.split("\n");
         },
-        doLike(setLike){
-            if(setLike === this.currentUserHadLike){
-                return
+        doLike(setLike) {
+            if (setLike === this.currentUserHadLike) {
+                return;
             }
             this.currentUserHadLike = setLike;
-            this.hasLikeCount = setLike ? this.hasLikeCount + 1 : this.hasLikeCount - 1;
+            this.hasLikeCount = setLike
+                ? this.hasLikeCount + 1
+                : this.hasLikeCount - 1;
             this.$emit("setLikeComment", setLike);
         },
         deleteComment() {
@@ -131,9 +151,9 @@ export default {
                 })
                 .catch(() => {});
         },
-        
-        likesFormat(count){
-            return count > 0 ? count : ''
+
+        likesFormat(count) {
+            return count > 0 ? count : "";
         },
         dataFormat(str) {
             let d = new Date(str);
