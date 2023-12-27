@@ -30,6 +30,7 @@
             :can-cancel-star="item.is_star &&(power.is_author || power.is_editor)"
             :can-add-white="!item.is_white && power.article_open_white == 1"
             :can-remove-white="item.is_white && (power.is_author == 1 || power.is_editor == 1)"
+            :can-hide="(power.is_author == 1 || power.is_editor == 1)"
             :is-like="item.is_likes == 1"
             :likes="~~item.likes"
             @addNewReply="addNewReply"

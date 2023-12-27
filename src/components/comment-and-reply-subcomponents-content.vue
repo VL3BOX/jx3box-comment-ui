@@ -64,6 +64,7 @@
                     type="text"
                     size="mini"
                     icon="el-icon-delete"
+                    v-if="canHide"
                     @click="hideComment()"
                     >黑洞</el-button
                 >
@@ -205,6 +206,7 @@ export default {
         "canDelete",
         "canSetTop",
         "canCancelTop",
+        "canHide",
         "isLike", // 是否已点赞
         "likes", // 点赞数
         "canSetStar",
@@ -228,7 +230,6 @@ export default {
             showUploader: false,
             inputId: "",
             previewList: [],
-
             currentUserHadLike: this.isLike,
             hasLikeCount: this.likes,
         };

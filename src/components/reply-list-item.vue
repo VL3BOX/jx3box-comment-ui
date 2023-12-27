@@ -15,6 +15,7 @@
             :content="reply.content"
             :attachments="reply.attachments | stringToArray"
             :can-delete="power.can_del || power.uid == reply.userId"
+            :can-hide="(power.is_author == 1 || power.is_editor == 1)"
             :can-reply="power.uid != reply.userId"
             :user-href="reply.replyForUID | profileLink"
             :reply-for-username="reply.replyForUsername"

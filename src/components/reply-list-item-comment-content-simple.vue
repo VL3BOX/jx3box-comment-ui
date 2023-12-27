@@ -71,6 +71,7 @@
                 type="text"
                 size="mini"
                 icon="el-icon-delete"
+                v-if="canHide"
                 @click="hideComment()"
             >
                 黑洞</el-button
@@ -97,6 +98,7 @@ export default {
         "date",
         "hasReply",
         "canDelete",
+        "canHide",
         "canReply",
         "isLike", // 是否已点赞
         "likes", // 点赞数
