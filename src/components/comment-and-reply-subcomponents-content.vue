@@ -64,6 +64,7 @@
                     type="text"
                     size="mini"
                     icon="el-icon-delete"
+                    @click="hideComment()"
                     >黑洞</el-button
                 >
                 <el-button
@@ -270,6 +271,17 @@ export default {
             })
                 .then(() => {
                     this.$emit("deleteComment");
+                })
+                .catch(() => {});
+        },
+        hideComment() {
+            this.$confirm("确定隐藏该评论吗？", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning",
+            })
+                .then(() => {
+                    this.$emit("hide", this.commentId);
                 })
                 .catch(() => {});
         },

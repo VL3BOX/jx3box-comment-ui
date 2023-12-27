@@ -9,6 +9,7 @@
             @deleteReply="deleteReply"
             @addReply="addReply"
             @setLikeComment="setLikeComment"
+            @hide="hideReply"
         />
         <!-- 分页 -->
         <el-row v-if="data.length >= 3 || showPager">
@@ -37,7 +38,7 @@
 
 <script>
 import { authorLink } from "@jx3box/jx3box-common/js/utils";
-import ReplyItem from "./reply-item";
+import ReplyItem from "./reply-list-item";
 export default {
     props: ["data", "power", "pager"],
     components: {
@@ -67,6 +68,9 @@ export default {
         },
         deleteReply(id) {
             this.$emit("deleteReply", id);
+        },
+        hideReply(id) {
+            this.$emit("hide", id);
         },
         setLikeComment(id, isLike) {
             this.$emit("setLikeComment", id, isLike);

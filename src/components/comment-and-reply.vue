@@ -18,7 +18,7 @@
                 ><i class="el-icon-cherry"></i>悄悄话</span
             >
         </div>
-        <CommentContent
+        <ContentOfCommentAndReply
             :date="item.commentDate"
             :content="item.content"
             :comment-id="item.id"
@@ -38,6 +38,7 @@
             @setStarComment="setStarComment"
             @setLikeComment="setLikeComment"
             @setWhiteComment="setWhiteComment"
+            @hide="hideComment"
         />
         <ReplyList
             :data="replyList"
@@ -48,18 +49,19 @@
             @goto="gotoReplyListIndex"
             @resetReply="resetReply"
             @setLikeComment="setLikeReply"
+            @hide="hideComment"
         />
     </div>
 </template>
 
 <script>
-import CommentContent from "./comment-content.vue";
-import ReplyList from "./reply-list.vue";
+import ContentOfCommentAndReply from "./comment-and-reply-subcomponents-content.vue";
+import ReplyList from "./comment-and-reply-subcomponents-reply-list.vue";
 import { POST, DELETE, GET } from "../service";
 export default {
     props: ["item", "baseApi", "power", "user-href", "username"],
     components: {
-        CommentContent,
+        ContentOfCommentAndReply,
         ReplyList
     },
     data: function() {
@@ -87,6 +89,9 @@ export default {
     methods: {
         deleteComment() {
             this.$emit("deleteComment", this.item.id);
+        },
+        hideComment(){
+            this.$emit("hide", this.item.id);
         },
         setTopComment(setTop) {
             this.$emit("setTopComment", this.item.id, setTop);

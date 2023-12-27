@@ -46,7 +46,7 @@
                         :withFrame="true"
                         :avatarSize="48"
                     />
-                    <CommentWithReply
+                    <CommentAndReply
                         :base-api="baseAPI"
                         :item="item"
                         :category="category"
@@ -56,6 +56,7 @@
                         @setStarComment="setStarComment"
                         @setWhiteComment="setWhiteComment"
                         @setLikeComment="setLikeComment"
+                        @hide="hideComment"
                         :user-href="item.userId | profileLink"
                         :username="item.displayName"
                     />
@@ -89,7 +90,7 @@
 import { showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
 import CommentAvatar from "./components/avatar.vue";
 import CommentInputForm from "./components/comment-input-form.vue";
-import CommentWithReply from "./components/comment-with-reply.vue";
+import CommentAndReply from "./components/comment-and-reply.vue";
 import { GET, POST, DELETE, PUT } from "./service";
 import { getOrderMode, setOrderMode } from "./options";
 export default {
@@ -97,7 +98,7 @@ export default {
     props: ["id", "category", "normal", "order"],
     components: {
         CommentAvatar,
-        CommentWithReply,
+        CommentAndReply,
         CommentInputForm,
     },
     data: function () {
@@ -187,6 +188,20 @@ export default {
                     this.$notify({
                         title: "",
                         message: "删除成功!",
+                        type: "success",
+                        duration: 3000,
+                        position: "bottom-right",
+                    });
+                    this.reloadCommentList(this.pager.index);
+                })
+                .catch(() => {});
+        },
+        hideComment(id) {
+            PUT(`${this.baseAPI}/comment/${id}/hide`)
+                .then(() => {
+                    this.$notify({
+                        title: "",
+                        message: "操作成功!",
                         type: "success",
                         duration: 3000,
                         position: "bottom-right",

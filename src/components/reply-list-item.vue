@@ -24,6 +24,7 @@
             @delete="deleteReply"
             @showReplyInput="showReplyForReplyFrom = !showReplyForReplyFrom"
             @setLikeComment="setLikeComment"
+            @hide="hideReply"
         />
         <!--隐藏起来的回复评论的评论表单-->
         <ReplyForReply
@@ -39,8 +40,8 @@
 
 <script>
 import { showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
-import CommentContentSimple from "./comment-content-simple.vue";
-import ReplyForReply from "./reply-for-reply";
+import CommentContentSimple from "./reply-list-item-comment-content-simple.vue";
+import ReplyForReply from "./reply-list-item-reply-form.vue";
 import CommentAvatar from "./avatar.vue";
 export default {
     props: ["reply", "power"],
@@ -72,6 +73,9 @@ export default {
     methods: {
         deleteReply(id) {
             this.$emit("deleteReply", id);
+        },
+        hideReply(id) {
+            this.$emit("hide", id);
         },
         setLikeComment(setLike) {
             this.$emit("setLikeComment", this.reply.id, setLike);
