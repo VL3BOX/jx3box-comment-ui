@@ -32,7 +32,9 @@
                     class="u-up"
                     src="../assets/img/heart_1.svg"
                     alt=""
-                />点赞{{ likesFormat(hasLikeCount) }}</el-button
+                />点赞<span class="u-up-count">{{
+                    likesFormat(hasLikeCount)
+                }}</span></el-button
             >
             <el-button
                 class="u-admin"
@@ -204,29 +206,35 @@ export default {
 </script>
 
 <style lang="less">
-.u-reply-content {
-    div,
-    p {
-        padding: 0;
-        margin: 0;
-        line-height: 1.75;
-        font-size: 14px;
-        img {
-            vertical-align: -3px;
+.u-reply {
+    .u-reply-content {
+        div,
+        p {
+            padding: 0;
+            margin: 0;
+            line-height: 1.75;
+            font-size: 14px;
+            img {
+                vertical-align: -3px;
+            }
         }
     }
-}
-.u-reply-text {
-    white-space: pre-line;
-}
-.u-attachements {
-    margin-top: 10px;
-}
-.u-up {
-    width: 12px;
-    height: 12px;
-    position: relative;
-    top: 1px;
-    margin-right: 5px;
+    .u-reply-text {
+        white-space: pre-line;
+    }
+    .u-attachements {
+        margin-top: 10px;
+    }
+    .u-up {
+        width: 12px;
+        height: 12px;
+        position: relative;
+        top: 1px;
+        margin-right: 5px;
+    }
+    .u-up-count {
+        color: #fba524;
+        margin-left: 3px;
+    }
 }
 </style>

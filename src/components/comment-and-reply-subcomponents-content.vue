@@ -26,7 +26,7 @@
                         class="u-up"
                         src="../assets/img/heart_1.svg"
                         alt=""
-                    />点赞{{ likesFormat(hasLikeCount) }}</el-button
+                    />点赞<span class="u-up-count">{{ likesFormat(hasLikeCount) }}</span></el-button
                 >
                 <el-button
                     class="u-admin"
@@ -429,6 +429,10 @@ export default {
         position: relative;
         top: 1px;
         margin-right: 5px;
+    }
+    .u-up-count{
+        color:#fba524;
+        margin-left:3px;
     }
 
     .u-like-count {
