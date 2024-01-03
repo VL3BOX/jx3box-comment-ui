@@ -192,6 +192,11 @@ export default {
     }
     .u-secret{
         background-color:#ff99cc;
+        display: flex;
+        align-items: center;
+        .el-checkbox__inner{
+            display:block;
+        }
     }
 }
 </style>
