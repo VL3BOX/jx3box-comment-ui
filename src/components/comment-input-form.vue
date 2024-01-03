@@ -127,5 +127,13 @@ export default {
 <style lang="less">
 .c-comment-secret {
     margin-left: 15px;
+
+    .u-secret {
+        display: flex;
+        align-items: center;
+        .el-checkbox__inner{
+            display:block;
+        }
+    }
 }
 </style>
