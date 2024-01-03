@@ -32,7 +32,7 @@
                     class="u-up"
                     src="../assets/img/heart_1.svg"
                     alt=""
-                />点赞<span class="u-up-count">{{
+                />点赞<span class="u-like-count">{{
                     likesFormat(hasLikeCount)
                 }}</span></el-button
             >
@@ -75,6 +75,7 @@
                 icon="el-icon-delete"
                 v-if="canHide"
                 @click="hideComment()"
+                title="拉入黑洞后，仅评论者自己独自可见"
             >
                 黑洞</el-button
             >
@@ -232,8 +233,8 @@ export default {
         top: 1px;
         margin-right: 5px;
     }
-    .u-up-count {
-        color: #fba524;
+    .u-like-count {
+        color: #999;
         margin-left: 3px;
     }
 }

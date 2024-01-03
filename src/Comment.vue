@@ -28,6 +28,7 @@
                         @change="changeWhiteList"
                         v-if="commentPower.is_author || commentPower.is_editor"
                         active-text="开启过滤"
+                        title="开启过滤后，仅设为显示的评论可被其他人所见"
                     >
                     </el-switch>
                 </div>

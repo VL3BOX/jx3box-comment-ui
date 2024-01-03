@@ -26,7 +26,7 @@
                         class="u-up"
                         src="../assets/img/heart_1.svg"
                         alt=""
-                    />点赞<span class="u-up-count">{{ likesFormat(hasLikeCount) }}</span></el-button
+                    />点赞<span class="u-like-count">{{ likesFormat(hasLikeCount) }}</span></el-button
                 >
                 <el-button
                     class="u-admin"
@@ -66,6 +66,7 @@
                     icon="el-icon-delete"
                     v-if="canHide"
                     @click="hideComment()"
+                    title="拉入黑洞后，仅评论者自己独自可见"
                     >黑洞</el-button
                 >
                 <el-button
@@ -430,13 +431,8 @@ export default {
         top: 1px;
         margin-right: 5px;
     }
-    .u-up-count{
-        color:#fba524;
-        margin-left:3px;
-    }
-
     .u-like-count {
-        margin-left: 5px;
+        margin-left: 3px;
         // &:before {
         //     content: "(";
         // }
