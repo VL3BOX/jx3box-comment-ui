@@ -3,7 +3,7 @@
         <div
             class="u-text"
             v-if="content != ''"
-            v-html="formatContent(content)"
+            v-html="renderContent"
         ></div>
         <div class="u-attachements" v-if="attachments.length">
             <el-image
@@ -233,7 +233,17 @@ export default {
             previewList: [],
             currentUserHadLike: this.isLike,
             hasLikeCount: this.likes,
+
+            renderContent: "",
         };
+    },
+    watch: {
+        content: {
+            handler: function (val) {
+                this.formatContent(val);
+            },
+            immediate: true,
+        },
     },
     mounted() {
         if (this.commentId) this.inputId = this.commentId;
@@ -331,7 +341,9 @@ export default {
             }
         },
         hideForm() {},
-        formatContent,
+        async formatContent(str) {
+            this.renderContent = await formatContent(str);
+        },
         async handleEmotionSelected(emotionVal) {
             const myField = document.querySelector(`#id${this.inputId}`);
             const value = emotionVal.key;

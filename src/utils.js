@@ -13,9 +13,9 @@ function escapeHtml(str) {
       }
     });
   }
-function formatContent(val) {
+async function formatContent(val) {
     const ins = new JX3_EMOTION(escapeHtml(val))
-    return ins.code
+    return await ins._renderHTML()
 }
 
 export {

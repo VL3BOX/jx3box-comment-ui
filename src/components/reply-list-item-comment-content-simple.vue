@@ -8,7 +8,7 @@
                 >
                 :
             </span>
-            <div class="u-reply-text" v-html="formatContent(content)"></div>
+            <div class="u-reply-text" v-html="renderContent"></div>
             <!-- <div class="u-reply-text" v-html="content"></div> -->
             <!-- <p v-for="(p, index) in getPList(content)" :key="index" v-html="formatContent(p)"></p> -->
         </div>
@@ -114,6 +114,8 @@ export default {
             showInput: false,
             currentUserHadLike: this.isLike,
             hasLikeCount: this.likes,
+
+            renderContent: "",
         };
     },
     computed: {
@@ -121,6 +123,14 @@ export default {
             return this.attachments.map((val) => {
                 return resolveImagePath(val);
             });
+        },
+    },
+    watch: {
+        content: {
+            handler: function (val) {
+                this.formatContent(val);
+            },
+            immediate: true,
         },
     },
     filters: {
@@ -132,7 +142,9 @@ export default {
         },
     },
     methods: {
-        formatContent,
+        async formatContent(str) {
+            this.renderContent = await formatContent(str);
+        },
         getPList(content) {
             return content.split("\n");
         },
