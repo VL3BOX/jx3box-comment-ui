@@ -1,56 +1,56 @@
 {
-    "name": "@jx3box/jx3box-comment-ui",
-    "version": "1.8.7",
-    "scripts": {
-        "dev": "env DEV_SERVER=true vue-cli-service serve",
-        "serve": "vue-cli-service serve",
-        "build": "vue-cli-service build --target lib --name comment src/Comment.vue && cp index.html dist/demo.html",
-        "lint": "vue-cli-service lint",
-        "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common@latest @jx3box/jx3box-emotion@latest"
+  "name": "@jx3box/jx3box-comment-ui",
+  "version": "1.8.7",
+  "scripts": {
+    "dev": "env DEV_SERVER=true vue-cli-service serve",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build --target lib --name comment src/Comment.vue && cp index.html dist/demo.html",
+    "lint": "vue-cli-service lint",
+    "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common@latest @jx3box/jx3box-emotion@latest"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "@jx3box/jx3box-common": "^8.2.4",
+    "@jx3box/jx3box-emotion": "^1.2.6",
+    "core-js": "^3.6.4",
+    "element-ui": "^2.13.1",
+    "hevue-img-preview": "^5.0.0",
+    "vue": "^2.6.11",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.16.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.16.0",
+    "@vue/cli-plugin-babel": "~4.3.0",
+    "@vue/cli-plugin-eslint": "~4.3.0",
+    "@vue/cli-service": "~4.3.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "less": "^3.0.4",
+    "less-loader": "^5.0.0",
+    "vue-cli-plugin-element": "~1.0.1",
+    "vue-template-compiler": "^2.6.11",
+    "xss": "^1.0.9"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
     },
-    "main": "index.js",
-    "dependencies": {
-        "@jx3box/jx3box-common": "^8.2.1",
-        "@jx3box/jx3box-emotion": "^1.2.6",
-        "core-js": "^3.6.4",
-        "element-ui": "^2.13.1",
-        "hevue-img-preview": "^5.0.0",
-        "vue": "^2.6.11",
-        "vuex": "^3.6.2"
-    },
-    "devDependencies": {
-        "@babel/plugin-proposal-nullish-coalescing-operator": "^7.16.0",
-        "@babel/plugin-proposal-optional-chaining": "^7.16.0",
-        "@vue/cli-plugin-babel": "~4.3.0",
-        "@vue/cli-plugin-eslint": "~4.3.0",
-        "@vue/cli-service": "~4.3.0",
-        "babel-eslint": "^10.1.0",
-        "eslint": "^6.7.2",
-        "eslint-plugin-vue": "^6.2.2",
-        "less": "^3.0.4",
-        "less-loader": "^5.0.0",
-        "vue-cli-plugin-element": "~1.0.1",
-        "vue-template-compiler": "^2.6.11",
-        "xss": "^1.0.9"
-    },
-    "eslintConfig": {
-        "root": true,
-        "env": {
-            "node": true
-        },
-        "extends": [
-            "plugin:vue/essential",
-            "eslint:recommended"
-        ],
-        "parserOptions": {
-            "parser": "babel-eslint"
-        },
-        "rules": {}
-    },
-    "browserslist": [
-        "last 5 chrome versions"
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
     ],
-    "engines": {
-        "node": ">= 14 < 17"
-    }
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "last 5 chrome versions"
+  ],
+  "engines": {
+    "node": ">= 14 < 17"
+  }
 }
