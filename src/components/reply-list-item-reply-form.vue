@@ -12,7 +12,7 @@
                 type="textarea"
                 v-model="content"
                 :id="'id' + inputId"
-                placeholder="输入回复..."
+                :placeholder="$t('输入回复...')"
             ></el-input>
         </el-form-item>
         <el-form-item>
@@ -41,10 +41,10 @@
                 type="primary"
                 @click="submintReply()"
                 :disabled="disableSubmitBtn"
-                >提交</el-button
+                >{{ $t('提交') }}</el-button
             >
             <el-button size="mini" type="text" @click="hideForm()"
-                >收起</el-button
+                >{{ $t('收起') }}</el-button
             >
         </el-form-item>
     </el-form>

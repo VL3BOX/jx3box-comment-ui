@@ -9,14 +9,14 @@
                 <quickReply @reply="onQuickReply"></quickReply>
                 <div class="c-comment-secret">
                     <el-checkbox class="u-secret" v-model="is_secret" border size="mini">悄悄话
-                        <el-tooltip class="item" effect="dark" content="勾选悄悄话后仅作者和你可见，并且不可再变更状态" placement="top">
+                        <el-tooltip class="item" effect="dark" :content="$t('勾选悄悄话后仅作者和你可见，并且不可再变更状态')" placement="top">
                             <i class="el-icon-info"></i> </el-tooltip></el-checkbox>
                 </div>
             </div>
             <Uploader class="u-uploader" ref="uploader" @onFinish="attachmentUploadFinish" @onError="attachmentUplodError"
                 v-if="showUploader" />
             <div class="u-toolbar">
-                <el-button type="primary" @click="onSubmit" class="u-publish" :disabled="disableSubmitBtn">发表评论</el-button>
+                <el-button type="primary" @click="onSubmit" class="u-publish" :disabled="disableSubmitBtn">{{ $t('发表评论') }}</el-button>
             </div>
         </el-form-item>
     </el-form>

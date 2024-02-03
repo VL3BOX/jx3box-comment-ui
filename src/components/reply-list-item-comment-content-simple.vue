@@ -2,7 +2,7 @@
     <div class="u-reply">
         <div class="u-reply-content">
             <span class="u-reply-label" v-if="replyForUserId != 0">
-                回复
+                {{ $t('回复') }}
                 <el-link type="primary" target="_blank" :href="userHref"
                     >@{{ replyForUsername }}</el-link
                 >
@@ -32,7 +32,7 @@
                     class="u-up"
                     src="../assets/img/heart_1.svg"
                     alt=""
-                />点赞<span class="u-like-count">{{
+                />{{ $t('点赞') }}<span class="u-like-count">{{
                     likesFormat(hasLikeCount)
                 }}</span></el-button
             >
@@ -46,7 +46,7 @@
                     class="u-up"
                     src="../assets/img/heart_2.svg"
                     alt=""
-                />已赞<span class="u-like-count">{{
+                />{{ $t('已赞') }}<span class="u-like-count">{{
                     likesFormat(hasLikeCount)
                 }}</span></el-button
             >
@@ -57,7 +57,7 @@
                 icon="el-icon-chat-line-round"
                 size="mini"
                 @click="showReplyForReplyInput()"
-                >回复</el-button
+                >{{ $t('回复') }}</el-button
             >
             <el-button
                 class="u-admin"
@@ -66,7 +66,7 @@
                 icon="el-icon-delete"
                 size="mini"
                 @click="deleteComment()"
-                >删除</el-button
+                >{{ $t('删除') }}</el-button
             >
             <el-button
                 class="u-admin"
@@ -75,9 +75,9 @@
                 icon="el-icon-delete"
                 v-if="canHide"
                 @click="hideComment()"
-                title="拉入黑洞后，仅评论者自己独自可见"
+                :title="$t('拉入黑洞后，仅评论者自己独自可见')"
             >
-                黑洞</el-button
+                {{ $t('黑洞') }}</el-button
             >
             <time class="u-date">
                 <i class="el-icon-time"></i>

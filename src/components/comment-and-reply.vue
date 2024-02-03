@@ -9,13 +9,13 @@
                 >{{ username || "人字榜800线无名小侠" }}</el-link
             >
             <span class="u-mark u-top" v-if="item.is_top"
-                ><i class="el-icon-download"></i>置顶</span
+                ><i class="el-icon-download"></i>{{ $t('置顶') }}</span
             >
             <span class="u-mark u-star" v-if="item.is_star"
-                ><i class="el-icon-star-off"></i>精华</span
+                ><i class="el-icon-star-off"></i>{{ $t('精华') }}</span
             >
             <span class="u-mark u-secret" v-if="item.is_secret"
-                ><i class="el-icon-cherry"></i>悄悄话</span
+                ><i class="el-icon-cherry"></i>{{ $t('悄悄话') }}</span
             >
         </div>
         <ContentOfCommentAndReply

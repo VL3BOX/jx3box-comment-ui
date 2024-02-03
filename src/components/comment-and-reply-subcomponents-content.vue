@@ -26,7 +26,7 @@
                         class="u-up"
                         src="../assets/img/heart_1.svg"
                         alt=""
-                    />点赞<span class="u-like-count">{{ likesFormat(hasLikeCount) }}</span></el-button
+                    />{{ $t('点赞') }}<span class="u-like-count">{{ likesFormat(hasLikeCount) }}</span></el-button
                 >
                 <el-button
                     class="u-admin"
@@ -38,7 +38,7 @@
                         class="u-up"
                         src="../assets/img/heart_2.svg"
                         alt=""
-                    />已赞<span class="u-like-count">{{
+                    />{{ $t('已赞') }}<span class="u-like-count">{{
                         likesFormat(hasLikeCount)
                     }}</span></el-button
                 >
@@ -48,7 +48,7 @@
                     size="mini"
                     icon="el-icon-chat-round"
                     @click="showForm = !showForm"
-                    >回复</el-button
+                    >{{ $t('回复') }}</el-button
                 >
                 <el-button
                     class="u-admin"
@@ -57,7 +57,7 @@
                     icon="el-icon-delete"
                     size="mini"
                     @click="deleteComment()"
-                    >删除</el-button
+                    >{{ $t('删除') }}</el-button
                 >
                 <el-button
                     class="u-admin"
@@ -66,8 +66,8 @@
                     icon="el-icon-delete"
                     v-if="canHide"
                     @click="hideComment()"
-                    title="拉入黑洞后，仅评论者自己独自可见"
-                    >黑洞</el-button
+                    :title="$t('拉入黑洞后，仅评论者自己独自可见')"
+                    >{{ $t('黑洞') }}</el-button
                 >
                 <el-button
                     class="u-admin"
@@ -76,7 +76,7 @@
                     icon="el-icon-top"
                     size="mini"
                     @click="topComment(true)"
-                    >置顶</el-button
+                    >{{ $t('置顶') }}</el-button
                 >
                 <el-button
                     class="u-admin"
@@ -85,7 +85,7 @@
                     icon="el-icon-top"
                     size="mini"
                     @click="topComment(false)"
-                    >取消置顶</el-button
+                    >{{ $t('取消置顶') }}</el-button
                 >
                 <el-button
                     class="u-admin"
@@ -94,7 +94,7 @@
                     icon="el-icon-star-off"
                     size="mini"
                     @click="starComment(true)"
-                    >加精</el-button
+                    >{{ $t('加精') }}</el-button
                 >
                 <el-button
                     class="u-admin"
@@ -103,7 +103,7 @@
                     icon="el-icon-star-on"
                     size="mini"
                     @click="starComment(false)"
-                    >取消加精</el-button
+                    >{{ $t('取消加精') }}</el-button
                 >
                 <time class="u-date">
                     <i class="el-icon-time"></i>
@@ -122,7 +122,7 @@
                     <img
                         class="u-icon-filter"
                         src="../assets/img/view.svg"
-                        alt="显示"
+                        :alt="$t('显示')"
                     />
                     显示</el-button
                 >
@@ -135,8 +135,8 @@
                     ><img
                         class="u-icon-filter"
                         src="../assets/img/hide.svg"
-                        alt="隐藏"
-                    />隐藏</el-button
+                        :alt="$t('隐藏')"
+                    />{{ $t('隐藏') }}</el-button
                 >
             </div>
         </div>
@@ -180,10 +180,10 @@
                     type="primary"
                     @click="submit()"
                     :disabled="disableSubmitBtn"
-                    >提交</el-button
+                    >{{ $t('提交') }}</el-button
                 >
                 <el-button size="mini" type="text" @click="showForm = false"
-                    >收起</el-button
+                    >{{ $t('收起') }}</el-button
                 >
             </el-form-item>
         </el-form>
